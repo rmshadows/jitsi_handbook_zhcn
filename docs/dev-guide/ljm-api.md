@@ -1,6 +1,6 @@
 ---
 id: dev-guide-ljm-api
-title: lib-jitsi-meet API (low level)
+title: lib-jitsi-meet API (low level) - lib-jitsi-meet API（低级 API）
 ---
 
 You can use Jitsi Meet API to create Jitsi Meet video conferences with a custom GUI.
@@ -89,505 +89,447 @@ JaaS customers, please follow [this example](https://github.com/jitsi/ljm-jaas-e
 
 ### JitsiMeetJS
 
-You can access the following methods and objects through `JitsiMeetJS` object.
+您可以通过 `JitsiMeetJS` 对象访问以下方法和对象。
 
-*  `JitsiMeetJS.init(options)` - this method initialized Jitsi Meet API.
-The `options` parameter is JS object with the following properties:
-    - `useIPv6` - boolean property
-    - `disableSimulcast` - boolean property. Enables/disables simulcast.
-    - `enableWindowOnErrorHandler` - boolean property (default false). Enables/disables attaching global onerror handler (window.onerror).
-    - `disableThirdPartyRequests` - if true - callstats will be disabled and the callstats API won't be included.
-    - `enableAnalyticsLogging` - boolean property (default false). Enables/disables analytics logging.
-    - `externalStorage` - Object that implements the Storage interface. If specified this object will be used for storing data instead of `localStorage`.
-    - `callStatsCustomScriptUrl` - (optional) custom url to access callstats client script
-    - `useTurnUdp` - boolean property (default false). Enables use of turn over udp for jvb. It is disabled because not very useful (if the client can use udp, it likely can connect to jvb directly over udp too; but it can be useful to still enable udp turn when an udp turn is known to be whitelisted on a network)
+*  `JitsiMeetJS.init(options)` - 此方法初始化 Jitsi Meet API。
+   `options` 参数是一个包含以下属性的 JS 对象：
+    - `useIPv6` - 布尔属性
+    - `disableSimulcast` - 布尔属性。启用/禁用多路复用。
+    - `enableWindowOnErrorHandler` - 布尔属性（默认为 false）。启用/禁用全局 onerror 处理程序（window.onerror）。
+    - `disableThirdPartyRequests` - 如果为 true，则禁用 callstats，并且不会包含 callstats API。
+    - `enableAnalyticsLogging` - 布尔属性（默认为 false）。启用/禁用分析日志记录。
+    - `externalStorage` - 实现存储接口的对象。如果指定，则使用该对象代替 `localStorage` 存储数据。
+    - `callStatsCustomScriptUrl` - （可选）访问 callstats 客户端脚本的自定义 URL。
+    - `useTurnUdp` - 布尔属性（默认为 false）。启用通过 UDP 进行 TURN 的 JVB。此选项禁用是因为不是非常有用（如果客户端可以使用 UDP，则可能也可以直接通过 UDP 连接到 JVB；但当已知 UDP TURN 在网络中被列入白名单时，启用 UDP TURN 仍然可能有用）。
 
-* `JitsiMeetJS.JitsiConnection` - the `JitsiConnection` constructor. You can use that to create new server connection.
+*  `JitsiMeetJS.JitsiConnection` - `JitsiConnection` 构造函数。您可以使用它创建新的服务器连接。
 
-* `JitsiMeetJS.setLogLevel` - changes the log level for the library. For example to have only error messages you should do:
+*  `JitsiMeetJS.setLogLevel` - 更改库的日志级别。例如，要仅显示错误消息，您应该执行：
+
 ```javascript
 JitsiMeetJS.setLogLevel(JitsiMeetJS.logLevels.ERROR);
 ```
 
-* `JitsiMeetJS.createLocalTracks(options)` - Creates the media tracks and returns them through `Promise` object. If rejected, passes `JitsiTrackError` instance to catch block.
-    - `options` - JS object with configuration options for the local media tracks. You can change the following properties there:
-        1. `devices` - array with the devices - "desktop", "video" and "audio" that will be passed to GUM. If that property is not set GUM will try to get all available devices.
-        2. `resolution` - the prefered resolution for the local video.
-        3. `constraints` - the prefered encoding properties for the created track (replaces 'resolution' in newer releases of browsers)
-        4. `cameraDeviceId` - the deviceID for the video device that is going to be used
-        5. `micDeviceId` - the deviceID for the audio device that is going to be used
-        6. `minFps` - the minimum frame rate for the video stream (passed to GUM)
-        7. `maxFps` - the maximum frame rate for the video stream (passed to GUM)
-        8. `desktopSharingSourceDevice` - The device id or label for a video input source that should be used for screensharing.
-        9. `facingMode` - facing mode for a camera (possible values - 'user', 'environment')
-        10. `firePermissionPromptIsShownEvent` - optional boolean parameter. If set to `true`, `JitsiMediaDevicesEvents.PERMISSION_PROMPT_IS_SHOWN` will be fired when browser shows gUM permission prompt.
-        11. `fireSlowPromiseEvent` - optional boolean parameter. If set to `true`, `JitsiMediaDevicesEvents.USER_MEDIA_SLOW_PROMISE_TIMEOUT` will be fired when browser takes too long to resolve the gUM promise. This event is mutual exclusive with the above `JitsiMediaDevicesEvents.PERMISSION_PROMPT_IS_SHOWN` event
-    - `firePermissionPromptIsShownEvent` - __DEPRECATED__. Use options.firePermissionPromptIsShownEvent instead
+* `JitsiMeetJS.createLocalTracks(options)` - 创建媒体轨道，并通过 `Promise` 对象返回。如果被拒绝，则将 `JitsiTrackError` 实例传递给 catch 块。
+  - `options` - JS 对象，包含本地媒体轨道的配置选项。您可以更改以下属性：
+    1. `devices` - 传递给 GUM 的设备数组 - "desktop"、"video" 和 "audio"。如果该属性未设置，GUM 将尝试获取所有可用设备。
+    2. `resolution` - 本地视频的首选分辨率。
+    3. `constraints` - 创建轨道的首选编码属性（在浏览器的新版本中替代 "resolution"）。
+    4. `cameraDeviceId` - 将要使用的视频设备的设备 ID。
+    5. `micDeviceId` - 将要使用的音频设备的设备 ID。
+    6. `minFps` - 视频流的最小帧率（传递给 GUM）。
+    7. `maxFps` - 视频流的最大帧率（传递给 GUM）。
+    8. `desktopSharingSourceDevice` - 应用于屏幕共享的视频输入源的设备 ID 或标签。
+    9. `facingMode` - 摄像头的朝向模式（可能值 - 'user'、'environment'）。
+    10. `firePermissionPromptIsShownEvent` - 可选布尔参数。如果设置为 `true`，则在浏览器显示 gUM 权限提示时，将触发 `JitsiMediaDevicesEvents.PERMISSION_PROMPT_IS_SHOWN`。
+    11. `fireSlowPromiseEvent` - 可选布尔参数。如果设置为 `true`，则当浏览器花费过长时间来解析 gUM promise 时，将触发 `JitsiMediaDevicesEvents.USER_MEDIA_SLOW_PROMISE_TIMEOUT`。此事件与上述 `JitsiMediaDevicesEvents.PERMISSION_PROMPT_IS_SHOWN` 事件是互斥的。
+  - `firePermissionPromptIsShownEvent` - __已弃用__。请使用 options.firePermissionPromptIsShownEvent。
 
-* `JitsiMeetJS.createTrackVADEmitter(localAudioDeviceId, sampleRate, vadProcessor)` - Creates a TrackVADEmitter service that connects an audio track to a VAD (voice activity detection) processor in order to obtain VAD scores for individual PCM audio samples.
-    - `localAudioDeviceId` - The target local audio device.
-    - `sampleRate` - Sample rate at which the emitter will operate. Possible values  256, 512, 1024, 4096, 8192, 16384. Passing other values will default to closes neighbor, i.e. Providing a value of 4096 means that the emitter will process bundles of 4096 PCM samples at a time, higher values mean longer calls, lowers values mean more calls but shorter.
-    - `vadProcessor` - VAD Processors that does the actual compute on a PCM sample.The processor needs to implement the following functions:
-        - `getSampleLength()` - Returns the sample size accepted by calculateAudioFrameVAD.
-        - `getRequiredPCMFrequency()` - Returns the PCM frequency at which the processor operates .i.e. (16KHz, 44.1 KHz etc.)
-        - `calculateAudioFrameVAD(pcmSample)` - Process a 32 float pcm sample of getSampleLength size.
-* `JitsiMeetJS.enumerateDevices(callback)` - __DEPRECATED__. Use `JitsiMeetJS.mediaDevices.enumerateDevices(callback)` instead.
-* `JitsiMeetJS.isDeviceChangeAvailable(deviceType)` - __DEPRECATED__. Use `JitsiMeetJS.mediaDevices.isDeviceChangeAvailable(deviceType)` instead.
-* `JitsiMeetJS.isDesktopSharingEnabled()` - returns true if desktop sharing is supported and false otherwise. NOTE: that method can be used after `JitsiMeetJS.init(options)` is completed otherwise the result will be always null.
-* `JitsiMeetJS.getActiveAudioDevice()` - goes through all audio devices on the system and returns information about one that is active, i.e. has audio signal. Returns a Promise resolving to an Object with the following structure:
-    - `deviceId` - string containing the device ID of the audio track found as active.
-    - `deviceLabel` - string containing the label of the audio device.
-* `JitsiMeetJS.getGlobalOnErrorHandler()` - returns function that can be used to be attached to window.onerror and if options.enableWindowOnErrorHandler is enabled returns the function used by the lib. (function(message, source, lineno, colno, error)).
+* `JitsiMeetJS.createTrackVADEmitter(localAudioDeviceId, sampleRate, vadProcessor)` - 创建一个 TrackVADEmitter 服务，将音频轨道连接到 VAD（语音活动检测）处理器，以获得单个 PCM 音频样本的 VAD 评分。
+  - `localAudioDeviceId` - 目标本地音频设备。
+  - `sampleRate` - 发射器将运行的采样率。可能的值为 256、512、1024、4096、8192、16384。传递其他值将默认为最接近的邻居，即提供 4096 的值意味着发射器将每次处理 4096 个 PCM 样本的包，较高的值意味着更长的调用，较低的值意味着更多的调用但更短的时间。
+  - `vadProcessor` - 执行 PCM 样本计算的 VAD 处理器。处理器需要实现以下函数：
+    - `getSampleLength()` - 返回 calculateAudioFrameVAD 接受的样本大小。
+    - `getRequiredPCMFrequency()` - 返回处理器工作的 PCM 频率，即（16KHz、44.1 KHz 等）。
+    - `calculateAudioFrameVAD(pcmSample)` - 处理 32 位浮点 PCM 样本，其大小为 getSampleLength。
 
-* `JitsiMeetJS.mediaDevices` - JS object that contains methods for interaction with media devices. Following methods are available:
-    - `isDeviceListAvailable()` - returns true if retrieving the device list is supported and false - otherwise
-    - `isDeviceChangeAvailable(deviceType)` - returns true if changing the input (camera / microphone) or output (audio) device is supported and false if not. `deviceType` is a type of device to change. Undefined or 'input' stands for input devices, 'output' - for audio output devices.
-    - `enumerateDevices(callback)` - returns list of the available devices as a parameter to the callback function. Every device is a MediaDeviceInfo object with the following properties:
-        - `label` - the name of the device
-        - `kind` - "audioinput", "videoinput" or "audiooutput"
-        - `deviceId` - the id of the device
-        - `groupId` - group identifier, two devices have the same group identifier if they belong to the same physical device; for example a monitor with both a built-in camera and microphone
-    - `setAudioOutputDevice(deviceId)` - sets current audio output device. `deviceId` - id of 'audiooutput' device from `JitsiMeetJS.enumerateDevices()`, '' is for default device.
-    - `getAudioOutputDevice()` - returns currently used audio output device id, '' stands for default device.
-    - `isDevicePermissionGranted(type)` - returns a Promise which resolves to true if user granted permission to media devices. `type` - 'audio', 'video' or `undefined`. In case of `undefined` will check if both audio and video permissions were granted.
-    - `addEventListener(event, handler)` - attaches an event handler.
-    - `removeEventListener(event, handler)` - removes an event handler.
+* `JitsiMeetJS.enumerateDevices(callback)` - __已弃用__。请使用 `JitsiMeetJS.mediaDevices.enumerateDevices(callback)` 替代。
+* `JitsiMeetJS.isDeviceChangeAvailable(deviceType)` - __已弃用__。请使用 `JitsiMeetJS.mediaDevices.isDeviceChangeAvailable(deviceType)` 替代。
+* `JitsiMeetJS.isDesktopSharingEnabled()` - 如果支持桌面共享，则返回 true；否则返回 false。注意：该方法只能在 `JitsiMeetJS.init(options)` 完成后使用，否则结果将始终为 null。
+* `JitsiMeetJS.getActiveAudioDevice()` - 遍历系统中的所有音频设备，返回有关一个活跃设备的信息，即具有音频信号的设备。返回一个 Promise，解析为一个具有以下结构的对象：
+  - `deviceId` - 包含找到的活跃音频轨道的设备 ID 的字符串。
+  - `deviceLabel` - 包含音频设备标签的字符串。
+* `JitsiMeetJS.getGlobalOnErrorHandler()` - 返回可用于附加到 window.onerror 的函数，如果启用 `options.enableWindowOnErrorHandler`，则返回库使用的函数。（函数（message、source、lineno、colno、error））。
 
-* `JitsiMeetJS.events` - JS object that contains all events used by the API. You will need that JS object when you try to subscribe for connection or conference events.
-    We have two event types - connection and conference. You can access the events with the following code `JitsiMeetJS.events.<event_type>.<event_name>`.
-    For example if you want to use the conference event that is fired when somebody leave conference you can use the following code - `JitsiMeetJS.events.conference.USER_LEFT`.
-    We support the following events:
-    1. `conference`
-        - `TRACK_ADDED` - stream received. (parameters - JitsiTrack)
-        - `TRACK_REMOVED` - stream removed. (parameters - JitsiTrack)
-        - `TRACK_MUTE_CHANGED` - JitsiTrack was muted or unmuted. (parameters - JitsiTrack)
-        - `TRACK_AUDIO_LEVEL_CHANGED` - audio level of JitsiTrack has changed. (parameters - participantId(string), audioLevel(number))
-        - `DOMINANT_SPEAKER_CHANGED` - the dominant speaker is changed. (parameters - id(string), previousSpeakers(`Array<string>`))
-        - `USER_JOINED` - new user joined a conference. (parameters - id(string), user(JitsiParticipant))
-        - `USER_LEFT` - a participant left conference. (parameters - id(string), user(JitsiParticipant))
-        - `MESSAGE_RECEIVED` - new text message received. (parameters - id(string), text(string), ts(number))
-        - `DISPLAY_NAME_CHANGED` - user has changed his display name. (parameters - id(string), displayName(string))
-        - `SUBJECT_CHANGED` - notifies that subject of the conference has changed (parameters - subject(string))
-        - `LAST_N_ENDPOINTS_CHANGED` - last n set was changed (parameters - leavingEndpointIds(array) ids of users leaving lastN, enteringEndpointIds(array) ids of users entering lastN)
-        - `CONFERENCE_JOINED` - notifies the local user that he joined the conference successfully. (no parameters)
-        - `CONFERENCE_LEFT` - notifies the local user that he left the conference successfully. (no parameters)
-        - `CONFERENCE_UNIQUE_ID_SET` - notifies the local user that the unique id for a meeting has been set. (parameters - meetingId(string))
-        - `DTMF_SUPPORT_CHANGED` - notifies if at least one user supports DTMF. (parameters - supports(boolean))
-        - `USER_ROLE_CHANGED` - notifies that role of some user changed. (parameters - id(string), role(string))
-        - `USER_STATUS_CHANGED` - notifies that status of some user changed. (parameters - id(string), status(string))
-        - `CONFERENCE_FAILED` - notifies that user failed to join the conference. (parameters - errorCode(JitsiMeetJS.errors.conference))
-        - `CONFERENCE_ERROR` - notifies that error occurred. (parameters - errorCode(JitsiMeetJS.errors.conference))
-        - `KICKED` - notifies that user has been kicked from the conference. (parameters - actorParticipant(JitsiParticipant), reason(string))
-        - `PARTICIPANT_KICKED` - notifies that participant has been kicked from the conference by another participant. (parameters - actorParticipant(JitsiParticipant), kickedParticipant(JitsiParticipant), reason(string))
-        - `START_MUTED_POLICY_CHANGED` - notifies that all new participants will join with muted audio/video stream (parameters - JS object with 2 properties - audio(boolean), video(boolean))
-        - `STARTED_MUTED` - notifies that the local user has started muted
-        - `CONNECTION_STATS` - __DEPRECATED__. Use `JitsiMeetJS.events.connectionQuality.LOCAL_STATS_UPDATED` instead.
-        - `BEFORE_STATISTICS_DISPOSED` - fired just before the statistics module is disposed and it's the last chance to submit some logs to the statistics service, before it gets disconnected
-        - `AUTH_STATUS_CHANGED` - notifies that authentication is enabled or disabled, or local user authenticated (logged in). (parameters - isAuthEnabled(boolean), authIdentity(string))
-        - `ENDPOINT_MESSAGE_RECEIVED` - notifies that a new message
-        from another participant is received on a data channel.
-        - `TALK_WHILE_MUTED` - notifies that a local user is talking while having the microphone muted.
-        - `NO_AUDIO_INPUT` - notifies that the current selected input device has no signal.
-        - `AUDIO_INPUT_STATE_CHANGE` - notifies that the current conference audio input switched between audio input states i.e. with or without audio input.
-        - `NOISY_MIC` - notifies that the current microphone used by the conference is noisy.
-        - `PARTICIPANT_PROPERTY_CHANGED` - notifies that user has changed his custom participant property. (parameters - user(JitsiParticipant), propertyKey(string), oldPropertyValue(string), propertyValue(string))
+* `JitsiMeetJS.mediaDevices` - JS 对象，包含与媒体设备交互的方法。可用的方法如下：
+  - `isDeviceListAvailable()` - 如果支持获取设备列表，则返回 true；否则返回 false。
+  - `isDeviceChangeAvailable(deviceType)` - 如果支持更改输入（相机/麦克风）或输出（音频）设备，则返回 true；否则返回 false。`deviceType` 是要更改的设备类型。未定义或 'input' 代表输入设备，'output' 代表音频输出设备。
+  - `enumerateDevices(callback)` - 返回可用设备的列表，作为参数传递给回调函数。每个设备都是一个 MediaDeviceInfo 对象，具有以下属性：
+    - `label` - 设备的名称
+    - `kind` - "audioinput"、"videoinput" 或 "audiooutput"
+    - `deviceId` - 设备的 ID
+    - `groupId` - 组标识符，如果两个设备属于同一物理设备，则它们具有相同的组标识符；例如，具有内置摄像头和麦克风的监视器。
+  - `setAudioOutputDevice(deviceId)` - 设置当前音频输出设备。`deviceId` - 来自 `JitsiMeetJS.enumerateDevices()` 的 'audiooutput' 设备 ID，'' 表示默认设备。
+  - `getAudioOutputDevice()` - 返回当前使用的音频输出设备 ID，'' 表示默认设备。
+  - `isDevicePermissionGranted(type)` - 返回一个 Promise，解析为 true，如果用户授予了媒体设备的权限。`type` - 'audio'、'video' 或 `undefined`。如果是 `undefined`，则检查是否同时授予了音频和视频权限。
+  - `addEventListener(event, handler)` - 附加事件处理程序。
+  - `removeEventListener(event, handler)` - 移除事件处理程序。
 
-    2. `connection`
-        - `CONNECTION_FAILED` - indicates that the server connection failed.
-        - `CONNECTION_ESTABLISHED` - indicates that we have successfully established server connection.
-        - `CONNECTION_DISCONNECTED` - indicates that we are disconnected.
-        - `WRONG_STATE` - indicates that the user has performed action that can't be executed because the connection is in wrong state.
+* `JitsiMeetJS.events` - JS 对象，包含 API 使用的所有事件。当您尝试订阅连接或会议事件时，您需要该 JS 对象。
+  我们有两种事件类型 - 连接和会议。您可以使用以下代码访问事件 `JitsiMeetJS.events.<event_type>.<event_name>`。
+  例如，如果您想使用在某人离开会议时触发的会议事件，可以使用以下代码 - `JitsiMeetJS.events.conference.USER_LEFT`。
+  我们支持以下事件：
+  1. `conference`
+     - `TRACK_ADDED` - 收到流。（参数 - JitsiTrack）
+     - `TRACK_REMOVED` - 移除流。（参数 - JitsiTrack）
+     - `TRACK_MUTE_CHANGED` - JitsiTrack 被静音或取消静
 
-    3. `detection`
-        - `VAD_SCORE_PUBLISHED` - event generated by a TackVADEmitter when it computed a VAD score for an audio PCM sample.
+音。
+     - `TRACK_AUDIO_OUTPUT_CHANGED` - 音频输出设备已更改。
+     - `USER_JOINED` - 用户加入会议。（参数 - User）
+     - `USER_LEFT` - 用户离开会议。（参数 - User）
+     - `DISPLAY_NAME_CHANGED` - 用户更改了他们的显示名称。（参数 - User）
+     - `AVATAR_CHANGED` - 用户更改了他们的头像。（参数 - User）
+     - `PARTICIPANT_ROLE_CHANGED` - 用户角色已更改。（参数 - User）
+     - `SUBJECT_CHANGED` - 会议主题已更改。
+     - `PASSWORD_REQUIRED` - 会议需要密码。
+     - `PASSWORD_SET` - 会议设置了密码。
+     - `PASSWORD_REMOVED` - 会议删除了密码。
+     - `MESSAGE_RECEIVED` - 收到消息。（参数 - Message）
+     - `MESSAGE_SENDER_CHANGED` - 消息发送者已更改。
+     - `KICKED` - 用户已被踢出会议。
+     - `KICKED_BY_SERVER` - 用户已被服务器踢出。
+     - `MUTE_EVERYONE` - 会议中的所有用户都已被静音。
+     - `UNMUTE_EVERYONE` - 会议中的所有用户已被取消静音。
+     - `MEETINGS_ERRORS` - 会议错误。
+     - `STARTED` - 会议已开始。
+     - `ENDED` - 会议已结束。
+     - `AVATAR_UPDATED` - 用户的头像已更新。
+     - `USER_DROPPED` - 用户掉线。
+     - `JVB_CONNECTION_ESTABLISHED` - JVB 连接已建立。
+     - `JVB_CONNECTION_FAILED` - JVB 连接失败。
+     - `JVB_CONNECTION_LOST` - JVB 连接丢失。
+     - `JVB_CONNECTION_RESTORED` - JVB 连接恢复。
+     - `CONFERENCE_MUC_JOINED` - 会议已经加入 MUC。
+     - `CONFERENCE_MUC_LEFT` - 离开会议的 MUC。
+     - `SPEAKER_STATS_UPDATED` - 演讲者统计信息已更新。
+     - `USER_VIDEO_MUTED` - 用户已将视频静音。
+     - `USER_AUDIO_MUTED` - 用户已将音频静音。
+     - `AUDIO_MUTED` - 用户已静音。
+     - `AUDIO_UNMUTED` - 用户已取消静音。
+     - `VIDEO_MUTED` - 用户已关闭视频。
+     - `VIDEO_UNMUTED` - 用户已开启视频。
+  2. `connection`
+     - `CONNECTION_ESTABLISHED` - 与服务器建立连接。
+     - `CONNECTION_FAILED` - 连接到服务器失败。
+     - `CONNECTION_DISCONNECTED` - 与服务器断开连接。
+     - `CONNECTION_INTERRUPTED` - 与服务器的连接中断。
+     - `CONNECTION_RESTORED` - 与服务器的连接恢复。
 
-    4. `track`
-        - `LOCAL_TRACK_STOPPED` - indicates that a local track was stopped. This
-        event can be fired when `dispose()` method is called or for other reasons.
-        - `TRACK_AUDIO_OUTPUT_CHANGED` - indicates that audio output device for track was changed (parameters - deviceId (string) - new audio output device ID).
-        - `TRACK_VIDEOTYPE_CHANGED` -  indicates that the video type("camera" or "desktop") of the track was changed
-
-    5. `mediaDevices`
-        - `DEVICE_LIST_CHANGED` - indicates that list of currently connected devices has changed (parameters - devices(MediaDeviceInfo[])).
-        - `PERMISSION_PROMPT_IS_SHOWN` - Indicates that the environment is currently showing permission prompt to access camera and/or microphone (parameters - environmentType ('chrome'|'opera'|'firefox'|'safari'|'nwjs'|'react-native'|'android').
-
-    6. `connectionQuality`
-        - `LOCAL_STATS_UPDATED` - New local connection statistics are received. (parameters - stats(object))
-        - `REMOTE_STATS_UPDATED` - New remote connection statistics are received. (parameters - id(string), stats(object))
-
-* `JitsiMeetJS.errors` - JS object that contains all errors used by the API. You can use that object to check the reported errors from the API
-    We have three error types - connection, conference and track. You can access the events with the following code `JitsiMeetJS.errors.<error_type>.<error_name>`.
-    For example if you want to use the conference event that is fired when somebody leave conference you can use the following code - `JitsiMeetJS.errors.conference.PASSWORD_REQUIRED`.
-    We support the following errors:
-    1. `conference`
-        - `CONNECTION_ERROR` - the connection with the conference is lost.
-        - `SETUP_FAILED` - conference setup failed
-        - `AUTHENTICATION_REQUIRED` - user must be authenticated to create this conference
-        - `PASSWORD_REQUIRED` - that error can be passed when the connection to the conference failed. You should try to join the conference with password.
-        - `PASSWORD_NOT_SUPPORTED` - indicates that conference cannot be locked
-        - `VIDEOBRIDGE_NOT_AVAILABLE` - video bridge issues.
-        - `RESERVATION_ERROR` - error in reservation system
-        - `GRACEFUL_SHUTDOWN` - graceful shutdown
-        - `JINGLE_FATAL_ERROR` - error in jingle (the orriginal error is attached as parameter.)
-        - `CONFERENCE_DESTROYED` - conference has been destroyed
-        - `CHAT_ERROR` - chat error happened
-        - `FOCUS_DISCONNECTED` - focus error happened
-        - `FOCUS_DISCONNECTED` - focus left the conference
-        - `CONFERENCE_MAX_USERS` - The maximum users limit has been reached
-    2. `connection`
-        - `CONNECTION_DROPPED_ERROR` - indicates that the connection was dropped with an error which was most likely caused by some networking issues.
-        - `PASSWORD_REQUIRED` - passed when the connection to the server failed. You should try to authenticate with password.
-        - `SERVER_ERROR` - indicates too many 5XX errors were received from the server.
-        - `OTHER_ERROR` - all other errors
-    3. `track`
-        - `GENERAL` - generic getUserMedia-related error.
-        - `UNSUPPORTED_RESOLUTION` - getUserMedia-related error, indicates that requested video resolution is not supported by camera.
-        - `PERMISSION_DENIED` - getUserMedia-related error, indicates that user denied permission to share requested device.
-        - `NOT_FOUND` - getUserMedia-related error, indicates that requested device was not found.
-        - `CONSTRAINT_FAILED` - getUserMedia-related error, indicates that some of requested constraints in getUserMedia call were not satisfied.
-        - `TRACK_IS_DISPOSED` - an error which indicates that track has been already disposed and cannot be longer used.
-        - `TRACK_NO_STREAM_FOUND` - an error which indicates that track has no MediaStream associated.
-        - `SCREENSHARING_GENERIC_ERROR` - generic error for screensharing.
-        - `SCREENSHARING_USER_CANCELED` - an error which indicates that user canceled screen sharing window selection dialog.
-
-* `JitsiMeetJS.errorTypes` - constructors for Error instances that can be produced by library. Are useful for checks like `error instanceof JitsiMeetJS.errorTypes.JitsiTrackError`. Following Errors are available:
-    1. `JitsiTrackError` - Error that happened to a JitsiTrack.
-
-* `JitsiMeetJS.logLevels` - object with the log levels:
-    1. `TRACE`
-    2. `DEBUG`
-    3. `INFO`
-    4. `LOG`
-    5. `WARN`
-    6. `ERROR`
+* `JitsiMeetJS.logLevels` - 可用日志级别的对象。可用级别如下：
+  - `ERROR`
+  - `WARN`
+  - `INFO`
+  - `DEBUG`
 
 ### JitsiConnection
 
-This objects represents the server connection. You can create new `JitsiConnection` object with the constructor `JitsiMeetJS.JitsiConnection`. `JitsiConnection` has the following methods:
+该对象表示与服务器的连接。您可以使用构造函数 `JitsiMeetJS.JitsiConnection` 创建新的 `JitsiConnection` 对象。`JitsiConnection` 具有以下方法：
 
+1. `JitsiConnection(appID, token, options)` - 构造函数。创建会议对象。
 
-1. `JitsiConnection(appID, token, options)` - constructor. Creates the conference object.
+   - `appID` - Jitsi Meet 视频会议服务提供商的标识。**注意：尚未实现。您可以安全地传递 `null`**
+   - `token` - 由 Jitsi Meet 视频会议服务提供商生成的密钥。该令牌将从 Jitsi Meet 服务器部署发送给提供商，以授权当前客户端。
+   - `options` - 配置服务器连接的 JS 对象。您可以更改以下属性：
+     1. `serviceUrl` - XMPP 服务 URL。例如，'wss://server.com/xmpp-websocket' 用于 Websocket 或 '//server.com/http-bind' 用于 BOSH。
+     2. `bosh` - 已弃用，请使用 serviceUrl 指定 BOSH 或 Websocket URL。
+     3. `hosts` - JS 对象
+        - `domain`
+        - `muc`
+        - `anonymousdomain`
+     4. `enableLipSync` - （可选）布尔属性，启用唇同步功能。当前仅在 Chrome 中有效，默认为禁用。
+     5. `clientNode` - 在 XEP-0115 'c' 段中宣传的客户端节点名称。
+     6. `xmppPing` - （可选）JS 对象 - xmpp ping 选项
+        - `interval` - 发送 ping 请求的频率，默认：10000（10 秒）
+        - `timeout` - 等待 ping 响应的时间，默认：5000（5 秒）
+        - `threshold` - 允许的 ping 失败次数，默认：2
+     7. `websocketKeepAlive` - （可选）设置 websocket keepalive GET 请求的间隔。默认值为 1 分钟（意味着加上一分钟的抖动）。
+        用于某些部署，其中需要保持 stick table 条目活跃，使用这些 GET 请求。
+     8. `websocketKeepAliveUrl` - （可选）用于 websocket keepalive GET 请求的特定 URL。
 
-    - `appID` - identification for the provider of Jitsi Meet video conferencing services. **NOTE: not implemented yet. You can safely pass `null`**
-    - `token` - secret generated by the provider of Jitsi Meet video conferencing services. The token will be send to the provider from the Jitsi Meet server deployment for authorization of the current client.
-    - `options` - JS object with configuration options for the server connection. You can change the following properties there:
-        1. `serviceUrl` - XMPP service URL. For  example 'wss://server.com/xmpp-websocket' for Websocket or '//server.com/http-bind' for BOSH.
-        2. `bosh` - DEPRECATED, use serviceUrl to specify either BOSH or Websocket URL.
-        3. `hosts` - JS Object
-            - `domain`
-            - `muc`
-            - `anonymousdomain`
-        4. `enableLipSync` - (optional) boolean property which enables the lipsync feature. Currently works only in Chrome and is disabled by default.
-        5. `clientNode` - The name of client node advertised in XEP-0115 'c' stanza
-        6. xmppPing - (optional) JS Object - xmpp ping options
-            - `interval` - how often to send ping requests, default: 10000 (10 seconds)
-            - `timeout` - the time to wait for ping responses, default: 5000 (5 seconds)
-            - `threshold` - how many ping failures will be tolerated before the connection is killed, default: 2
-        7. websocketKeepAlive - (optional) Setting the interval of websocket keepalive GET requests. By default, the value is 1 minute(which means a minute + a minute of jitter).
-           Used for certain deployments where a stick table entry needs to be kept alive we use those GET requests.
-        8. websocketKeepAliveUrl - (optional) Specific Url to use for the websocket keepalive GET requests.
+2. `connect(options)` - 建立服务器连接。
 
-2. `connect(options)` - establish server connection
-    - `options` - JS Object with `id` and `password` properties.
+   - `options` - 包含 `id` 和 `password` 属性的 JS 对象。
 
-3. `disconnect()` - destroys the server connection
+3. `disconnect()` - 销毁服务器连接。
 
-4. `initJitsiConference(name, options)` - creates new `JitsiConference` object.
-    - `name` - the name of the conference
-    - `options` - JS object with configuration options for the conference. You can change the following properties there:
-        - `audioQuality` - Audio quality related settings.
-            - `stereo`
-            - `opusMaxAverageBitrate`
-            - `enableOpusDtx`
-        - `bridgeChannel` - Settings related to the bridge channel.
-            - `ignoreDomain` - If the backend advertises multiple colibri websockets, this options allows to filter some of them out based on the domain name.
-            - `preferSctp` - Enables the use of the SCTP data channel for bridge channel.
-        - `callStatsID` - callstats credentials
-        - `callStatsSecret` - callstats credentials
-        - `channelLastN`
-        - `deploymentInfo`
-            - `shard`
-            - `userRegion`
-        - `disableAudioLevels` - boolean property. Enables/disables audio levels.
-        - `disableInitialGUM`
-        - `disableRtx` - boolean property (default to false).  Enables/disable the use of RTX.
-        - `disableSimulcast` - Enable / disable simulcast support.
-        - `e2eping`
-            - `pingInterval`
-        - `enableForcedReload`
-        - `enableNoAudioDetection` - boolean property.
-        - `enableOpusRed`
-        - `enableTalkWhileMuted` - boolean property.
-        - `enableNoisyMicDetection` - boolean property.
-        - `enableRemb` - boolean property. Enables/disables REMB support, enabled by default.
-        - `enableTcc` - enables/disabled TCC for bandwidth estimation, enabled by default.
-        - `focusUserJid` - The real JID of focus participant - can be overridden here
-        - `ignoreStartMuted` - ignores start muted events coming from jicofo.
-        - `p2p` - Peer to peer related options
-            - `enabled` - enables or disable peer-to-peer connection, if disabled all media will be routed through the Jitsi Videobridge.
-            - `codecPreferenceOrder` - Provides a way to set the codec preference on desktop based endpoints.
-            - `mobileCodecPreferenceOrder` - Provides a way to set the codec preference on mobile devices, both on RN and mobile browser based endpoints.
-            - `stunServers` - list of STUN servers e.g. `{ urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }`
-            - `backToP2PDelay` - a delay given in seconds, before the conference switches back to P2P, after the 3rd participant has left the room.
-        - `recordingType` - the type of recording to be used
-        - `rttMonitor`
-            - `enabled`
-            - `initialDelay`
-            - `getStatsInterval`
-            - `analyticsInterval`
-            - `stunServers`
-        - `startAudioOnly`
-        - `startAudioMuted`
-        - `startWithAudioMuted`
-        - `startVideoMuted`
-        - `startWithVideoMuted`
-        - `startSilent` - enables silent mode, will mark audio as inactive will not send/receive audio
-        - `videoQuality` Video quality settings related to the bridge connection.
-            - `codecPreferenceOrder` - Provides a way to set the codec preference on desktop based endpoints.
-            - `mobileCodecPreferenceOrder` - Provides a way to set the codec preference on mobile devices, both on RN and mobile browser based endpoints.
-            - `maxBitratesVideo` - Provides a way to specify the bitrates for different codecs.
-        - `testing`
+4. `initJitsiConference(name, options)` - 创建新的 `JitsiConference` 对象。
 
-        **NOTE: if 4 and 5 are set the library is going to send events to callstats. Otherwise the callstats integration will be disabled.**
+   - `name` - 会议的名称。
+   - `options` - 配置会议的 JS 对象。您可以更改以下属性：
+     - `audioQuality` - 与音频质量相关的设置。
+       - `stereo`
+       - `opusMaxAverageBitrate`
+       - `enableOpusDtx`
+     - `bridgeChannel` - 与桥接通道相关的设置。
+       - `ignoreDomain` - 如果后端宣传多个 colibri websockets，该选项允许根据域名过滤其中一些。
+       - `preferSctp` - 启用 SCTP 数据通道用于桥接通道。
+     - `callStatsID` - callstats 凭据。
+     - `callStatsSecret` - callstats 凭据。
+     - `channelLastN`
+     - `deploymentInfo`
+       - `shard`
+       - `userRegion`
+     - `disableAudioLevels` - 布尔属性。启用/禁用音频级别。
+     - `disableInitialGUM`
+     - `disableRtx` - 布尔属性（默认为 false）。启用/禁用 RTX 的使用。
+     - `disableSimulcast` - 启用/禁用模拟广播支持。
+     - `e2eping`
+       - `pingInterval`
+     - `enableForcedReload`
+     - `enableIceRestart`
+     - `enableNoAudioDetection` - 布尔属性。
+     - `enableOpusRed`
+     - `enableTalkWhileMuted` - 布尔属性。
+     - `enableNoisyMicDetection` - 布尔属性。
+     - `enableRemb` - 布尔属性。启用/禁用 REMB 支持，默认为启用。
+     - `enableTcc` - 启用/禁用 TCC 进行带宽估计，默认为启用。
+     - `focusUserJid` - 焦点参与者的真实 JID - 可以在此处被覆盖。
+     - `ignoreStartMuted` - 忽略来自 jicofo 的开始静音事件。
+     - `p2p` - 与点对点相关的选项。
+       - `enabled` - 启用或禁用点对点连接，如果禁用，所有媒体将通过 Jitsi Videobridge 路由。
+       - `codecPreferenceOrder` - 提供一种在桌面端点上设置编解码器优先级的方法。
+       - `mobileCodecPreferenceOrder` - 提供一种在移动设备上设置编解码器优先级的方法，包括 RN 和基于移动浏览器的端点。
+       - `stunServers` - STUN 服务器列表，例如 `{ urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }`
+       - `backToP2PDelay` - 在第三个参与者离开房间后，会议切换回 P2P 的延迟（以秒为单位）。
+     - `recordingType` - 要使用的录制类型。
+     - `rttMonitor`
+       - `enabled`
+       - `initialDelay`
+       - `getStatsInterval`
+       - `analyticsInterval`
+       - `stunServers`
+     - `startAudioOnly`
+     - `startAudioMuted`
+     - `startWithAudioMuted`
+     - `startVideoMuted`
+     - `startWithVideoMuted`
+     - `startSilent` - 启用静音模式，将音频标记为非活动状态，不会发送/接收音频。
+     - `videoQuality` - 与桥接连接相关的视频质量设置。
+       - `codecPreferenceOrder` - 提供一种在桌面端点上设置编解码器优先级的方法。
+       - `mobileCodecPreferenceOrder` - 提供一种在移动设备上设置编解码器优先级的方法，包括 RN 和基于移动浏览器的端点。
+       - `maxBitratesVideo` - 提供一种为不同编解码器指定比特率的方法。
+     - `testing`
 
-5. `addEventListener(event, listener)` - Subscribes the passed listener to the event.
-    - `event` - one of the events from `JitsiMeetJS.events.connection` object.
-    - `listener` - handler for the event.
+     **注意：如果设置了 4 和 5，则库将向 callstats 发送事件。否则，将禁用 callstats 集成。**
 
-6. `removeEventListener(event, listener)` - Removes event listener.
-    - `event` - the event
-    - `listener` - the listener that will be removed.
+5. `addEventListener(event, listener)` - 订阅传入的监听器以响应事件。
 
-7. `addFeature` - Adds new feature to the list of supported features for the local participant
-    - `feature` - string, the name of the feature
-    - `submit` - boolean, default false, if true - the new list of features will be immediately submitted to the others.
+   - `event` - `JitsiMeetJS.events.connection` 对象中的一个事件。
+   - `listener` - 事件的处理程序。
 
-8. `removeFeature` - Removes a feature from the list of supported features for the local participant
-    - `feature` - string, the name of the feature
-    - `submit` - boolean, default false, if true - the new list of features will be immediately submitted to the others.
+6. `removeEventListener(event, listener)` - 移除事件监听器。
+
+   - `event` - 事件。
+   - `listener` - 要移除的监听器。
+
+7. `addFeature` - 向本地参与者的支持功能列表中添加新功能。
+
+   - `feature` - 字符串，功能名称。
+   - `submit` - 布尔值，默认为 false；如果为 true，则新功能列表将立即提交给其他人。
+
+8. `removeFeature` - 从本地参与者的支持功能列表中移除一个功能。
+
+   - `feature` - 字符串，功能名称。
+   - `submit` - 布尔值，默认为 false；如果为 true，则新功能列表将立即提交给其他人。
 
 ### JitsiConference
 
-The object represents a conference. We have the following methods to control the conference:
+该对象表示一个会议。我们有以下方法来控制会议：
 
-1. `join(password)` - Joins the conference
-    - password - string of the password. This parameter is not mandatory.
+1. `join(password)` - 加入会议
+   - `password` - 密码字符串。此参数不是必需的。
 
-2. `leave()` - leaves the conference. Returns Promise.
+2. `leave()` - 离开会议。返回 Promise。
 
-3. `myUserId()` - get local user ID.
+3. `myUserId()` - 获取本地用户 ID。
 
-4. `getLocalTracks()` - Returns array with JitsiTrack objects for the local streams.
+4. `getLocalTracks()` - 返回包含本地流的 JitsiTrack 对象的数组。
 
-5. `addEventListener(event, listener)` - Subscribes the passed listener to the event.
-    - `event` - one of the events from `JitsiMeetJS.events.conference` object.
-    - `listener` - handler for the event.
+5. `addEventListener(event, listener)` - 将传入的监听器订阅到事件。
+   - `event` - `JitsiMeetJS.events.conference` 对象中的一个事件。
+   - `listener` - 事件的处理程序。
 
-6. `removeEventListener(event, listener)` - Removes event listener.
-    - `event` - the event
-    - `listener` - the listener that will be removed.
+6. `removeEventListener(event, listener)` - 移除事件监听器。
+   - `event` - 事件
+   - `listener` - 要移除的监听器。
 
-7. `on(event, listener)` - alias for addEventListener
+7. `on(event, listener)` - `addEventListener` 的别名
 
-8. `off(event, listener)` - alias for removeEventListener
+8. `off(event, listener)` - `removeEventListener` 的别名
 
-9. `sendTextMessage(text)` - sends the given string to other participants in the conference.
+9. `sendTextMessage(text)` - 向会议中的其他参与者发送给定字符串。
 
-10. `setDisplayName(name)` - changes the display name of the local participant.
-    - `name` - the new display name.
+10. `setDisplayName(name)` - 更改本地参与者的显示名称。
+    - `name` - 新的显示名称。
 
-11. `sendCommand(name, values)` - sends user defined system command to the other participants
-    - `name` - the name of the command.
-    - `values` - JS object. The object has the following structure:
+11. `sendCommand(name, values)` - 向其他参与者发送用户定义的系统命令
+    - `name` - 命令的名称。
+    - `values` - JS 对象。该对象具有以下结构：
 
-
-```javascript
-            {
-
-
-                value: the_value_of_the_command,
-
-
-                attributes: {}, // map with keys the name of the attribute and values - the values of the attributes.
-
-
-                children: [] // array with JS object with the same structure.
-            }
-```
-
-
-    NOTE: When you use that method the passed object will be added in every system message that is sent to the other participants. It might be sent more than once.
-
-
-12. `sendCommandOnce(name, values)` - Sends only one time a user defined system command to the other participants
-
-
-13. `removeCommand(name)` - removes a command for the list of the commands that are sent to the ther participants
-    - `name` - the name of the command
-
-14. `addCommandListener(command, handler)` - adds listener
-    - `command` - string for the name of the command
-    - `handler(values)` - the listener that will be called when a command is received from another participant.
-
-15. `removeCommandListener(command)` - removes the listeners for the specified command
-    - `command` - the name of the command
-
-16. `addTrack(track)` - Adds `JitsiLocalTrack` object to the conference. Throws an error if adding second video stream of the same videoType. `camera` and `desktop` are considered as two separate video sources. Therefore, when adding a video source (camera or desktop) for the first time to the conference, `addTack` needs to be called and after that only `replaceTrack` needs to be used to replace the existing track with another track of the same video type or for removing it from the conference. Returns a promise.
-    - `track` - the `JitsiLocalTrack`
-
-17. `removeTrack(track)` - Removes `JitsiLocalTrack` object to the conference. Returns Promise. This does not fire `TRACK_REMOVED` event anymore on the remote end. The same SSRC will be re-used when another track of the same kind is added back to the conference to keep signaling messages to a minimum.
-    - `track` - the `JitsiLocalTrack`
-
-18. `isDTMFSupported()` - Check if at least one user supports DTMF.
-
-19. `getRole()` - returns string with the local user role ("moderator" or "none")
-
-20. `isModerator()` - checks if local user has "moderator" role
-
-21. `lock(password)` - set password for the conference; returns Promise
-    - `password` - string password
-
-    Note: available only for moderator
-
-22. `unlock()` - unset conference password; returns Promise
-
-    Note: available only for moderator
-
-23. `kickParticipant(id, reason)` - Kick participant from the conference
-    - `id` - string participant id
-    - `reason` - (optional) string, default 'You have been kicked.' - reason of the participant to kick
-
-24. `setStartMutedPolicy(policy)` - make all new participants join with muted audio/video
-    - `policy` - JS object with following properties
-        - `audio` - boolean if audio stream should be muted
-        - `video` - boolean if video stream should be muted
-
-    Note: available only for moderator
-
-25. `getStartMutedPolicy()` - returns the current policy with JS object:
-    - `policy` - JS object with following properties
-        - `audio` - boolean if audio stream should be muted
-        - `video` - boolean if video stream should be muted
-
-26. `isStartAudioMuted()` - check if audio is muted on join
-
-27. `isStartVideoMuted()` - check if video is muted on join
-
-28. `sendFeedback(overallFeedback, detailedFeedback)` - Sends the given feedback through CallStats if enabled.
-    - `overallFeedback` - an integer between 1 and 5 indicating the user feedback
-    - `detailedFeedback` - detailed feedback from the user. Not yet used
-
-29. `setSubject(subject)` - change subject of the conference
-    - `subject` - string new subject
-
-    Note: available only for moderator
-
-30. `sendEndpointMessage(to, payload)` - Sends message via the data channels.
-    - `to` - the id of the endpoint that should receive the message. If "" the message will be sent to all participants.
-    - `payload` - JSON object - the payload of the message.
-
-Throws NetworkError or InvalidStateError or Error if the operation fails.
-
-31. `sendEndpointStatsMessage(payload)` - Sends a `EndpointStats` Colibri message on the bridge channel. This should be used instead of `broadcastEndpointMessage` for relaying local stats to all the remote endpoints.
-    - `payload` - JSON object - the payload of the message.
-
-Throws NetworkError, InvalidStateError or Error if the operation fails.
-
-32. `broadcastEndpointMessage(payload)` - Sends broadcast message via the datachannels.
-    - `payload` - JSON object - the payload of the message.
-
-Throws NetworkError or InvalidStateError or Error if the operation fails.
-
-33. `replaceTrack` - replaces the track currently being used as the sender's source with a new MediaStreamTrack. The new track must be of the same media kind (audio, video, etc) and switching the track should not require negotiation. `replaceTrack(oldTrack, newTrack)`
-
-Throws NetworkError or InvalidStateError or Error if the operation fails.
-
-34. `setReceiverConstraints` - set the constraints for the video that is requested from the bridge. This single message should be used in lieu of `setLastN`, `setReceiverVideoConstraint` and `selectParticipants` methods. These constraints are applicable to bridge connection only. More information about the signaling message format and how the Jitsi Videobridge allocates bandwidth can be found [here](https://github.com/jitsi/jitsi-videobridge/blob/master/doc/allocation.md#new-message-format).
-    - `videoConstraints` - Object that specifies the constraints in the following format.
     ```javascript
     {
-       'lastN': 20, // Number of videos requested from the bridge.
-       'selectedSources': ['A', 'B', 'C'], // The source names of the video tracks that are prioritized first.
-       'onStageSources': ['A'], // The source names of the video tracks that are prioritized up to a higher resolution.
-       'defaultConstraints': { 'maxHeight': 180 }, // Default resolution requested for all endpoints.
-       'constraints': { // Source specific resolution.
+        value: the_value_of_the_command,
+        attributes: {}, // 以属性名称为键，属性值为值的映射。
+        children: [] // 包含具有相同结构的 JS 对象的数组。
+    }
+    ```
+
+    注意：当使用该方法时，传入的对象将添加到发送给其他参与者的每条系统消息中，可能会多次发送。
+
+12. `sendCommandOnce(name, values)` - 仅一次向其他参与者发送用户定义的系统命令。
+
+13. `removeCommand(name)` - 从发送给其他参与者的命令列表中移除命令。
+    - `name` - 命令的名称。
+
+14. `addCommandListener(command, handler)` - 添加命令监听器。
+    - `command` - 命令名称的字符串。
+    - `handler(values)` - 当从其他参与者接收到命令时调用的监听器。
+
+15. `removeCommandListener(command)` - 移除指定命令的监听器。
+    - `command` - 命令的名称。
+
+16. `addTrack(track)` - 将 `JitsiLocalTrack` 对象添加到会议。如果添加同一视频类型的第二个视频流，将抛出错误。`camera` 和 `desktop` 被视为两种不同的视频源。因此，在首次向会议中添加视频源（相机或桌面）时，需要调用 `addTrack`，之后仅需使用 `replaceTrack` 用相同视频类型的另一个轨道替换现有轨道或将其从会议中移除。返回一个 Promise。
+    - `track` - `JitsiLocalTrack` 对象。
+
+17. `removeTrack(track)` - 将 `JitsiLocalTrack` 对象从会议中移除。返回 Promise。这不再在远端触发 `TRACK_REMOVED` 事件。同一 SSRC 将在添加另一种相同类型的轨道时被重用，以将信令消息降到最低。
+    - `track` - `JitsiLocalTrack` 对象。
+
+18. `isDTMFSupported()` - 检查至少一个用户是否支持 DTMF。
+
+19. `getRole()` - 返回本地用户角色的字符串（“moderator” 或 “none”）。
+
+20. `isModerator()` - 检查本地用户是否具有“moderator”角色。
+
+21. `lock(password)` - 设置会议密码；返回 Promise。
+    - `password` - 密码字符串。
+
+    注意：仅对主持人可用。
+
+22. `unlock()` - 解除会议密码；返回 Promise。
+    
+    注意：仅对主持人可用。
+
+23. `kickParticipant(id, reason)` - 将参与者踢出会议。
+    - `id` - 参与者 ID 的字符串。
+    - `reason` - （可选）字符串，默认为 'You have been kicked.' - 踢出参与者的原因。
+
+24. `setStartMutedPolicy(policy)` - 使所有新参与者加入时静音音频/视频。
+    - `policy` - JS 对象，具有以下属性：
+      - `audio` - 布尔值，如果音频流应静音。
+      - `video` - 布尔值，如果视频流应静音。
+
+    注意：仅对主持人可用。
+
+25. `getStartMutedPolicy()` - 返回当前政策的 JS 对象：
+    - `policy` - JS 对象，具有以下属性：
+      - `audio` - 布尔值，如果音频流应静音。
+      - `video` - 布尔值，如果视频流应静音。
+
+26. `isStartAudioMuted()` - 检查加入时音频是否静音。
+
+27. `isStartVideoMuted()` - 检查加入时视频是否静音。
+
+28. `sendFeedback(overallFeedback, detailedFeedback)` - 通过 CallStats 发送给定反馈（如果启用）。
+    - `overallFeedback` - 一个介于 1 和 5 之间的整数，表示用户反馈。
+    - `detailedFeedback` - 用户的详细反馈。尚未使用。
+
+29. `setSubject(subject)` - 更改会议主题。
+    - `subject` - 新主题的字符串。
+
+    注意：仅对主持人可用。
+
+30. `sendEndpointMessage(to, payload)` - 通过数据通道发送消息。
+    - `to` - 应该接收消息的端点的 ID。如果为空，则消息将发送给所有参与者。
+    - `payload` - JSON 对象 - 消息的有效载荷。
+
+抛出 NetworkError、InvalidStateError 或 Error 如果操作失败。
+
+31. `sendEndpointStatsMessage(payload)` - 在桥接通道上发送 `EndpointStats` Colibri 消息。这应代替 `broadcastEndpointMessage` 用于将本地统计信息转发到所有远程端点。
+    - `payload` - JSON 对象 - 消息的有效载荷。
+
+抛出 NetworkError、InvalidStateError 或 Error 如果操作失败。
+
+32. `broadcastEndpointMessage(payload)` - 通过数据通道发送广播消息。
+    - `payload` - JSON 对象 - 消息的有效载荷。
+
+抛出 NetworkError、InvalidStateError 或 Error 如果操作失败。
+
+33. `replaceTrack` - 用新的 MediaStreamTrack 替换当前用作发送方源的轨道。新轨道必须为同一媒体类型（音频、视频等），并且切换轨道不应要求协商。`replaceTrack(oldTrack, newTrack)`。
+
+抛出 NetworkError、InvalidStateError 或 Error 如果操作失败。
+
+34. `setReceiverConstraints` - 设置从桥接请求的视频的约束。此单条消息应替代 `setLastN`、`setReceiverVideoConstraint` 和 `selectParticipants` 方法。这些约束仅适用于桥接连接。有关信令消息格式和 Jitsi Videobridge 如何分配带宽的更多信息，请参见 [此处](https://github.com/jitsi/jitsi-videobridge/blob/master/doc/allocation.md#new-message-format)。
+    - `videoConstraints` - 对象，指定以下格式的约束。
+
+    ```javascript
+    {
+       'lastN': 20, // 请求的来自桥接的视屏数量。
+       'selectedSources': ['A', 'B', 'C'], // 首先优先的视频轨道源名称。
+       'onStageSources': ['A'], // 被优先提升到更高分辨率的视频轨道源名称。
+       'defaultConstraints': { 'maxHeight': 180 }, // 所有端点请求的默认分辨率。
+       'constraints': { // 特定源的分辨率。
            'A': { 'maxHeight': 720 }
        }
     }
     ```
 
-35. `setSenderVideoConstraint(resolution)` - set the desired resolution to send to JVB or the peer (180, 360, 720).
+35. `setSenderVideoConstraint(resolution)` - 设置发送到 JVB 或对等方的所需分辨率（180、360、720）。
 
-36. `isHidden` - checks if local user has joined as a "hidden" user. This is a specialized role used for integrations.
+36. `isHidden` - 检查本地用户是否以“隐藏”用户身份加入。这是一种用于集成的特殊角色。
 
-37. `setLocalParticipantProperty(propertyKey, propertyValue)` - used to set a custom propery to the local participant("fullName": "Full Name", favoriteColor: "red", "userId": 234). Also this can be used to modify an already set custom property.
-    - `propertyKey` - string - custom property name
-    - `propertyValue` - string - custom property value
+37. `setLocalParticipantProperty(propertyKey, propertyValue)` - 用于设置本地参与者的自定义属性（"fullName": "Full Name", favoriteColor: "red", "userId": 234）。这也可用于修改已设置的自定义属性。
+    - `propertyKey` - 字符串 - 自定义属性名称。
+    - `propertyValue` - 字符串 - 自定义属性值。
 
-38. `getParticipants()` - Retrieves an array of all participants in this conference.
+38. `getParticipants()` - 检索该会议中所有参与者的数组。
 
-39. `revokeOwner(participantId)` -  Revokes owner's rights to the participant. The particiapnt that invokes the function should have same or more rights than the targeted participant. This rights check is done at the XMPP server level.
+39. `revokeOwner(participantId)` - 撤销参与者的所有者权限。调用该函数的参与者应具有与目标参与者相同或更高的权限。此权限检查在 XMPP 服务器级别进行。
 
 ### JitsiTrack
 
-The object represents single track - video or audio. They can be remote tracks ( from the other participants in the call) or local tracks (from the devices of the local participant).
-We have the following methods for controling the tracks:
+该对象表示单个轨道 - 视频或音频。它们可以是远程轨道（来自通话中的其他参与者）或本地轨道（来自本地参与者的设备）。我们有以下方法来控制轨道：
 
-1. `getType()` - returns string with the type of the track( "video" for the video tracks and "audio" for the audio tracks)
+1. `getType()` - 返回轨道类型的字符串（视频轨道返回 "video"，音频轨道返回 "audio"）。
 
-2. `mute()` - mutes the track. Returns Promise.
+2. `mute()` - 静音轨道。返回 Promise。
 
-   Note: This method is implemented only for the local tracks.
+   注意：此方法仅对本地轨道实现。
 
-3. `unmute()` - unmutes the track. Returns Promise.
+3. `unmute()` - 取消静音轨道。返回 Promise。
 
-   Note: This method is implemented only for the local tracks.
+   注意：此方法仅对本地轨道实现。
 
-4. `isMuted()` - check if track is muted
+4. `isMuted()` - 检查轨道是否静音。
 
-5. `attach(container)` - attaches the track to the given container.
+5. `attach(container)` - 将轨道附加到给定容器。
 
-6. `detach(container)` - removes the track from the container.
+6. `detach(container)` - 从容器中移除轨道。
 
-7. `dispose()` - disposes the track. If the track is added to a conference the track will be removed. Returns Promise.
+7. `dispose()` - 处理轨道。如果轨道已添加到会议中，轨道将被移除。返回 Promise。
 
-   Note: This method is implemented only for the local tracks.
+   注意：此方法仅对本地轨道实现。
 
-8. `getId()` - returns unique string for the track.
+8. `getId()` - 返回轨道的唯一字符串。
 
-9. `getParticipantId()` - returns id(string) of the track owner
+9. `getParticipantId()` - 返回轨道所有者的 ID（字符串）。
 
-   Note: This method is implemented only for the remote tracks.
+   注意：此方法仅对远程轨道实现。
 
-10. `getSourceName()` - returns the source name of the track.
+10. `getSourceName()` - 返回轨道的源名称。
 
-11. `setAudioOutput(audioOutputDeviceId)` - sets new audio output device for track's DOM elements. Video tracks are ignored.
+11. `setAudioOutput(audioOutputDeviceId)` - 为轨道的 DOM 元素设置新的音频输出设备。视频轨道被忽略。
 
-12. `getDeviceId()` - returns device ID associated with track (for local tracks only)
+12. `getDeviceId()` - 返回与轨道相关联的设备 ID（仅限本地轨道）。
 
-13. `isEnded()` - returns true if track is ended
+13. `isEnded()` - 如果轨道已结束，则返回 true。
 
-14. `setEffect(effect)` - Applies the effect by swapping out the existing MediaStream on the JitsiTrack with the new
+14. `setEffect(effect)` - 通过用具有所需效果的新 MediaStream 替换现有的 MediaStream 来应用效果。将 "undefined" 传递给此函数以移除效果并恢复 `JitsiTrack` 上的原始 MediaStream。
 
-    MediaStream which has the desired effect. "undefined" is passed to this function for removing the effect and for
+    对于效果实例，必须定义以下方法。
 
-    restoring the original MediaStream on the `JitsiTrack`.
+    `startEffect()` - 启动效果并返回一个新的 MediaStream，该流将与现有流进行替换。
 
-    The following methods have to be defined for the effect instance.
+    `stopEffect()` - 停止效果。
 
-    `startEffect()` - Starts the effect and returns a new MediaStream that is to be swapped with the existing one.
+    `isEnabled()` - 检查本地轨道是否支持该效果。
 
-    `stopEffect()` - Stops the effect.
-
-    `isEnabled()` - Checks if the local track supports the effect.
-
-    Note: This method is implemented only for the local tracks.
+    注意：此方法仅对本地轨道实现。
 
 ### JitsiTrackError
 
-The object represents error that happened to a JitsiTrack. Is inherited from JavaScript base `Error` object,
-so `"name"`, `"message"` and `"stack"` properties are available. For GUM-related errors,
-exposes additional `"gum"` property, which is an object with following properties:
- - `error` - original GUM error
- - `constraints` - GUM constraints object used for the call
- - `devices` - array of devices requested in GUM call (possible values - "audio", "video", "screen", "desktop", "audiooutput")
+该对象表示发生在 JitsiTrack 上的错误。它继承自 JavaScript 基础的 `Error` 对象，因此可以使用 `"name"`、`"message"` 和 `"stack"` 属性。对于与 GUM 相关的错误，暴露额外的 `"gum"` 属性，该属性是一个具有以下属性的对象：
+
+- `error` - 原始 GUM 错误。
+- `constraints` - 用于调用的 GUM 约束对象。
+- `devices` - 在 GUM 调用中请求的设备数组（可能的值 - "audio"、"video"、"screen"、"desktop"、"audiooutput"）。

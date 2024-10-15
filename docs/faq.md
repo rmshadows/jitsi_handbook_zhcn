@@ -1,124 +1,116 @@
 ---
 id: faq
-title: FAQ
+title: FAQ - 常见问题回答
 ---
 
-## How to tell if my server instance is behind NAT?
+## 如何判断我的服务器实例是否在 NAT 后面？
 
-In general, if the tool ifconfig (or ipconfig) shows the assigned IPv4 address to be a private / local address (10.x.x.x, or  172.16.x.x - 172.31.x.x, or 192.168.x.x) but you know that its public IPv4 address is different from that, the server is most probably behind NAT.
+一般来说，如果工具 ifconfig（或 ipconfig）显示分配的 IPv4 地址是私有/本地地址（10.x.x.x、172.16.x.x - 172.31.x.x 或 192.168.x.x），但你知道它的公共 IPv4 地址不同于此，那么该服务器很可能是在 NAT 后面。
 
-If you are hosting your server on a VPS, and you are not sure, ask your VPS provider's support team.
+如果你在 VPS 上托管服务器，且不确定，可以向你的 VPS 提供商的支持团队询问。
 
-## Clients could communicate well in the room created at `meet.jit.si`. The same clients still could connect to my self-hosted instance but could neither hear nor see one another. What's wrong?
+## 客户端在 `meet.jit.si` 创建的房间中能够正常通信，但在我自托管的实例中仍然能够连接，但彼此无法听到或看到。问题出在哪里？
 
-Most probably, the server is behind NAT, but you haven't added the NAT-specific configuration. See this [resolved question](https://community.jitsi.org/t/cannot-see-video-or-hear-audio-on-self-hosted-instance/). You need to follow the steps detailed [here](devops-guide/devops-guide-quickstart#advanced-configuration).
+很可能是服务器在 NAT 后面，但你没有添加特定于 NAT 的配置。请查看 [这个已解决的问题](https://community.jitsi.org/t/cannot-see-video-or-hear-audio-on-self-hosted-instance/)。你需要按照 [这里](devops-guide/devops-guide-quickstart#advanced-configuration) 的详细步骤进行操作。
 
-## It works with two participants but crashes or does not work properly when a third joins
+## 两个参与者的时候它可以正常工作，但第三个参与者加入时，会崩溃或无法正常运行
 
-P2P mode is working, but it fails when you are trying to pass traffic via jitsi-videobridge2.
+P2P 模式正常工作，但在尝试通过 jitsi-videobridge2 传递流量时失败。
 
-Check you've got your firewall / NAT set up correctly — especially UDP 10000. For more information, see [here](devops-guide/devops-guide-quickstart#setup-and-configure-your-firewall).
+请检查你的防火墙/NAT 设置是否正确，特别是 UDP 10000。有关更多信息，请参见 [这里](devops-guide/devops-guide-quickstart#setup-and-configure-your-firewall)。
 
-## Can I mute and unmute other participants?
+## 我可以静音和取消静音其他参与者吗？
 
-If you are the moderator of a conference, you can mute everyone's microphone. You cannot unmute other people's microphones, and they can unmute their microphones at any time.
+如果你是会议的主持人，你可以静音所有人的麦克风。但是你不能取消其他人的麦克风静音，他们可以随时取消静音。
 
-You may want to set some "ground rules" for who can talk and when, just as with any physical meeting or classroom.
+你可能想要设定一些“基本规则”，规定谁可以发言以及何时发言，就像任何实体会议或课堂一样。
 
-If you would like to limit who can become a moderator, you need to set up your instance of Jitsi and enable "secure domain". Please see [here](#4-enable-secure-domain-if-you-are-using-your-instance-of-jitsi) for more information.
+如果你希望限制谁可以成为主持人，需要设置你的 Jitsi 实例并启用“安全域”。有关更多信息，请参见 [这里](#4-enable-secure-domain-if-you-are-using-your-instance-of-jitsi)。
 
-## How can I protect my meetings with Jitsi?
+## 如何保护我的 Jitsi 会议？
 
-### _1. Create a "strong" room name._
+### _1. 创建一个“强大”会议室名称。_
 
-Use a strong room name, that no one else is likely to be using. Use the name generator on the welcome page, or else generate your own "strong" name.
+使用一个强密码式的会议室名称，避免使用其他人可能想到的名称。你可以使用欢迎页面上的名称生成器，或自行生成一个“强大”名称。
 
-For example, on macOS, in the terminal, you can use `uuidgen` to generate a string of letters of numbers (e.g. B741B63E-C5E6-4D82-BAC4-048BE25D8CC7).
+例如，在 macOS 终端中，你可以使用 `uuidgen` 命令生成一串字母和数字（例如 B741B63E-C5E6-4D82-BAC4-048BE25D8CC7）。
 
-Your room name would be `meet.jit.si/B741B63E-C5E6-4D82-BAC4-048BE25D8CC7` on the hosted `meet.jit.si` platform.
+你的会议室名称将在托管的 `meet.jit.si` 平台上显示为 `meet.jit.si/B741B63E-C5E6-4D82-BAC4-048BE25D8CC7`。
 
-If you use "test" or "LucysMeeting" "pilates" or similar, then it's highly likely that other users will have had the same idea.
+如果你使用像“test”或“LucysMeeting”这样的名称，很有可能其他用户也会使用类似的名称。
 
-### _2. Use a different room name for each meeting / conference you have._
+### _2. 为每次会议/视频会议使用不同的会议室名称。_
 
-If you are going to have multiple meetings, ideally use a different room name for each one.
+如果你需要进行多次会议，理想情况下为每次会议使用不同的会议室名称。
 
-If that is not practical, at least use a different room name for each group of people.
+如果不太方便，至少为每一组参与者使用不同的会议室名称。
 
-### _3. Add a password to the room._
+### _3. 给会议室设置密码。_
 
-Once you have started your room, set a password for it. Only people who have the password can join from that point on, but it does not affect people who have already joined.
+启动会议室后，为其设置密码。只有知道密码的人才能加入会议，但这不会影响已经加入的人。
 
-You will need to tell everyone the password.
+你需要将密码告知所有参与者。
 
-If they give the password to others, those other people can also join.
+如果他们将密码分享给他人，其他人也可以加入会议。
 
-### _4. Enable "secure domain" if you are using your instance of Jitsi._
+### _4. 如果你使用自托管的 Jitsi 实例，启用“安全域”。_
 
-In addition to the tips above, consider enabling the ["secure domain" configuration](https://jitsi.github.io/handbook/docs/devops-guide/secure-domain). This requires you (or someone else) to enter a username and password to open a room. It also allows you to become a moderator.
+除了上述建议之外，考虑启用[“安全域”配置](https://jitsi.github.io/handbook/docs/devops-guide/secure-domain)。这要求你（或其他人）输入用户名和密码才能开启会议室。它还允许你成为会议的主持人。
 
-## It's working when I connect from a browser, but not from the iOS or Android apps
+## 在浏览器上可以正常连接，但在 iOS 或 Android 应用中无法连接
 
-This probably means that you are not serving the fullchain for your TLS certificate. You can check if your cert chain
-is properly configured [here](https://whatsmychaincert.com/).
+这可能是因为你的 TLS 证书没有完整链条。你可以在[这里](https://whatsmychaincert.com/)检查你的证书链是否配置正确。
 
-In nginx, if you are using Let's Encrypt, you should have a line like this:
+如果你使用的是 Let’s Encrypt 并通过 nginx 配置，应该有如下的配置行：
 
 `ssl_certificate /etc/letsencrypt/live/jitsi.example.com/fullchain.pem;`
 
+## 我可以录制并保存视频吗？
 
-## Can I record and save the video?
+可以。有多种方法可以录制会议（使用外部软件或服务）：
 
-Yes. There are multiple methods (using external software or services):
+_注意_：如果你想使用隐私友好的方法，建议使用方法 1 或 2。
 
-_Note_: If you want to use a privacy-friendly method, use method 1 or 2.
+1. **OBS**：使用 [OBS](https://obsproject.com/) 录制会议（例如浏览器窗口）。
 
-1. **OBS**: Use [OBS](https://obsproject.com/) to record your Session (e.g. your browser window).
+2. **RTMP 服务器**：你需要设置自己的 RTMP 服务器，然后使用你的 RTMP URL 和流密钥，而不是按照[这里](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)描述的使用 YouTube 流密钥。自行部署的 Jitsi Meet 实例需要设置 Jibri 来实现此功能。
 
-2. **RTMP-Server**: For this you have to setup your own RTMP-Server and then use your RTMP URL + Stream key instead of the Youtube Stream key as described [here](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/). Self-installed Jitsi Meet deployments will need to setup Jibri to do this.
+3. **Dropbox**：通过 Jitsi Meet [连接 Dropbox](/handbook/docs/dev-guide/dev-guide-web-integrations#creating-the-dropbox-app-for-dropbox-recording-integration)，并将视频保存到 Dropbox。
 
-3. **Dropbox**: [Connect to Dropbox with Jitsi Meet](/handbook/docs/dev-guide/dev-guide-web-integrations#creating-the-dropbox-app-for-dropbox-recording-integration) and save the video in the Dropbox. 
+4. **视频服务/网站**：将你的会议直播到 YouTube 或其他网站（例如 Twitch），然后在那里获取录制的视频（参见 [操作指南](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)）。自托管的 Jitsi Meet 部署需要设置 Jibri 来实现此功能。
 
-4. **Video Services/Websites**: Stream your conference to YouTube or other sites (e.g. Twitch) and access the recording there (see [howto](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)). Self-installed Jitsi Meet deployments will need to setup Jibri to do this. 
+未来可能会有更多录制方法，但目前尚未准备好（例如 [本地录制](https://github.com/jitsi/jitsi-meet/issues/6014)）。
 
-More methods might be implemented in the future, but are not ready yet (e.g. [Local Recording](https://github.com/jitsi/jitsi-meet/issues/6014).
+## 我在会议中设置了密码，但下次会议时它没有生效
 
-## I set the password in meeting but it is not working the next time
-Once the meeting ends it's password also gets removed, so you need to set the password again for next meeting.
+一旦会议结束，密码也会被清除。因此，你需要为每次会议重新设置密码。
 
-## How to limit the number of participants?
+## 如何限制参与者人数？
 
-1. Use the command `prosodyctl about` to view the version of prosody and plug directory, similar to the output below.
+1. 使用命令 `prosodyctl about` 查看 Prosody 的版本和插件目录，输出结果类似如下：
 
 ```
 Prosody 0.11.6
-
 # Prosody directories
-
 Data directory: /var/lib/prosody
-
 Config directory: /etc/prosody
-
 Source directory: /usr/lib/prosody
-
 Plugin directories:
-
 /usr/share/jitsi-meet/prosody-plugins/
-
 /usr/lib/prosody/modules/
 ```
 
-2. Check if there is a `mod_muc_max_occupants.lua` file in your plugin directory.
+2. 检查插件目录中是否有 `mod_muc_max_occupants.lua` 文件。
 
-If not, please create a new file `mod_muc_max_occupants.lua` in the plugin directory And copy everything from [here](https://github.com/jitsi/jitsi-meet/blob/master/resources/prosody-plugins/mod_muc_max_occupants.lua) to paste.
+如果没有，请在插件目录中新建一个文件 `mod_muc_max_occupants.lua`，并从[这里](https://github.com/jitsi/jitsi-meet/blob/master/resources/prosody-plugins/mod_muc_max_occupants.lua)复制所有内容粘贴到该文件中。
 
-If it exists, please ignore this step.
+如果文件已存在，请忽略此步骤。
 
-3.Edit your `/etc/prosody/conf.avail/meet.example.com.cfg.lua` file and add `muc_max_occupants` as a module_enabled in the conference.meet.example.com "muc" section.
+3. 编辑 `/etc/prosody/conf.avail/meet.example.com.cfg.lua` 文件，在 conference.meet.example.com 的 "muc" 部分中将 `muc_max_occupants` 添加为启用的模块。
 
-Then, add the options below that. You need both `muc_max_occupants` and `muc_access_whitelist` defined.
+然后，在下面添加以下选项。需要同时定义 `muc_max_occupants` 和 `muc_access_whitelist`。
 
-Example:
+示例：
 
 ```
 Component "conference.meet.example.com" "muc"
@@ -135,15 +127,17 @@ Component "conference.meet.example.com" "muc"
    muc_room_default_public_jids = true
 ```
 
-Note: the relationship between storage = "" and your prosody version, and you need to modify all storage="" .
+注意：`storage = ""` 的值与 Prosody 版本相关，你需要根据版本修改 `storage=""`。
+
 - Prosody nightly747 storage = "null"
 - Prosody 0.10 storage = "none"
 - Prosody 0.11 storage = "memory"
 
-4. You need to use the command `prosodyctl restart` to see the effect.
+4. 使用命令 `prosodyctl restart` 重启服务以生效。
 
-5. If you want to update to use prosody, you can check [here](https://community.jitsi.org/t/how-to-how-do-i-update-prosody/72205).
+5. 如果你想更新 Prosody，可以参考[这里](https://community.jitsi.org/t/how-to-how-do-i-update-prosody/72205)。
 
-## Other participants complain my screen sharing is very bright and appears washed out?
-You might have HDR streaming enabled in your OS display or graphic card settings.  If you are on Windows, you can quickly toggle HDR on/off using `Win + Alt + B` for all your HDR-capable screens at any time, even while screen sharing.
+## 其他参与者反映我的屏幕共享画面非常亮，看起来像是被“洗过色”？
+
+可能是你操作系统显示设置或显卡设置中启用了 HDR 流媒体。如果你使用 Windows，可以通过快捷键 `Win + Alt + B` 随时快速切换 HDR 开/关，即使在屏幕共享时也可以切换。
 

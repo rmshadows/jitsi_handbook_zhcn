@@ -1,13 +1,13 @@
 ---
 id: mobile-dropbox
-title: Setting up Dropbox integration
+title: Setting up Dropbox integration - 设置 Dropbox 集成
 ---
 
-1. Create a Dropbox app.
-2. Add the following to ```ios/app/src/Info.plist``` by replacing `<APP_KEY>`
-   with your own Dropbox app key (which can be found in the
-   [App Console](https://www.dropbox.com/developers/apps)):
-```
+1. 创建一个 Dropbox 应用。
+
+2. 将以下内容添加到 `ios/app/src/Info.plist` 中，将 `<APP_KEY>` 替换为您自己的 Dropbox 应用密钥（可以在 [App Console](https://www.dropbox.com/developers/apps) 中找到）：
+
+```xml
 <key>CFBundleURLTypes</key>
 <array>
   <dict>
@@ -26,7 +26,6 @@ title: Setting up Dropbox integration
 </array>
 ```
 
-**NOTE:** Both Android and iOS builds of the apps will parse the Dropbox app key
-from ```ios/app/src/Info.plist```.
+**注意：** Android 和 iOS 应用的构建将从 `ios/app/src/Info.plist` 中解析 Dropbox 应用密钥。
 
-**NOTE:** See [Dropbox developer guide](https://www.dropbox.com/developers/reference/developer-guide) for more information
+**注意：** 有关更多信息，请参见 [Dropbox 开发者指南](https://www.dropbox.com/developers/reference/developer-guide)。

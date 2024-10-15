@@ -1,16 +1,12 @@
 ---
 id: speakerstats
-title: Enabling Speaker Stats
-sidebar_label: Speaker Stats
+title: Enabling Speaker Stats - 启用发言者统计
+sidebar_label: Speaker Stats - 启用发言者统计
 ---
 
-To enable the speaker stats we need to enable speakerstats module under the main
-virtual host, this is to enable the advertising the speaker stats component, 
-which address needs to be specified in `speakerstats_component` option.
+要启用发言者统计功能，我们需要在主虚拟主机下启用 `speakerstats` 模块，这将启用发言者统计组件的广告。组件的地址需要在 `speakerstats_component` 选项中指定。
 
-We need to also enable the component with the address specified in `speakerstats_component`.
-The component needs also to have the option with the muc component address in
-`muc_component` option.
+此外，我们还需要启用组件，地址需要在 `speakerstats_component` 中指定。组件还需要包含 `muc_component` 选项，该选项中包含 MUC（多用户聊天）组件的地址。
 
 ```lua
 VirtualHost "jitsi.example.com"

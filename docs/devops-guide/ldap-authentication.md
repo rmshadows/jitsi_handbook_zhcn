@@ -1,47 +1,37 @@
 ---
 id: ldap-authentication
-title: LDAP authentication
-sidebar_label: LDAP Authentication
+title: LDAP authentication - LDAP 认证
+sidebar_label: LDAP 认证
 ---
 
 :::note
-This is a first draft and might not work on your system. It has been tested on a Debian 11 installation with prosody 0.11 and authenticates against an OpenLDAP directory.
+本文只是初稿，可能在您的系统上无法正常工作。它已在安装了 Prosody 0.11 的 Debian 11 系统上进行了测试，并对 OpenLDAP 目录进行身份验证。
 :::
 
-If you want to authenticate your users against an LDAP directory instead 
-of the local Prosody user database, you can use the Cyrus SASL package. 
-Using this package you might be able to validate user-supplied credentials 
-against other sources, such as PAM, SQL and more - but this is beyond 
-this article.
+如果您希望将用户身份验证与 LDAP 目录进行，而不是使用本地 Prosody 用户数据库，可以使用 Cyrus SASL 包。使用此包，您可能能够验证用户提供的凭据与其他来源（如 PAM、SQL 等）进行匹配，但这超出了本文的范围。
 
-## Prerequisites
+## 前提条件
 
-Before following this article, make sure you have set up Prosody as 
-described in [Authentication (Secure Domain)](secure-domain.md) first.
+在遵循本文之前，请确保您已按照[身份验证（安全域）](secure-domain.md)的说明设置了 Prosody。
 
-### Required packages
+### 必需的包
 
-On Debian systems you need to install some required packages:
+在 Debian 系统上，您需要安装一些必需的包：
 
 ```
 sudo apt-get install sasl2-bin libsasl2-modules-ldap lua-cyrussasl
 sudo prosodyctl install --server=https://modules.prosody.im/rocks/ mod_auth_cyrus
 ```
 
-The first two packages are necessary for Cyrus' `saslauthd` and allow it 
-to connect to an LDAP directory. The `lua-cyrussasl`-package allows 
-Prosody to access Cyrus SASL.
+前两个包是 Cyrus 的 `saslauthd` 所必需的，并允许它连接到 LDAP 目录。`lua-cyrussasl` 包允许 Prosody 访问 Cyrus SASL。
 
-Installing the [mod_auth_cyrus](https://modules.prosody.im/mod_auth_cyrus) module is neccessary because support for Cyrus SASL has been [removed](https://prosody.im/doc/cyrus_sasl) from mainline Prosody and placed in the community module repository.
+安装 [mod_auth_cyrus](https://modules.prosody.im/mod_auth_cyrus) 模块是必要的，因为对 Cyrus SASL 的支持已从主流 Prosody 中[移除](https://prosody.im/doc/cyrus_sasl)，并放置在社区模块库中。
 
-## Install and set up Cyrus SASL
+## 安装和设置 Cyrus SASL
 
-The following options define a basic LDAP configuration. A full set of 
-possible options can be found in [LDAP_SASLAUTHD](https://github.com/winlibs/cyrus-sasl/blob/master/saslauthd/LDAP_SASLAUTHD).
+以下选项定义了基本的 LDAP 配置。有关可能选项的完整集，请参阅 [LDAP_SASLAUTHD](https://github.com/winlibs/cyrus-sasl/blob/master/saslauthd/LDAP_SASLAUTHD)。
 
-By default Cyrus' `saslauthd` searches for its LDAP configuration in 
-`/etc/saslauthd.conf`. So create this file and enter something similar 
-to define your LDAP environment:
+默认情况下，Cyrus 的 `saslauthd` 在 `/etc/saslauthd.conf` 中查找其 LDAP 配置。因此，请创建此文件并输入类似以下内容以定义您的 LDAP 环境：
 
 ```
 ldap_servers: ldaps://ldap.example.com
@@ -52,23 +42,21 @@ ldap_search_base: ou=people,dc=example,dc=com
 ```
 
 :::note
-One omitted option you might want to look into is `ldap_filter` which defaults to `uid=%u` and should work for a lot of systems.  If you are using a Samba or Microsoft AD instance as your LDAP server you may need to change this to `ldap_filter: (sAMAccountName=%U)` as `uid` is NULL by default many configurations. You can also use the `ldap_filter` to allow only specific users access. For more details on this and other options see the `LDAP_SASLAUTHD` document linked above.
+您可能想要查看的一个省略选项是 `ldap_filter`，其默认值为 `uid=%u`，并且适用于许多系统。如果您使用的是 Samba 或 Microsoft AD 实例作为 LDAP 服务器，您可能需要将其更改为 `ldap_filter: (sAMAccountName=%U)`，因为许多配置中 `uid` 默认为 NULL。您还可以使用 `ldap_filter` 来仅允许特定用户访问。有关此和其他选项的更多详细信息，请参阅上面链接的 `LDAP_SASLAUTHD` 文档。
 
-Please note that Prosody may experience issues with usernames containing the "@"-symbol. You can work around this issue by changing `uid=%u` to `uid=%U`, which is [defined](https://github.com/winlibs/cyrus-sasl/blob/d933c030ce12ec0668469d79ab8378e347a1b3ba/saslauthd/LDAP_SASLAUTHD#L126) as the "user portion of %u (%U = test when %u = test@domain.tld)"
+请注意，Prosody 可能在用户名包含“@”符号时遇到问题。您可以通过将 `uid=%u` 更改为 `uid=%U` 来解决此问题，`%U` 被[定义](https://github.com/winlibs/cyrus-sasl/blob/d933c030ce12ec0668469d79ab8378e347a1b3ba/saslauthd/LDAP_SASLAUTHD#L126)为“%u 的用户部分（当 %u = test 时，%U = test@domain.tld）”。
+
 :::
 
-### Test LDAP authentication
+### 测试 LDAP 认证
 
-To test if the LDAP configuration is working, you can start `saslauthd` in 
-debug mode while specifying the mandatory LDAP authentication mechanism:
+要测试 LDAP 配置是否正常工作，您可以在指定强制 LDAP 认证机制的情况下以调试模式启动 `saslauthd`：
 
 ```
 sudo saslauthd -d -a ldap
 ```
 
-The test utility for the SASL authentication server can then be used in a 
-secondary terminal. Replace `user` and `password` with credentials stored 
-in LDAP.
+然后，可以在第二个终端中使用 SASL 认证服务器的测试工具。将 `user` 和 `password` 替换为存储在 LDAP 中的凭据。
 
 ```
 sudo testsaslauthd -u user -p password
@@ -78,16 +66,18 @@ sudo testsaslauthd -u user -p wrongpassword
 0: NO "authentication failed"
 ```
 
-After testing, you can stop `saslauthd` using `ctrl-c`.
+测试后，您可以使用 `ctrl-c` 停止 `saslauthd`。
 
-### Enable the `saslauthd` service
+### 启用 `saslauthd` 服务
 
-You will need to edit the `/etc/default/saslauthd` to enable the `saslauthd` service to run at boot and have it use LDAP for authentication.  You can use sed to do this quickly.
+您需要编辑 `/etc/default/saslauthd` 文件，以使 `saslauthd` 服务在启动时运行，并使用 LDAP 进行身份验证。您可以使用 sed 快速完成此操作。
+
 ```
 sudo sed -i -e "s/START=.*/START=yes/" -e "s/MECHANISMS=.*/MECHANISMS=\"ldap\"/" /etc/default/saslauthd
 ```
 
-This will make the following changes to `/etc/default/saslauthd`.
+这将对 `/etc/default/saslauthd` 文件进行以下更改。
+
 ```
 [...]
 # Should saslauthd run automatically on startup? (default: no)
@@ -98,79 +88,64 @@ MECHANISMS="ldap"
 [...]
 ```
 
+不需要将 `MECH_OPTIONS` 指向 LDAP 配置文件，因为这是该机制的默认设置。
 
-It is not necessary to point `MECH_OPTIONS` to the LDAP configuration file 
-since this is the default for this mechanism.
-
-Now you can start, restart and stop `saslauthd` using the `service` scripts:
+现在您可以使用 `service` 脚本来启动、重启和停止 `saslauthd`：
 
 ```
 sudo service saslauthd restart
 ```
 
-If you experience issues, check `/var/log/auth.log` for `saslauthd` entries.
+如果遇到问题，请检查 `/var/log/auth.log` 中的 `saslauthd` 条目。
 
-### Cyrus SASL Configuration file
+### Cyrus SASL 配置文件
 
-Cyrus SASL requires a configuration file in order to know how to check user 
-credentials. For Prosody, the file is named `prosody.conf` by default. 
-Its location varies by OS and distribution as shown in the following table:
+Cyrus SASL 需要一个配置文件，以了解如何检查用户凭据。对于 Prosody，该文件的默认名称为 `prosody.conf`。其位置因操作系统和发行版而异，如下表所示：
 
-| Platform          | Location   |
+| 平台              | 位置       |
 | ----------------- | ---------- |
-| Debian and Ubuntu | /etc/sasl  |
+| Debian 和 Ubuntu  | /etc/sasl  |
 | Arch, RHEL/CentOS | /etc/sasl2 |
 
-So for Debian systems, create the file `/etc/sasl/prosody.conf`. 
-The directory `/etc/sasl` might not yet exist.
+因此，对于 Debian 系统，创建文件 `/etc/sasl/prosody.conf`。目录 `/etc/sasl` 可能尚未存在。
 
 ```
 sudo mkdir /etc/sasl/
 
-cat << 'EOF' |sudo tee /etc/sasl/prosody.conf > /dev/null
+cat << 'EOF' | sudo tee /etc/sasl/prosody.conf > /dev/null
 pwcheck_method: saslauthd
 mech_list: PLAIN
 EOF
 ```
 
 :::note
-The filename `prosody.conf`  corresponds to a value for `cyrus_application_name` 
-in the Prosody config. Since we have not changed the default this has a value of `prosody`.
-
+文件名 `prosody.conf` 对应于 Prosody 配置中的 `cyrus_application_name` 值。由于我们没有更改默认值，因此其值为 `prosody`。
 :::
 
-The Prosody documentation has more details on a 
-[Cyrus SASL-related setup](https://prosody.im/doc/cyrus_sasl).
+Prosody 文档中有更多关于 [Cyrus SASL 相关设置](https://prosody.im/doc/cyrus_sasl) 的详细信息。
 
-## Set up Prosody
+## 设置 Prosody
 
-If you have tested the LDAP authentication successfully and enabled the `saslauthd` service, you can change Prosody's authentication to the Cyrus backend by changing the `authentication` setting in `/etc/prosody/conf.avail/$(hostname -f).cfg.lua` via the command:
+如果您已经成功测试了 LDAP 身份验证并启用了 `saslauthd` 服务，您可以通过在 `/etc/prosody/conf.avail/$(hostname -f).cfg.lua` 中更改 `authentication` 设置，将 Prosody 的身份验证更改为 Cyrus 后端，使用以下命令：
+
 ```
 sed -i -E -e "/^ *VirtualHost \"$(hostname -f)\"/,/^ *VirtualHost/ {s/authentication ?=.*$/authentication = \"cyrus\"/}" /etc/prosody/conf.avail/$(hostname -f).cfg.lua
 ```
 
-You might also have to add the `allow_unencrypted_plain_auth` option to allow 
-plain-text passwords to be sent over the network. *This is not recommended* as it 
-makes the setup less secure. So please try without this line first and only add
-it if you have problems authenticating.
+您可能还需要添加 `allow_unencrypted_plain_auth` 选项，以允许明文密码通过网络发送。*这并不推荐*，因为这会使设置变得不够安全。因此请先尝试不添加此行，只有在遇到身份验证问题时再添加它。
 
 ```
         authentication = "cyrus"
         allow_unencrypted_plain_auth = true
 ```
 
-### Set Permissions
+### 设置权限
 
-Prosody will now try to access the saslauthd socket in 
-`/var/run/saslauthd/` to communicate with the authentication daemon. 
-This folder only allows access to user `root` and group `sasl` while prosody 
-runs as the system user/group `prosody`. 
+Prosody 现在将尝试访问 `/var/run/saslauthd/` 中的 saslauthd 套接字，以与身份验证守护进程进行通信。此文件夹仅允许用户 `root` 和组 `sasl` 访问，而 Prosody 以系统用户/组 `prosody` 的身份运行。
 
-The easiest solution is to add the `sasl` group to the `prosody` user and 
-restart the service.
+最简单的解决方案是将 `sasl` 组添加到 `prosody` 用户，并重启服务。
 
 ```
 sudo adduser prosody sasl
 sudo service prosody restart
 ```
-

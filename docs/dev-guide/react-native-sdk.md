@@ -3,23 +3,22 @@ id: dev-guide-react-native-sdk
 title: React Native SDK
 ---
 
-The Jitsi React Native SDK provides the same user experience as the Jitsi Meet app,
-in a customizable way which you can embed in your React Native apps.
+Jitsi React Native SDK 提供与 Jitsi Meet 应用相同的用户体验，以可自定义的方式嵌入到您的 React Native 应用中。
 
-## Sample application using the React Native SDK
+## 使用 React Native SDK 的示例应用
 
-If you want to see how easy integrating the Jitsi React Native SDK into a React Native application is, take a look at the<br/>
-[sample applications repository](https://github.com/jitsi/jitsi-meet-sdk-samples#react-native).
+如果您想看看如何将 Jitsi React Native SDK 轻松集成到 React Native 应用中，请查看<br/>
+[示例应用程序仓库](https://github.com/jitsi/jitsi-meet-sdk-samples#react-native)。
 
-## Usage
+## 用法
 
-While this is a published library, you can `npm i @jitsi/react-native-sdk`.<br/>
-Dependency conflicts may occur between RNSDK and your app. <br/>If that is the case, please run `npm i @jitsi/react-native-sdk --force`.<br/>
-To check if some dependencies need to be added, please run the following script `node node_modules/@jitsi/react-native-sdk/update_dependencies.js`.<br/>
-This will sync all of our peer dependencies with your dependencies. <br/>
-Next you will need to do `npm install`.
+虽然这是一个发布的库，您可以通过 `npm i @jitsi/react-native-sdk` 安装。<br/>
+可能会出现 RNSDK 和您的应用之间的依赖冲突。<br/>如果出现这种情况，请运行 `npm i @jitsi/react-native-sdk --force`。<br/>
+要检查是否需要添加一些依赖项，请运行以下脚本 `node node_modules/@jitsi/react-native-sdk/update_dependencies.js`。<br/>
+这将同步我们的所有同级依赖项与您的依赖项。<br/>
+接下来，您需要执行 `npm install`。
 
-Because our SDK uses SVG files, you will need to update your metro bundler configuration accordingly:
+由于我们的 SDK 使用 SVG 文件，您需要相应地更新您的 metro bundler 配置：
 
 ```config title="metro.config"
 const { getDefaultConfig } = require('metro-config');
@@ -50,11 +49,12 @@ module.exports = (async () => {
 })();
 ```
 
+### 安卓
 
-### Android
+#### 权限
 
-#### Permissions
-- In `android/app/src/debug/AndroidManifest.xml` and `android/app/src/main/AndroidManifest.xml`, under the `</application>` tag, please include
+- 在 `android/app/src/debug/AndroidManifest.xml` 和 `android/app/src/main/AndroidManifest.xml` 中，在 `</application>` 标签下，请添加
+
   ```xml
    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -66,22 +66,27 @@ module.exports = (async () => {
    <uses-permission android:name="android.permission.WAKE_LOCK" />
    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
   ```
-- Starting Android 14, specific foreground service types permissions require to be added in the manifest file: 
+
+- 从 Android 14 开始，特定的前台服务类型权限需要在清单文件中添加：
+
   ```xml
    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
   ```
 
-#### Services
-- To enables the screen share feature you now need to go to your `MainApplication.java` file and:
-  1. `import com.oney.WebRTCModule.WebRTCModuleOptions;` that comes from `react-native-webrtc` dependency.
-  
-  2. `WebRTCModuleOptions options = WebRTCModuleOptions.getInstance();` instance it.
-  3. `options.enableMediaProjectionService = true;` enable foreground service that takes care of screen-sharing feature.
+#### 服务
+
+- 要启用屏幕共享功能，您现在需要进入 `MainApplication.java` 文件并：
+  1. `import com.oney.WebRTCModule.WebRTCModuleOptions;` 来自 `react-native-webrtc` 依赖项。
+
+  2. `WebRTCModuleOptions options = WebRTCModuleOptions.getInstance();` 实例化它。
+  3. `options.enableMediaProjectionService = true;` 启用处理屏幕共享功能的前台服务。
 
 #### API
-- Our app use `react-native-orientation-locker` dependency that uses API 33 features. Make sure that your app, in `android\build.gradle`, targets, at least, that version:
+
+- 我们的应用使用 `react-native-orientation-locker` 依赖项，该依赖项使用 API 33 功能。确保您的应用在 `android\build.gradle` 中至少针对该版本：
+
   ```markdown
     buildscript {
         ext {
@@ -91,39 +96,39 @@ module.exports = (async () => {
     }
   ```
 
-### iOS 
+### iOS
 
-#### Permissions
-- React Native SDK requests camera and microphone access, make sure to include the required entries for `NSCameraUsageDescription` and `NSMicrophoneUsageDescription`in your `Info.plist` file.
-- React Native SDK shows and hides the status bar based on the conference state,
-  you may want to set `UIViewControllerBasedStatusBarAppearance` to `NO` in your
-  `Info.plist` file.
-- For starting screen sharing React Native SDK provides the UI to present the `RPSystemBroadcastPickerView` to the user. By default, the picker will display a list of all the available broadcast providers. In order to limit the picker to our particular broadcast provider, we have to set `preferredExtension` to the bundle identifier of the broadcast extension. We are doing this by adding a new key named `RTCScreenSharingExtension` to the app's Info.plist and setting the broadcast extension bundle identifier as the value.
-- Make sure `voip` is added to `UIBackgroundModes`, in the app's `Info.plist`, in order to work when the app is in the background.
- 
+#### 权限
 
-#### Build Phases
+- React Native SDK 请求摄像头和麦克风访问，请确保在您的 `Info.plist` 文件中包含 `NSCameraUsageDescription` 和 `NSMicrophoneUsageDescription` 的必要条目。
+- React Native SDK 根据会议状态显示和隐藏状态栏，您可能希望在 `Info.plist` 文件中将 `UIViewControllerBasedStatusBarAppearance` 设置为 `NO`。
+- 要启动屏幕共享，React Native SDK 提供 UI 以向用户展示 `RPSystemBroadcastPickerView`。默认情况下，选择器将显示所有可用广播提供者的列表。为了将选择器限制为我们特定的广播提供者，我们必须将 `preferredExtension` 设置为广播扩展的包标识符。我们通过在应用的 Info.plist 中添加一个名为 `RTCScreenSharingExtension` 的新键并将广播扩展包标识符设置为值来做到这一点。
+- 确保在应用的 `Info.plist` 中将 `voip` 添加到 `UIBackgroundModes`，以便在应用后台时仍能工作。
 
-##### Run Script Phases
-- For the sounds to work, please add the following script in Xcode:
+#### 构建阶段
+
+##### 运行脚本阶段
+
+- 为了使声音正常工作，请在 Xcode 中添加以下脚本：
+
   ```shell
     SOUNDS_DIR="${PROJECT_DIR}/../node_modules/@jitsi/react-native-sdk/sounds"
     cp $SOUNDS_DIR/* ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/
   ```
 
- 
+## JitsiMeeting 属性
 
-## JitsiMeeting props
-
-Our JitsiMeeting component renders the full meeting experience. This has some customizable properties:
-
+我们的 JitsiMeeting 组件渲染完整的会议体验。它具有一些可自定义的属性：
 
 ### config
-`Object` - Overwrite different [config](https://github.com/jitsi/jitsi-meet/blob/master/config.js) options.
-- For example:
+
+`Object` - 重写不同的 [config](https://github.com/jitsi/jitsi-meet/blob/master/config.js) 选项。
+
+- 例如：
+
 ```javascript
 <JitsiMeeting
-    config = {{
+    config={{
         hideConferenceTimer: true,
         subject: "React Native SDK",
         customToolbarButtons: [
@@ -140,11 +145,12 @@ Our JitsiMeeting component renders the full meeting experience. This has some cu
     }} />
 ```
 
-
 ### flags
-`Object` - Add different feature [flags](https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.ts)
-that your meeting experience would like to have. 
-- For example: 
+
+`Object` - 添加不同功能的 [flags](https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.ts)，以增强您的会议体验。
+
+- 例如：
+
 ```javascript
 <JitsiMeeting 
     flags={{
@@ -153,64 +159,63 @@ that your meeting experience would like to have.
     'invite.enabled': true }} />
 ```
 
-
 ### eventListeners
-`Object` - Options that personalize your meeting experience:
 
- - onConferenceBlurred
-`Function` - Takes a function that gets triggered when ```CONFERENCE_BLURRED``` action is dispatched, more exactly when a conference screen is out of focus, more exactly when navigation to another screen is initiated. 
+`Object` - 个性化您的会议体验的选项：
 
- - onConferenceFocused
-`Function` - Takes a function that gets triggered when ```CONFERENCE_FOCUSED``` action is dispatched, more exactly when a conference screen is focused.
+- onConferenceBlurred
+  `Function` - 传入一个函数，当 ```CONFERENCE_BLURRED``` 动作被分发时触发，具体来说，当会议屏幕失去焦点时，尤其是在导航到另一个屏幕时。
 
- - onAudioMutedChanged
-`Function` - Takes a function that gets triggered when ```SET_AUDIO_MUTED``` action is dispatched, more exactly when audio mute state is changed.
+- onConferenceFocused
+  `Function` - 传入一个函数，当 ```CONFERENCE_FOCUSED``` 动作被分发时触发，具体来说，当会议屏幕获得焦点时。
 
- - onConferenceJoined
-`Function` - Takes a function that gets triggered when ```CONFERENCE_JOINED``` action is dispatched, more exactly when a conference was joined.
+- onAudioMutedChanged
+  `Function` - 传入一个函数，当 ```SET_AUDIO_MUTED``` 动作被分发时触发，具体来说，当音频静音状态改变时。
 
- - onConferenceLeft
-   `Function` - Takes a function that gets triggered when ```CONFERENCE_LEFT``` action is dispatched, more exactly when a conference was left.
+- onConferenceJoined
+  `Function` - 传入一个函数，当 ```CONFERENCE_JOINED``` 动作被分发时触发，具体来说，当会议已加入时。
 
- - onConferenceWillJoin
-`Function` - Takes a function that gets triggered when ```CONFERENCE_WILL_JOIN``` action is dispatched, more exactly when a conference will be joined.
+- onConferenceLeft
+  `Function` - 传入一个函数，当 ```CONFERENCE_LEFT``` 动作被分发时触发，具体来说，当会议已离开时。
 
- - onEnterPictureInPicture
-   `Function` - Takes a function that gets triggered when ```ENTER_PICTURE_IN_PICTURE``` action is dispatched, more exactly when entering picture-in-picture is initiated.
+- onConferenceWillJoin
+  `Function` - 传入一个函数，当 ```CONFERENCE_WILL_JOIN``` 动作被分发时触发，具体来说，当会议即将加入时。
 
- - onParticipantJoined
-`Function` - Takes a function that gets triggered when ```PARTICIPANT_JOINED``` action is dispatched, more exactly when a specific participant joined a conference.
+- onEnterPictureInPicture
+  `Function` - 传入一个函数，当 ```ENTER_PICTURE_IN_PICTURE``` 动作被分发时触发，具体来说，当进入画中画模式时。
 
- - onReadyToClose
-   `Function` - Takes a function that gets triggered when ```READY_TO_CLOSE``` action is dispatched, more exactly when one exits a conference.
+- onParticipantJoined
+  `Function` - 传入一个函数，当 ```PARTICIPANT_JOINED``` 动作被分发时触发，具体来说，当特定参与者加入会议时。
+
+- onReadyToClose
+  `Function` - 传入一个函数，当 ```READY_TO_CLOSE``` 动作被分发时触发，具体来说，当退出会议时。
 
 - onVideoMutedChanged
-  `Function` - Takes a function that gets triggered when ```SET_VIDEO_MUTED``` action is dispatched, more exactly when video mute state is changed.
-
+  `Function` - 传入一个函数，当 ```SET_VIDEO_MUTED``` 动作被分发时触发，具体来说，当视频静音状态改变时。
 
 ### room
-`string` - Name of the room where the conference takes place.
 
+`string` - 会议进行的房间名称。
 
 ### serverURL
-`string` - Server where the conference should take place.
 
+`string` - 会议应进行的服务器地址。
 
 ### style
-`Object` - CSS your meeting experience.
 
+`Object` - 自定义会议体验的 CSS 样式。
 
 ### token
-`string` - JWT token used for authentication.
 
+`string` - 用于身份验证的 JWT 令牌。
 
 ### userInfo
 
 - avatarUrl
-`string` - Path to participant's avatar.
+  `string` - 参与者头像的路径。
 
 - displayName
-`string` - Default participant name to be displayed.
+  `string` - 默认参与者名称以显示。
 
 - email
-`string` - Default email for participant.
+  `string` - 默认参与者电子邮件。

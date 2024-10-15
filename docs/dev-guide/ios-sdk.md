@@ -3,30 +3,26 @@ id: dev-guide-ios-sdk
 title: iOS SDK
 ---
 
-The Jitsi Meet iOS SDK provides the same user experience as the Jitsi Meet app,
-in a customizable way which you can embed in your apps.
+Jitsi Meet iOS SDK 提供与 Jitsi Meet 应用相同的用户体验，并以可定制的方式嵌入到您的应用中。
 
 :::important
-iOS 15.1 or higher is required.
+需要 iOS 15.1 或更高版本。
 :::
 
-## Sample applications using the SDK
+## 使用 SDK 的示例应用程序
 
-If you want to see how easy integrating the Jitsi Meet SDK into a native application is, take a look at the
-[sample applications repository](https://github.com/jitsi/jitsi-meet-sdk-samples#ios).
+如果您想了解将 Jitsi Meet SDK 集成到原生应用程序中的简单性，可以查看 [示例应用程序库](https://github.com/jitsi/jitsi-meet-sdk-samples#ios)。
 
-## Usage
+## 用法
 
-There are 2 ways to integrate the SDK into your project:
+将 SDK 集成到项目中有两种方法：
 
-- Using CocoaPods
-- Building it yourself
+- 使用 CocoaPods
+- 自行构建
 
-### Using CocoaPods
+### 使用 CocoaPods
 
-The recommended way for using the SDK is by using CocoaPods. In order to
-do so, add the `JitsiMeetSDK` dependency to your existing `Podfile` or create
-a new one following this example:
+推荐使用 CocoaPods 来使用 SDK。为此，请将 `JitsiMeetSDK` 依赖项添加到现有的 `Podfile` 中，或按照以下示例创建一个新的：
 
 ```ruby
 platform :ios, '15.1'
@@ -40,24 +36,19 @@ target 'JitsiMeetSDKTest' do
 end
 ```
 
-Replace `JitsiMeetSDKTest` with your project and target names.
+将 `JitsiMeetSDKTest` 替换为您的项目和目标名称。
 
-Since the SDK requests camera and microphone access, make sure to include the
-required entries for `NSCameraUsageDescription` and `NSMicrophoneUsageDescription`
-in your `Info.plist` file.
+由于 SDK 请求摄像头和麦克风访问权限，请确保在 `Info.plist` 文件中包含所需的 `NSCameraUsageDescription` 和 `NSMicrophoneUsageDescription` 条目。
 
-In order for app to properly work in the background, select the "audio" and "voip"
-background modes.
+为了确保应用在后台正常工作，请选择“音频”和“VoIP”后台模式。
 
-Last, since the SDK shows and hides the status bar based on the conference state,
-you may want to set `UIViewControllerBasedStatusBarAppearance` to `NO` in your
-`Info.plist` file.
+最后，由于 SDK 会根据会议状态显示和隐藏状态栏，您可能需要在 `Info.plist` 文件中将 `UIViewControllerBasedStatusBarAppearance` 设置为 `NO`。
 
-### Building it yourself
+### 自行构建
 
-1. Install all required [dependencies](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-mobile-jitsi-meet).
+1. 安装所有所需的 [依赖项](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-mobile-jitsi-meet)。
 
-2. Build it:
+2. 构建它：
 
 ```bash
 mkdir -p ios/sdk/out
@@ -88,22 +79,19 @@ xcodebuild -create-xcframework \
     -output ios/sdk/out/JitsiMeetSDK.xcframework
 ```
 
-After successfully building Jitsi Meet SDK for iOS, the resulting XCFramework will be in the ios/sdk/out directory.
+成功构建 Jitsi Meet SDK for iOS 后，生成的 XCFramework 将位于 `ios/sdk/out` 目录中。
 
-NOTE: Your app will need to depend on the JitsiWebRTC CocoaPod.
+注意：您的应用将需要依赖于 JitsiWebRTC CocoaPod。
 
 ## API
 
-JitsiMeet is an iOS framework which embodies the whole Jitsi Meet experience and
-makes it reusable by third-party apps.
+JitsiMeet 是一个 iOS 框架，它体现了完整的 Jitsi Meet 体验，并使第三方应用可以重用。
 
-To get started:
+要开始：
 
-1. Add a `JitsiMeetView` to your app using a Storyboard or Interface Builder,
-   for example.
+1. 使用故事板或界面构建器向您的应用添加 `JitsiMeetView`，例如。
 
-2. Then, once the view has loaded, set the delegate in your controller and load
-   the desired URL:
+2. 然后，在视图加载后，在您的控制器中设置代理并加载所需的 URL：
 
 ```objc
 - (void)viewDidLoad {
@@ -122,18 +110,17 @@ To get started:
 }
 ```
 
-### JitsiMeetView class
+### JitsiMeetView 类
 
-The `JitsiMeetView` class is the entry point to the SDK. It a subclass of
-`UIView` which renders a full conference in the designated area.
+`JitsiMeetView` 类是 SDK 的入口点。它是 `UIView` 的子类，在指定区域中渲染完整的会议。
 
 #### delegate
 
-Property to get/set the `JitsiMeetViewDelegate` on `JitsiMeetView`.
+获取/设置 `JitsiMeetViewDelegate` 的属性。
 
 #### join:JitsiMeetConferenceOptions
 
-Joins the conference specified by the given options.
+根据给定选项加入会议。
 
 ```objc
   JitsiMeetConferenceOptions *options = [JitsiMeetConferenceOptions fromBuilder:^(JitsiMeetConferenceOptionsBuilder *builder) {
@@ -162,60 +149,53 @@ Joins the conference specified by the given options.
 
 #### leave
 
-Leaves the currently active conference.
+离开当前活动的会议。
 
 #### hangUp
 
-The localParticipant leaves the current conference.
+本地参与者离开当前会议。
 
 #### setAudioMuted
 
-Sets the state of the localParticipant audio muted according to the `muted` parameter.
+根据 `muted` 参数设置本地参与者的音频静音状态。
 
 #### setVideoMuted
 
-Sets the state of the localParticipant video muted according to the `muted` parameter.
+根据 `muted` 参数设置本地参与者的视频静音状态。
 
 #### sendEndpointTextMessage
 
-Sends a message via the data channel to one particular participant or to all of them.
-If the `to` param is empty, the message will be sent to all the participants in the conference.
+通过数据通道向特定参与者或所有参与者发送消息。如果 `to` 参数为空，则消息将发送给会议中的所有参与者。
 
-In order to get the participantId, the `PARTICIPANT_JOINED` event should be listened for,
-which `data` includes the id and this should be stored somehow.
+要获取 `participantId`，应监听 `PARTICIPANT_JOINED` 事件，其中 `data` 包含 id，并且应该以某种方式存储。
 
 #### toggleScreenShare
 
-Sets the state of the localParticipant screen sharing according to the `enabled` parameter.
+根据 `enabled` 参数设置本地参与者的屏幕共享状态。
 
 #### openChat
 
-Opens the chat dialog. If `to` contains a valid participantId, the private chat with that particular participant will be opened.
+打开聊天对话框。如果 `to` 包含有效的 `participantId`，则将打开与该特定参与者的私人聊天。
 
 #### sendChatMessage
 
-Sends a chat message via to one particular participant or to all of them.
-If the `to` param is empty, the message will be sent to all the participants in the conference.
+通过发送聊天消息给特定参与者或所有参与者。如果 `to` 参数为空，则消息将发送给会议中的所有参与者。
 
-In order to get the participantId, the `PARTICIPANT_JOINED` event should be listened for,
-which `data` includes the id and this should be stored somehow.
+要获取 `participantId`，应监听 `PARTICIPANT_JOINED` 事件，其中 `data` 包含 id，并且应该以某种方式存储。
 
 #### closeChat
 
-Closes the chat dialog.
+关闭聊天对话框。
 
 #### retrieveParticipantsInfo
 
-Retrieves the participants information in the completionHandler sent as parameter.
+以作为参数传递的 completionHandler 检索参与者信息。
 
 #### Universal / deep linking
 
-In order to support Universal / deep linking, `JitsiMeet` offers 2 class
-methods that you app's delegate should call in order for the app to follow those
-links.
+为了支持 Universal / deep linking，`JitsiMeet` 提供了两个类方法，您的应用代理应调用这些方法，以便应用可以处理这些链接。
 
-If these functions return NO it means the URL wasn't handled by the SDK. This
-is useful when the host application uses other SDKs which also use linking.
+如果这些函数返回 NO，则意味着 URL 未被 SDK 处理。这在宿主应用程序使用其他也使用链接的 SDK 时很有用。
 
 ```objc
 -  (BOOL)application:(UIApplication *)application
@@ -228,10 +208,10 @@ continueUserActivity:(NSUserActivity *)userActivity
 }
 ```
 
-And also one of the following:
+以及以下之一：
 
 ```objc
-// See https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623073-application?language=objc
+// 请参阅 https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623073-application?language=objc
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -243,130 +223,116 @@ And also one of the following:
 
 ### JitsiMeetViewDelegate
 
-This delegate is optional, and can be set on the `JitsiMeetView` instance using
-the `delegate` property.
+此委托是可选的，可以通过 `delegate` 属性在 `JitsiMeetView` 实例上设置。
 
-It provides information about the conference state: was it joined, left, did it
-fail?
+它提供有关会议状态的信息：是否已加入、是否已离开、是否发生故障？
 
-All methods in this delegate are optional.
+所有委托中的方法都是可选的。
 
 #### conferenceJoined
 
-Called when a conference was joined. `data` contains the following information:
+在加入会议时调用。`data` 包含以下信息：
 
-- `url`: the conference URL
+- `url`：会议 URL
 
 #### conferenceTerminated
 
-Called when the active conference ends, be it because of user choice or because of a failure. `data` contains the
-following information:
+当活动会议结束时调用，无论是由于用户选择还是由于故障。`data` 包含以下信息：
 
-- `url`: the conference URL
-- `error`: missing if the conference finished gracefully, otherwise contains the error message
+- `url`：会议 URL
+- `error`：如果会议正常结束，则缺失；否则包含错误消息
 
 #### conferenceWillJoin
 
-Called before a conference is joined. `data` contains the following information:
+在加入会议之前调用。`data` 包含以下信息：
 
-- `url`: the conference URL
+- `url`：会议 URL
 
 #### enterPictureInPicture
 
-Called when entering Picture-in-Picture is requested by the user. The app should
-now activate its Picture-in-Picture implementation (and resize the associated
-`JitsiMeetView`. The latter will automatically detect its new size and adjust
-its user interface to a variant appropriate for the small size ordinarily
-associated with Picture-in-Picture.)
+当用户请求进入画中画模式时调用。应用程序现在应该激活其画中画实现（并调整关联的 `JitsiMeetView` 大小。后者会自动检测其新大小并调整其用户界面以适应通常与画中画相关的小尺寸）。
 
-The `data` dictionary is empty.
+`data` 字典为空。
 
 #### participantJoined
 
-Called when a participant has joined the conference. `data` contains the following information:
+当参与者加入会议时调用。`data` 包含以下信息：
 
-- `email`: the email of the participant. It may not be set if the remote participant didn't set one.
-- `name`: the name of the participant.
-- `role`: the role of the participant.
-- `participantId`: the id of the participant.
+- `email`：参与者的电子邮件。如果远程参与者未设置，则可能未设置。
+- `name`：参与者的姓名。
+- `role`：参与者的角色。
+- `participantId`：参与者的 ID。
 
 #### participantLeft
 
-Called when a participant has left the conference. `data` contains the following information:
+当参与者离开会议时调用。`data` 包含以下信息：
 
-- `participantId`: the id of the participant that left.
+- `participantId`：离开的参与者的 ID。
 
 #### audioMutedChanged
 
-Called when the local participant's audio is muted or unmuted. `data` contains the following information:
+当本地参与者的音频静音或取消静音时调用。`data` 包含以下信息：
 
-- `muted`: a boolean indicating whether the audio is muted or not.
+- `muted`：布尔值，指示音频是否静音。
 
 #### videoMutedChanged
 
-Called when the local participant's video is muted or unmuted. `data` contains the following information:
+当本地参与者的视频静音或取消静音时调用。`data` 包含以下信息：
 
-- `muted`: an integer indicating whether the video is muted or not. 0 means unmuted, 4 means muted.
+- `muted`：整数，指示视频是否静音。0 表示未静音，4 表示静音。
 
 #### endpointTextMessageReceived
 
-Called when an endpoint text message is received.
+当接收到端点文本消息时调用。
 
-The `data` dictionary contains a `senderId` key with the participantId of the sender and a `message` key with the
-content.
+`data` 字典包含一个 `senderId` 键，表示发送者的参与者 ID，以及一个 `message` 键，表示内容。
 
 #### screenShareToggled
 
-Called when a participant starts or stops sharing his screen.
+当参与者开始或停止共享屏幕时调用。
 
-The `data` dictionary contains a `participantId` key with the id of the participant and a 'sharing' key with boolean
-value.
+`data` 字典包含一个 `participantId` 键，表示参与者的 ID，以及一个 `sharing` 键，表示布尔值。
 
 #### chatMessageReceived
 
-Called when a chat text message is received. `data` contains the following information:
+当接收到聊天文本消息时调用。`data` 包含以下信息：
 
-- `senderId`: the id of the participant that sent the message.
-- `message`: the content of the message.
-- `isPrivate`: true if the message is private, false otherwise.
-- `timestamp`: the (optional) timestamp of the message.
+- `senderId`：发送消息的参与者的 ID。
+- `message`：消息的内容。
+- `isPrivate`：如果消息是私密的，则为 true；否则为 false。
+- `timestamp`：消息的（可选）时间戳。
 
 #### chatToggled
 
-Called when the chat dialog is opened or closed. `data` contains the following information:
+当聊天对话框打开或关闭时调用。`data` 包含以下信息：
 
-- `isOpen`: true if the chat dialog is open, false otherwise.
+- `isOpen`：如果聊天对话框打开，则为 true；否则为 false。
 
 #### readyToClose
 
-Called when the SDK is ready to be closed. No meeting is happening at this point.
+当 SDK 准备关闭时调用。此时没有会议正在进行。
 
 #### customOverflowMenuButtonPressed
 
-Called when custom buttons are added to the overflow menu. `data` contains the following information:
+当自定义按钮添加到溢出菜单时调用。`data` 包含以下信息：
 
-- `id`: the id of the pressed custom button.
-- `text`: the label of the pressed custom button.
+- `id`：被按下的自定义按钮的 ID。
+- `text`：被按下的自定义按钮的标签。
 
-### Picture-in-Picture
+### 画中画
 
-`JitsiMeetView` will automatically adjust its UI when presented in a
-Picture-in-Picture style scenario, in a rectangle too small to accommodate its
-"full" UI.
+`JitsiMeetView` 在以画中画样式场景呈现时会自动调整其用户界面，大小矩形不足以容纳其“完整”用户界面。
 
-Jitsi Meet SDK does not currently implement native Picture-in-Picture on iOS. If
-desired, apps need to implement non-native Picture-in-Picture themselves and
-resize `JitsiMeetView`.
+Jitsi Meet SDK 目前在 iOS 上未实现本地画中画。如果需要，应用程序需要自行实现非本地画中画，并调整 `JitsiMeetView` 的大小。
 
-If `delegate` implements `enterPictureInPicture:`, the in-call toolbar will
-render a button to afford the user to request entering Picture-in-Picture.
+如果 `delegate` 实现了 `enterPictureInPicture:`，则通话工具栏将渲染一个按钮，以便用户请求进入画中画。
 
-## Dropbox integration
+## Dropbox 集成
 
-To setup the Dropbox integration, follow these steps:
+要设置 Dropbox 集成，请按照以下步骤操作：
 
-1. Add the following to the app's Info.plist and change `<APP_KEY>` to your
-Dropbox app key:
+1. 将以下内容添加到应用的 Info.plist 中，并将 `<APP_KEY>` 替换为您的 Dropbox 应用密钥：
+
 ```
 <key>CFBundleURLTypes</key>
 <array>
@@ -386,35 +352,35 @@ Dropbox app key:
 </array>
 ```
 
-2. Make sure your app calls the Jitsi Meet SDK universal / deep linking delegate methods.
+2. 确保您的应用调用 Jitsi Meet SDK 的通用/深度链接委托方法。
 
-## Screen Sharing integration
+## 屏幕共享集成
 
-The screen sharing functionality for iOS was added to Jitsi starting with JitsiMeetSDK version 3.3.0. It is available for applications running on iOS 14 or newer.
+自 JitsiMeetSDK 版本 3.3.0 起，iOS 增加了屏幕共享功能。此功能适用于运行 iOS 14 或更高版本的应用程序。
 
-For achieving this we are using the `Broadcast Upload Extension` for capturing the contents of the user's screen. Passing the frames to the RN WebRTC is done using Unix stream-oriented sockets communication, the extension acting as the client and the React Native WebRTC being the server.
+为此，我们使用 `Broadcast Upload Extension` 捕获用户屏幕的内容。通过 Unix 面向流的套接字通信将帧传递给 RN WebRTC，扩展作为客户端，React Native WebRTC 作为服务器。
 
-The following documentation covers the code provided in the [sample app](https://github.com/jitsi/jitsi-meet-sdk-samples/tree/master/ios/swift-screensharing/JitsiSDKScreenSharingTest).
+以下文档涵盖了 [示例应用程序](https://github.com/jitsi/jitsi-meet-sdk-samples/tree/master/ios/swift-screensharing/JitsiSDKScreenSharingTest) 中提供的代码。
 
-### Creating the Broadcast Upload Extension
+### 创建广播上传扩展
 
-The `Broadcast Upload Extension` is one of the App Extensions types defined in iOS and is used for capturing the contents of the user's screen.
+`广播上传扩展` 是 iOS 中定义的一种应用扩展类型，用于捕获用户屏幕的内容。
 
-For creating the extension you need to add a new target to your application, selecting the `Broadcast Upload Extension` template. Fill in the desired name, change the language to Swift, make sure `Include UI Extension` is not selected, as we don't need custom UI for our case, then press Finish (screenshot 1). You will see that a new folder with the extension's name was added to the project's tree, containing the `SampleHandler.swift` class. Also, make sure to update the `Deployment Info`, for the newly created extension, to iOS 14 or newer. To learn more about creating App Extensions check the [official documentation](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html).
+要创建该扩展，您需要为应用添加一个新目标，选择 `广播上传扩展` 模板。填写所需的名称，将语言更改为 Swift，确保未选中 `包含 UI 扩展`，因为在本案例中我们不需要自定义 UI，然后按完成（截图 1）。您会看到项目树中添加了一个新文件夹，包含 `SampleHandler.swift` 类。同时，确保将新创建的扩展的 `Deployment Info` 更新为 iOS 14 或更高版本。要了解更多关于创建应用扩展的信息，请查看 [官方文档](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html)。
 
-![screenshot 1](../assets/iOS_screensharing_1.png "screenshot 1")
+![截图 1](../assets/iOS_screensharing_1.png "截图 1")
 
-With the extension created the next steps are to set up the socket connection, add the functionality for handling the received frames, and send them to RN WebRTC for processing. We will be using the code provided with the sample project for this. Copy `SampleUploader.swift`, `SocketConnection.swift`, `DarwinNotificationCenter.swift`, and `Atomic.swift` files to your extension's folder and make sure they're added to the target.
+扩展创建完成后，下一步是设置套接字连接，添加处理接收帧的功能，并将其发送到 RN WebRTC 进行处理。我们将使用示例项目中提供的代码。将 `SampleUploader.swift`、`SocketConnection.swift`、`DarwinNotificationCenter.swift` 和 `Atomic.swift` 文件复制到扩展的文件夹中，并确保它们被添加到目标中。
 
-### Setting up the socket connection
+### 设置套接字连接
 
-Sending the recorded frames to RN WebRTC is done via Unix SOCK_STREAM sockets. The extension needs to be set up as the client endpoint for this.
+通过 Unix SOCK_STREAM 套接字将录制的帧发送到 RN WebRTC。扩展需要设置为客户端端点。
 
-We will update `SampleHandler.swift` to initiate the socket connection with RN WebRTC, using the `SocketConnection` class. But before, we have to set up the file that the sockets will use for communication.
+我们将更新 `SampleHandler.swift`，以使用 `SocketConnection` 类初始化与 RN WebRTC 的套接字连接。但在此之前，我们需要设置套接字将用于通信的文件。
 
-Even though an app extension bundle is nested within its containing app’s bundle, the running app extension and containing app have no direct access to each other’s containers. We will address this by enabling data sharing. To enable data sharing, use Xcode or the Developer portal to enable app groups for the containing app and its contained app extensions. Next, register the app group in the portal and specify the app group to use in the containing app. To learn about working with app groups, see [Adding an App to an App Group](https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW19).
+尽管应用扩展捆绑包嵌套在其包含应用的捆绑包中，但正在运行的应用扩展和包含应用之间没有直接访问彼此容器的权限。我们将通过启用数据共享来解决这个问题。使用 Xcode 或开发者门户为包含应用及其包含的应用扩展启用应用组。接下来，在门户中注册应用组，并在包含应用中指定要使用的应用组。要了解如何使用应用组，请参见 [添加应用到应用组](https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW19)。
 
-Now, add a `private var socketFilePath: String` to your `SampleHandler` class and set it up with a shared file named `rtc_SSFD`, using the newly registered app group, like this:
+现在，在 `SampleHandler` 类中添加 `private var socketFilePath: String`，并使用新注册的应用组设置共享文件名 `rtc_SSFD`，如下所示：
 
 ```swift
 private enum Constants {
@@ -428,7 +394,7 @@ private var socketFilePath: String {
 }
 ```
 
-Next, we will configure the `SocketConnection` to use the shared file. Add a `private var clientConnection: SocketConnection?` to the `SampleHandler` class and override `init` to set it up, like this:
+接下来，我们将配置 `SocketConnection` 使用共享文件。在 `SampleHandler` 类中添加 `private var clientConnection: SocketConnection?`，并重写 `init` 进行设置，如下所示：
 
 ```swift
 override init() {
@@ -439,13 +405,13 @@ override init() {
 } 
 ```
 
-In order for this to work, the RN WebRTC end needs to know about the app group identifier we have configured the app with. We are doing this by adding a new key named `RTCAppGroupIdentifier` to the app's `Info.plist` with the app group identifier as the value.
+为了使其工作，RN WebRTC 端需要知道我们为应用配置的应用组标识符。我们通过在应用的 `Info.plist` 中添加一个名为 `RTCAppGroupIdentifier` 的新键，并将应用组标识符作为值来实现。
 
-### Opening the socket connection
+### 打开套接字连接
 
-For starting screen sharing JitsiMeet SDK provides the UI to present the `RPSystemBroadcastPickerView` to the user. By default, the picker will display a list of all the available broadcast providers. In order to limit the picker to our particular broadcast provider, we have to set `preferredExtension` to the bundle identifier of the broadcast extension. We are doing this by adding a new key named `RTCScreenSharingExtension` to the app's Info.plist and setting the broadcast extension bundle identifier as the value.
+要开始屏幕共享，JitsiMeet SDK 提供 UI 来向用户展示 `RPSystemBroadcastPickerView`。默认情况下，选择器将显示所有可用的广播提供者。为了将选择器限制为我们的特定广播提供者，我们需要将 `preferredExtension` 设置为广播扩展的包标识符。我们通过在应用的 Info.plist 中添加一个名为 `RTCScreenSharingExtension` 的新键并将广播扩展的包标识符设置为值来实现。
 
-Once screen recording has started ReplayKit invokes the methods to handle video buffers, as well as the methods to handle starting and stopping the broadcast, from the `SampleHandler` class. The `broadcastStarted(withSetupInfo:)` method is our entry point for opening the socket connection with the RN WebRTC server. To do this we have to post the `broadcastStarted` notification the server is listening for, in order to start the connection, and we are ready to connect. Add a new method `openConnection()` to the `SampleHandler` class which will repeatedly attempt connecting to the server, for cases when the server connection start is delayed:
+一旦开始屏幕录制，ReplayKit 将调用 `SampleHandler` 类中的方法来处理视频缓冲区，以及启动和停止广播的方法。`broadcastStarted(withSetupInfo:)` 方法是我们打开与 RN WebRTC 服务器的套接字连接的入口点。为此，我们需要发布服务器正在监听的 `broadcastStarted` 通知，以便开始连接，我们准备连接。向 `SampleHandler` 类添加一个新的方法 `openConnection()`，该方法将重复尝试连接服务器，以防服务器连接启动延迟：
 
 ```swift
 func openConnection() {
@@ -464,7 +430,7 @@ func openConnection() {
 }
 ```
 
-Next, update the `broadcastStarted(withSetupInfo:)` method to post the notification and connect:
+接下来，更新 `broadcastStarted(withSetupInfo:)` 方法以发布通知并连接：
 
 ```swift
 override func broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?) {
@@ -473,19 +439,20 @@ override func broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?) {
 }
 ```
 
-`DarwinNotificationCenter` is a simple helper class for broadcasting system-wide notifications, instead of delivering only within a single program, as `NSNotificationCenter` does. This mechanism allows the app to register for notifications sent from the extension.
+`DarwinNotificationCenter` 是一个简单的助手类，用于广播系统范围的通知，而不仅仅是在单个程序内发送，正如 `NSNotificationCenter` 所做的那样。这种机制允许应用注册接收来自扩展的通知。
 
-Now we are ready to start sending video frames.
+现在我们准备开始发送视频帧。
 
-### Sending video frames
+### 发送视频帧
 
-RN WebRTC is designed to work with jpeg encoded images framed in a `CFHTTPMessage` object. The following header fields are required:
-- `Content-Length` - the size of the jpeg data
-- `Buffer-Width` - the width of the buffer, in pixels
-- `Buffer-Height` - the buffer height, in pixels
-- `Buffer-Orientation` - the value for the `RPVideoSampleOrientationKey` that describes the video orientation.
+RN WebRTC 设计用于处理编码为 jpeg 的图像，封装在 `CFHTTPMessage` 对象中。以下头字段是必需的：
 
-We are going to prepare and send our video frames using the `SampleUploader` class. Add a new `private var uploader: SampleUploader?` to the SampleHandler class and update `init()` to initialize it:
+- `Content-Length` - jpeg 数据的大小
+- `Buffer-Width` - 缓冲区的宽度，以像素为单位
+- `Buffer-Height` - 缓冲区的高度，以像素为单位
+- `Buffer-Orientation` - 描述视频方向的 `RPVideoSampleOrientationKey` 的值。
+
+我们将使用 `SampleUploader` 类准备并发送视频帧。在 `SampleHandler` 类中添加一个新的 `private var uploader: SampleUploader?`，并更新 `init()` 以初始化它：
 
 ```swift
 override init() {
@@ -497,13 +464,13 @@ override init() {
 }
 ```
 
-Next, we are going to update the `processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType)` method to send our video frames. For performance reasons, we'll also implement a very simple mechanism for adjusting the frame rate by using every third frame. Add a new `private var frameCount = 0` and update the above-mentioned method like this:
+接下来，我们将更新 `processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType)` 方法以发送视频帧。出于性能考虑，我们还将实现一个非常简单的机制，通过使用每第三帧来调整帧速率。在类中添加一个新的 `private var frameCount = 0`，并按如下方式更新上述方法：
 
 ```swift
 override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
     switch sampleBufferType {
     case .video:
-        // very simple mechanism for adjusting frame rate by using every third frame
+        // 通过使用每第三帧来实现帧速率调整的非常简单机制
         frameCount += 1
         if frameCount % 3 == 0 {
             uploader?.send(sample: sampleBuffer)
@@ -514,7 +481,7 @@ override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBuf
 }
 ```
 
-Also, update `broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?)` to reset the `frameCount` every time screen sharing is started:
+此外，更新 `broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?)`，在每次开始屏幕共享时重置 `frameCount`：
 
 ```swift
 override func broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?) {
@@ -525,15 +492,15 @@ override func broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?) {
 }
 ```
 
-With this, we've concluded sending the video frames and we can move to the last step, handling stop screen sharing.
+至此，我们已经完成了发送视频帧的工作，可以进入最后一步，处理停止屏幕共享。
 
-### Handling stop screen sharing
+### 处理停止屏幕共享
 
-Besides the in-meeting UI (screenshot 2), ReplayKit integration with iOS provides support for stopping screen recording outside of the app's control, from the status bar (screenshot 3) or using the Control Center (screenshot 4).
+除了会议中的用户界面（截图 2）外，ReplayKit 与 iOS 的集成还支持从状态栏（截图 3）或使用控制中心（截图 4）停止屏幕录制。
 
-![ios-screensharing](../assets/iOS_screensharing_2.png "screenshot 2") ![ios-screensharing](../assets/iOS_screensharing_3.png "screenshot 3") ![ios-screensharing](../assets/iOS_screensharing_4.png "screenshot 4") 
+![ios-screensharing](../assets/iOS_screensharing_2.png "截图 2") ![ios-screensharing](../assets/iOS_screensharing_3.png "截图 3") ![ios-screensharing](../assets/iOS_screensharing_4.png "截图 4") 
 
-Any of these actions will trigger `broadcastFinished` in our `SampleHandler` implementation. This is our entry point for closing the connection and cleaning up. We will update `broadcastFinished` to post a `DarwinNotification.broadcastStopped` system-wide notification and close the connection:
+任何这些操作都将触发我们 `SampleHandler` 实现中的 `broadcastFinished`。这是我们关闭连接和清理的入口点。我们将更新 `broadcastFinished`，以发布 `DarwinNotification.broadcastStopped` 的系统范围通知并关闭连接：
 
 ```swift
 override func broadcastFinished() {
@@ -542,7 +509,7 @@ override func broadcastFinished() {
 }
 ```
 
-Another scenario we need to take care of is when the server connection is dropped, like when leaving a meeting while screen sharing or an error is encountered. We will address this by handling `clientConnection.didClose` event. Add a new method `setupConnection` to the `SampleHandler` class and update `init` to call it:
+我们还需要处理另一种情况，即服务器连接中断，例如在屏幕共享时离开会议或遇到错误。我们将通过处理 `clientConnection.didClose` 事件来解决这个问题。在 `SampleHandler` 类中添加一个新方法 `setupConnection`，并更新 `init` 以调用它：
 
 ```swift
 func setupConnection() {
@@ -550,9 +517,9 @@ func setupConnection() {
         if let error = error {
             self?.finishBroadcastWithError(error)
         } else {
-            // the displayed failure message is more user friendly when using NSError instead of Error
+            // 使用 NSError 而不是 Error 会使显示的失败消息更友好
             let JMScreenSharingStopped = 10001
-            let customError = NSError(domain: RPRecordingErrorDomain, code: JMScreenSharingStopped, userInfo: [NSLocalizedDescriptionKey: "Screen sharing stopped"])
+            let customError = NSError(domain: RPRecordingErrorDomain, code: JMScreenSharingStopped, userInfo: [NSLocalizedDescriptionKey: "屏幕共享已停止"])
             self?.finishBroadcastWithError(customError)
         }
     }
@@ -569,7 +536,7 @@ override init() {
 }
 ```
 
-Now, that we are done writing the implementation, we just need to enable the functionality in Jitsi. We are doing this by configuring `JitsiMeetConferenceOptionsBuilder` with the `ios.screensharing.enabled feature` flag, like this:
+现在，我们已经完成了实现，只需在 Jitsi 中启用此功能。我们通过使用 `JitsiMeetConferenceOptionsBuilder` 配置 `ios.screensharing.enabled` 功能标志来实现，代码如下：
 
 ```swift
 let options = JitsiMeetConferenceOptions.fromBuilder { [weak self] builder in
@@ -579,23 +546,23 @@ let options = JitsiMeetConferenceOptions.fromBuilder { [weak self] builder in
 meetView.join(options)
 ```
 
-Finally, we are ready to test the implementation. Before doing so, make sure voip is added to `UIBackgroundModes`, in the app's `Info.playlist`, in order to work when the app is in the background.
+最后，我们准备测试该实现。在此之前，请确保将 voip 添加到应用的 `Info.plist` 中的 `UIBackgroundModes`，以便在应用在后台时仍能正常工作。
 
 ### TL;DR
 
-- Add a `Broadcast Upload Extension`, without UI, to your app. Update deployment info to run in iOS 14 or newer.
-- Copy `SampleUploader.swift`, `SocketConnection.swift`, `DarwinNotificationCenter.swift` and `Atomic.swift` files from the sample project to your extension. Make sure they are added to the extension's target.
-- Add both the app and the extension to the same App Group. Next, add the app group id value to the app's `Info.plist` for the `RTCAppGroupIdentifier` key.
-- Add a new key `RTCScreenSharingExtension` to the app's `Info.plist` with the extension's `Bundle Identifier` as the value.
-- Update `SampleHandler.swift` with the code from the sample project. Update `appGroupIdentifier` constant with the App Group name your app and extension are both registered to.
-- Update `JitsiMeetConferenceOptions` to enable screen sharing using the `ios.screensharing.enabled` feature flag.
-- Make sure `voip` is added to `UIBackgroundModes`, in the app's `Info.plist`, in order to work when the app is in the background.
+- 向应用添加一个没有 UI 的 `广播上传扩展`。将部署信息更新为在 iOS 14 或更高版本中运行。
+- 从示例项目中复制 `SampleUploader.swift`、`SocketConnection.swift`、`DarwinNotificationCenter.swift` 和 `Atomic.swift` 文件到扩展中。确保它们已添加到扩展的目标中。
+- 将应用和扩展添加到同一应用组。接下来，将应用组 ID 值添加到应用的 `Info.plist` 中的 `RTCAppGroupIdentifier` 键。
+- 在应用的 `Info.plist` 中添加一个新键 `RTCScreenSharingExtension`，其值为扩展的 `Bundle Identifier`。
+- 使用示例项目中的代码更新 `SampleHandler.swift`。将 `appGroupIdentifier` 常量更新为您的应用和扩展均注册的应用组名称。
+- 更新 `JitsiMeetConferenceOptions`，使用 `ios.screensharing.enabled` 功能标志启用屏幕共享。
+- 确保将 voip 添加到应用的 `Info.plist` 中的 `UIBackgroundModes`，以便在应用在后台时仍能正常工作。
 
-## Debugging
+## 调试
 
- - If you choose `Console` app for debugging, please be sure that you select:
-`Action`(tab) -> `Include Info Messages`
-`Action`(tab) -> `Include Debug Messages`
+- 如果您选择使用 `Console` 应用进行调试，请确保选择：
+  `Action`（选项卡） -> `Include Info Messages`
+  `Action`（选项卡） -> `Include Debug Messages`
 
- - In the Search filter please type `JitsiMeetSDK`, press Return key and replace `ANY` with `Category`.
-This will show you all the real time logs related to our SDK.
+- 在搜索过滤器中，请输入 `JitsiMeetSDK`，按回车键并将 `ANY` 替换为 `Category`。
+  这将显示与我们的 SDK 相关的所有实时日志。

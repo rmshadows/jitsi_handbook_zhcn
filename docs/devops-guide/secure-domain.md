@@ -1,32 +1,29 @@
 ---
 id: secure-domain
-title: Secure Domain setup
-sidebar_label: Authentication (Secure Domain)
+title: Secure Domain setup - 安全域配置
+sidebar_label: Authentication (Secure Domain) - 认证（安全域）
 ---
 
-It is possible to allow only authenticated users to create new conference
-rooms. Whenever a new room is about to be created, Jitsi Meet will prompt for
-a user name and password. After the room is created, others will be able to join
-from anonymous domain. Here's what has to be configured:
+可以设置为仅允许经过身份验证的用户创建新的会议室。当一个新的房间即将被创建时，Jitsi Meet 会提示输入用户名和密码。房间创建后，其他用户可以通过匿名域名加入会议。以下是需要配置的内容：
 
-## Prosody configuration
+## Prosody 配置
 
-If you have installed Jitsi Meet from the Debian package, these changes should be made in `/etc/prosody/conf.avail/[your-hostname].cfg.lua`
+如果你是通过 Debian 包安装的 Jitsi Meet，以下更改应在 `/etc/prosody/conf.avail/[your-hostname].cfg.lua` 文件中进行。
 
-### Enable authentication
+### 启用身份验证
 
-Inside the `VirtualHost "[your-hostname]"` block, replace anonymous authentication with hashed password authentication:
+在 `VirtualHost "[your-hostname]"` 块中，将匿名身份验证替换为哈希密码身份验证：
 
 ```
 VirtualHost "jitsi-meet.example.com"
     authentication = "internal_hashed"
 ```
 
-Replace `jitsi-meet.example.com` with your hostname.
+将 `jitsi-meet.example.com` 替换为你的主机名。
 
-### Enable anonymous login for guests
+### 启用访客的匿名登录
 
-Add this block **after the previous VirtualHost** to enable the anonymous login method for guests:
+**在前一个 VirtualHost 之后** 添加以下块以启用访客的匿名登录：
 
 ```
 VirtualHost "guest.jitsi-meet.example.com"
@@ -34,13 +31,13 @@ VirtualHost "guest.jitsi-meet.example.com"
     c2s_require_encryption = false
 ```
 
-_Note that `guest.jitsi-meet.example.com` is internal to Jitsi, and you do not need to (and should not) create a DNS record for it, or generate an SSL/TLS certificate, or do any web server configuration. While it is internal, you should still replace `jitsi-meet.example.com` with your hostname._
+_注意：`guest.jitsi-meet.example.com` 仅用于 Jitsi 内部，不需要（也不应该）为它创建 DNS 记录、生成 SSL/TLS 证书或进行任何 web 服务器配置。虽然它是内部使用的，但仍应将 `jitsi-meet.example.com` 替换为你的主机名。_
 
-## Jitsi Meet configuration
+## Jitsi Meet 配置
 
-In config.js, the `anonymousdomain` options has to be set.
+在 `config.js` 文件中，需要设置 `anonymousdomain` 选项。
 
-If you have installed jitsi-meet from the Debian package, these changes should be made in `/etc/jitsi/meet/[your-hostname]-config.js`.
+如果你是通过 Debian 包安装的 jitsi-meet，以下更改应在 `/etc/jitsi/meet/[your-hostname]-config.js` 文件中进行。
 
 ```
 var config = {
@@ -53,11 +50,9 @@ var config = {
 }
 ```
 
-## Jicofo configuration
+## Jicofo 配置
 
-When running Jicofo, specify your main domain in an additional configuration
-property. Jicofo will accept conference allocation requests only from the
-authenticated domain. This should go as a new 'authentication' section in `/etc/jitsi/jicofo/jicofo.conf`:
+运行 Jicofo 时，需在附加的配置属性中指定你的主域名。Jicofo 只会接受来自经过身份验证的域的会议分配请求。应在 `/etc/jitsi/jicofo/jicofo.conf` 文件中添加以下新的 `authentication` 部分：
 
 ```
 jicofo {
@@ -69,7 +64,7 @@ jicofo {
  ...
 ```
 
-When using token based authentication, the type must use `JWT` as the scheme instead:
+如果使用基于令牌的身份验证，类型应改为 `JWT`：
 
 ```
 jicofo {
@@ -81,14 +76,16 @@ jicofo {
  ...
 ```
 
-## Create users in Prosody (internal auth)
+## 在 Prosody 中创建用户（内部认证）
 
-Finally, run `prosodyctl` to create a user in Prosody:
+最后，运行 `prosodyctl` 来在 Prosody 中创建用户：
 
 ```
 sudo prosodyctl register <username> jitsi-meet.example.com <password>
 ```
-and then restart prosody, jicofo and jitsi-videobridge2
+
+然后重启 Prosody、Jicofo 和 jitsi-videobridge2：
+
 ```
 systemctl restart prosody
 systemctl restart jicofo
@@ -96,20 +93,20 @@ systemctl restart jitsi-videobridge2
 ```
 
 :::note
-Docker users may require an alternate config path.  Users of the official [`jitsi/prosody`](https://github.com/jitsi/docker-jitsi-meet) image should invoke `prosodyctl` as follows.
+Docker 用户可能需要使用替代的配置路径。使用官方 [`jitsi/prosody`](https://github.com/jitsi/docker-jitsi-meet) 镜像的用户应按如下方式调用 `prosodyctl`。
 
 ```
 prosodyctl --config /config/prosody.cfg.lua register <username> meet.jitsi <password>
 ```
 
-Full documentation for `prosodyctl` can be found on [the official site](https://prosody.im/doc/prosodyctl).
+关于 `prosodyctl` 的完整文档可以参考[官网](https://prosody.im/doc/prosodyctl)。
 :::
 
-## Optional: Jigasi configuration
+## 可选：Jigasi 配置
 
-### Enable Authentication
+### 启用身份验证
 
-If you are using Jigasi, set it to authenticate by editing the following lines in `/etc/jitsi/jigasi/sip-communicator.properties`:
+如果使用 Jigasi，可以通过编辑 `/etc/jitsi/jigasi/sip-communicator.properties` 文件中的以下行来启用身份验证：
 
 ````
 org.jitsi.jigasi.xmpp.acc.USER_ID=SOME_USER@SOME_DOMAIN
@@ -117,16 +114,16 @@ org.jitsi.jigasi.xmpp.acc.PASS=SOME_PASS
 org.jitsi.jigasi.xmpp.acc.ANONYMOUS_AUTH=false
 ````
 
-Note that the password is the actual plaintext password, not a base64 encoding.
+注意：密码为明文密码，而非 base64 编码。
 
-### Debugging
+### 调试
 
-If you experience problems with a certificate chain, you may need to uncomment the following line, also in `sip-communicator.properties`:
+如果遇到证书链问题，可能需要取消注释 `sip-communicator.properties` 文件中的以下行：
 
 ````
 net.java.sip.communicator.service.gui.ALWAYS_TRUST_MODE_ENABLED=true
 ````
 
 :::note
-This should only be used for testing/debugging purposes, or in controlled environments. If you confirm that this is the problem, you should then solve it in another way (e.g. get a signed certificate for Prosody, or add the particular certificate to Jigasi’s trust store).
+此设置仅应用于测试/调试或受控环境中。如果确认这是问题所在，应该通过其他方式解决（例如为 Prosody 获取签名证书，或将特定证书添加到 Jigasi 的信任库中）。
 :::

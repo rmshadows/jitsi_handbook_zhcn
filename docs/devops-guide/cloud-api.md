@@ -3,10 +3,11 @@ id: cloud-api
 title: Cloud API
 ---
 
-The Jitsi Meet Cloud API is a specification for services which can support the integration of Jitsi Meet into other applications, for mapping conferences for dial-in support, and for supporting directory search and user invitations to conferences.
+Jitsi Meet Cloud API 是一个用于支持 Jitsi Meet 集成到其他应用程序中的服务规范，提供对拨号支持会议的映射，以及支持目录搜索和邀请用户加入会议的功能。
 
-The swagger for these services is provided in [cloud-api.swagger](https://github.com/jitsi/jitsi-meet/blob/master/resources/cloud-api.swagger).
+这些服务的 [swagger](https://github.com/jitsi/jitsi-meet/blob/master/resources/cloud-api.swagger) 可在 GitHub 上找到。
 
-## Sample conference mapper application
+## 示例会议映射应用
 
-https://github.com/luki-ev/conferencemapper
+可以参考以下示例应用程序：
+[https://github.com/luki-ev/conferencemapper](https://github.com/luki-ev/conferencemapper)

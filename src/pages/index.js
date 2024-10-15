@@ -8,70 +8,60 @@ import styles from "./styles.module.css";
 
 const features = [
   {
-    title: <>Hey there Fellow Jitster!</>,
+    title: <>Jitsi用户，您好！</>,
     imageUrl: "img/undraw_code_review.svg",
     description: (
       <>
-        Jitsi Meet is a set of Open Source projects which empower users to
-        deploy secure, scalable and easy to use video conferencing platforms
-        with state-of-the-art video quality and features.
+        Jitsi Meet 是一组开源项目，旨在为用户提供安全、可扩展且易于使用的视频会议平台，同时具备最先进的视频质量和功能。
 
         <br/><br/>
 
-        On This site you'll find documentation for all your Jitsi needs.
+        在本网站上，你可以找到所有与 Jitsi 相关的文档资源。
 
         <br /><br/>
 
-        Get started <a href="docs/intro">here</a>.
+        让我们从 <a href="docs/intro">这里</a> 开始吧。
       </>
     ),
   },
   {
-    title: <>Batteries included</>,
+    title: <>功能齐全</>,
     imageUrl: "img/undraw_real_time_sync.svg",
     description: (
       <>
-        Jitsi Meet supports all common browsers and also mobile devices.
+        Jitsi Meet 支持所有主流浏览器以及移动设备。
         
         <br /><br />
 
-        Our APIs allow developers to easily integrate Jitsi Meet into existing
-        applications, whether those are web based or native mobile apps.
+        我们的 API 允许开发者轻松将 Jitsi Meet 集成到现有的应用程序中，无论是基于网页的应用，还是原生移动应用。
         
         <br /><br />
         
-        You can use our freely available instance at{" "}
+        你可以使用我们在 
+        {" "}
         <a href="https://meet.jit.si" target="_blank">
           meet.jit.si
-        </a>{" "}
-        or self-host it yourself using our readily available Debian packages or
-        comprehensive Docker setup.
+        </a>{" "} 
+        提供的免费实例，或通过现成的 Debian 软件包或全面的 Docker 配置，实现自主托管。
       </>
     ),
   },
   {
-    title: <>JaaS: Jitsi as a Service</>,
+    title: <>JaaS：Jitsi即服务(Jitsi as a Service)</>,
     imageUrl: "img/undraw_going_up.svg",
     description: (
       <>
-        Looking for configuration flexibility without the complexity of
-        self-hosting and scalability management?
+        想要在避免自托管和可扩展性管理复杂性的同时，获得灵活的配置选项？
         
         <br /><br />
         
-        Look no further than JaaS. 8x8 Jitsi as a Service (JaaS) is
-        an enterprise-ready video meeting platform that allows developers,
-        organizations and businesses to easily build and deploy video
-        solutions. With Jitsi as a Service we now give you all the power of
-        Jitsi running on our global platform so you can focus on building secure
-        and branded video experiences.
+        JaaS 是你的理想选择。8x8 提供的 Jitsi 即服务 (JaaS) 是一款企业级视频会议平台，允许开发者、组织和企业轻松构建并部署视频解决方案。通过 Jitsi 即服务，我们让你能够使用 Jitsi 的强大功能，运行在我们的全球平台上，让你专注于构建安全且具有品牌标识的视频体验。 
         
         <br /><br />
-        Check JaaS out{" "}
+        点击 此处了解更多 {" "}
         <a href="https://jaas.8x8.vc" target="_blank">
           here
-        </a>
-        .
+        </a> 信息。
       </>
     ),
   },
@@ -109,6 +99,10 @@ function Home() {
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <div>
+            先进的视频会议系统，支持自主托管<br/><br/>
+            <p>『翻译』日期：2024-10-11 来源：Jitsi-Meet中文交流群（246483851） —— Ryan Yim</p>
+          </div>
           <div className={styles.buttons}>
             <Link
               className={clsx(

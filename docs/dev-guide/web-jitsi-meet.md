@@ -1,74 +1,76 @@
 ---
 id: dev-guide-web-jitsi-meet
-title: Developer Guide for Jitsi Meet
-sidebar_label: Jitsi Meet development
+title: Developer Guide for Jitsi Meet - Jitsi Meet开发指南
+sidebar_label: Jitsi Meet development - Jitsi Meet开发
 ---
 
-This guide will help you setup a development environment to start working on the Jitsi Meet web app itself.
+本指南将帮助您设置开发环境，以开始在 Jitsi Meet 网络应用程序上进行工作。
 
-## Building the sources
+## 构建源代码
 
 :::note
-Node.js >= 16 and npm >= 8 are required.
+需要 Node.js >= 16 和 npm >= 8。
 :::
 
 :::caution
-Windows is not supported.
+不支持 Windows。
 :::
 
-On Debian/Ubuntu systems, the required packages can be installed with:
-- Download "Linux Binaries (x64)" from https://nodejs.org/en/download/
-- Install Node.js following these instructions: https://github.com/nodejs/help/wiki/Installation
+在 Debian/Ubuntu 系统上，可以通过以下方式安装所需的软件包：
 
-Then go ahead:
+- 从 https://nodejs.org/en/download/ 下载“Linux Binaries (x64)”。
+- 按照以下说明安装 Node.js：[Node.js 安装说明](https://github.com/nodejs/help/wiki/Installation)。
+
+然后继续：
+
 ```bash
-# Clone the repository
+# 克隆代码库
 git clone https://github.com/jitsi/jitsi-meet
 cd ./jitsi-meet
 
 npm install
 
-# To build the Jitsi Meet application, just type
+# 构建 Jitsi Meet 应用程序，只需输入
 make
 ```
 
 :::warning
-**DO NOT** run `npm update` or use `yarn` or delete `package-lock.json`. Dependencies are pinned for a reason.
+**不要**运行 `npm update` 或使用 `yarn`，也不要删除 `package-lock.json`。依赖项被固定是有原因的。
 :::
 
-### Running with webpack-dev-server for development
+### 使用 webpack-dev-server 进行开发运行
 
-Use the following command in your terminal:
+在终端中使用以下命令：
 
 ```bash
 make dev
 ```
 
-By default the backend deployment used is `alpha.jitsi.net`. You can point the Jitsi Meet app at a different backend by using a proxy server. To do this, set the WEBPACK_DEV_SERVER_PROXY_TARGET variable:
+默认情况下，使用的后端部署为 `alpha.jitsi.net`。您可以通过使用代理服务器将 Jitsi Meet 应用指向其他后端。为此，请设置 `WEBPACK_DEV_SERVER_PROXY_TARGET` 变量：
 
 ```bash
 export WEBPACK_DEV_SERVER_PROXY_TARGET=https://your-example-server.com
 make dev
 ```
 
-The app should be running at https://localhost:8080/
+应用程序应该在 https://localhost:8080/ 上运行。
 
-#### Certificate Error
+#### 证书错误
 
-Browsers may show a certificate error since the development certificate is self-signed. It's safe to disregard those
-warning and continue to your site.
+浏览器可能会显示证书错误，因为开发证书是自签名的。可以安全地忽略这些警告并继续访问您的网站。
 
-### Building .debs
+### 构建 .debs 文件
 
-To make a deb you can easily deploy to a public test server, ensure you have the lib-jitsi-meet sources you wish, then:
+要制作一个可以轻松部署到公共测试服务器的 deb，确保您拥有所需的 lib-jitsi-meet 源代码，然后：
+
 ```
 npm install
 make
 dpkg-buildpackage -A -rfakeroot -us -uc -tc
 ```
 
-You'll have a bunch of .deb files in the parent directory, and can push the updated source to your server and install it with the jitsi-meet-web deb file.
+您将在上级目录中获得一堆 .deb 文件，并可以将更新的源代码推送到您的服务器并使用 jitsi-meet-web deb 文件安装它。
 
-### Running from source on existing deployment
+### 从现有部署的源代码运行
 
-Follow the document https://community.jitsi.org/t/how-to-how-to-build-jitsi-meet-from-source-a-developers-guide/75422
+请参阅文档 [如何从源代码构建 Jitsi Meet：开发者指南](https://community.jitsi.org/t/how-to-how-to-build-jitsi-meet-from-source-a-developers-guide/75422)。

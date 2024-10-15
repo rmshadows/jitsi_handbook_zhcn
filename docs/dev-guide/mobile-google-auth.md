@@ -1,25 +1,15 @@
 ---
 id: mobile-google-auth
-title: Setting up Google sign-in integration
+title: Setting up Google sign-in integration - 设置 Google 登录集成
 ---
 
-- Create a Firebase project here: https://firebase.google.com/. You'll need a
-signed Android build for that, that can be a debug self-signed build too, just
-retrieve the signing hash. The key hash of an already signed ap can be obtained
-as follows (on macOS): ```keytool -list -printcert -jarfile the-app.apk```
-- Place the generated ```google-services.json``` file in ```android/app```
-for Android and the ```GoogleService-Info.plist``` into ```ios/app``` for
-iOS (you can stop at that step, no need for the driver and the code changes they
-suggest in the wizard).
-- You may want to exclude these files in YOUR GIT config (do not exclude them in
-the ```.gitignore``` of the application itself!).
-- Your web client ID is auto generated during the Firebase project
- creation. Find them in the Google Developer console
- (https://console.developers.google.com/)
-- Make sure your config reflects this ID by setting
-```googleApiApplicationClientID``` in config.js.
-- Add your iOS client ID (the REVERSED_CLIENT_ID in the plist file) as an
-application URL schema into ```ios/app/src/Info.plist```
-(replacing placeholder).
-- Enable YouTube API access on the developer console (see above) to enable live
-streaming.
+- 在此处创建 Firebase 项目：https://firebase.google.com/。您需要一个已签名的 Android 构建，您也可以使用调试自签名构建，只需获取签名哈希即可。已签名应用的密钥哈希可以通过以下方式获取（在 macOS 上）：
+  ```bash
+  keytool -list -printcert -jarfile the-app.apk
+  ```
+- 将生成的 `google-services.json` 文件放置在 `android/app` 中，iOS 的 `GoogleService-Info.plist` 文件放置在 `ios/app` 中（您可以在此步骤停止，不需要执行向导中建议的驱动程序和代码更改）。
+- 您可能希望在您的 GIT 配置中排除这些文件（请勿在应用程序本身的 `.gitignore` 中排除它们！）。
+- 您的网络客户端 ID 在创建 Firebase 项目时会自动生成。可以在 Google 开发者控制台中找到它们（https://console.developers.google.com/）。
+- 确保您的配置反映此 ID，通过在 config.js 中设置 `googleApiApplicationClientID`。
+- 将您的 iOS 客户端 ID（plist 文件中的 REVERSED_CLIENT_ID）作为应用程序 URL 架构添加到 `ios/app/src/Info.plist` 中（替换占位符）。
+- 在开发者控制台中启用 YouTube API 访问（见上文），以启用直播。

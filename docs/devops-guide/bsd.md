@@ -1,29 +1,29 @@
 ---
 id: devops-guide-bsd
-title: Self-Hosting Guide - FreeBSD/NetBSD/OpenBSD
+title: 自托管指南 - FreeBSD/NetBSD/OpenBSD
 sidebar_label: BSD
 ---
 
-This document is a reference point for pointing to the upstream packages provided by the FreeBSD, NetBSD and OpenBSD distributions. Jitsi only officially supports Linux, for any problems with the BSD packages you can contact their respective mailing lists.
+本文档意在作为 FreeBSD、NetBSD 和 OpenBSD 发行版中上游软件包的参考点。Jitsi 官方仅支持 Linux，关于 BSD 软件包的任何问题，请联系相应的邮件列表。
 
-__Note__: Many of the installation steps require root access.
+__注意__：许多安装步骤需要 root 权限。
 
 ## FreeBSD
 
-FreeBSD provides ports for [Jitsi](https://www.freshports.org/net-im/jitsi-meet-full) along with documentation on how to configure it and the current limitations - https://wiki.freebsd.org/Jitsi.
+FreeBSD 提供了 [Jitsi](https://www.freshports.org/net-im/jitsi-meet-full) 的端口以及如何配置它和当前限制的文档：https://wiki.freebsd.org/Jitsi。
 
-Jitsi can be installed using the meta port [net-im/jitsi-meet-full](https://www.freshports.org/net-im/jitsi-meet-full) which pulls in Jitsi Videobridge, Jicofo and Jitsi Meet Web UI, along with prosody, the Jitsi prosody plugins, nginx and other required dependencies. Instructions on how to build the port can be read on the FreeBSD Foundation site - https://freebsdfoundation.org/freebsd-project/resourcesold/installing-a-port-on-freebsd/.
+可以通过 [net-im/jitsi-meet-full](https://www.freshports.org/net-im/jitsi-meet-full) 元端口（meta port）安装 Jitsi，它包含 Jitsi Videobridge、Jicofo 和 Jitsi Meet Web UI，以及 prosody、Jitsi prosody 插件、nginx 和其他所需的依赖项。有关如何构建端口的说明可以在 FreeBSD 基金会网站上找到：https://freebsdfoundation.org/freebsd-project/resourcesold/installing-a-port-on-freebsd/。
 
 ## NetBSD
 
-NetBSD provides individual ports for [Jitsi Videobridge](https://pkgsrc.se/chat/jitsi-videobridge), [Jicofo](https://pkgsrc.se/chat/jicofo), [Jitsi prosody plugins](https://pkgsrc.se/chat/jitsi-meet-prosody) and [Jitsi Meet Web UI](https://pkgsrc.se/wip/jitsi-meet). They can be installed using the command `pkg_add <pkg-name>`.
+NetBSD 提供了 [Jitsi Videobridge](https://pkgsrc.se/chat/jitsi-videobridge)、[Jicofo](https://pkgsrc.se/chat/jicofo)、[Jitsi prosody 插件](https://pkgsrc.se/chat/jitsi-meet-prosody) 和 [Jitsi Meet Web UI](https://pkgsrc.se/wip/jitsi-meet) 的独立端口。可以使用命令 `pkg_add <pkg-name>` 安装它们。
 
 ## OpenBSD
 
-OpenBSD provides ports for [Jitsi](https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/meta/jitsi/), along with a pkg-readme which details how to configure Jitsi for a single host install, located at [/usr/local/share/docs/pkg-readme/jitsi](https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/meta/jitsi/pkg/).
+OpenBSD 提供了 [Jitsi](https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/meta/jitsi/) 的端口，并附带了如何配置 Jitsi 以进行单主机安装的详细说明，位于 [/usr/local/share/docs/pkg-readme/jitsi](https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/meta/jitsi/pkg/)。
 
-The meta port can be installed by the command `pkg_add jitsi`, which pulls in the individual ports, Jitsi Videobridge, Jicofo and Jitsi Meet Web UI, along with prosody, Jitsi prosody plugins and other required dependencies.
+可以通过命令 `pkg_add jitsi` 安装元端口（meta port），该端口包含 Jitsi Videobridge、Jicofo 和 Jitsi Meet Web UI 以及 prosody、Jitsi prosody 插件和其他必要的依赖项。
 
-## Limitations
+## 限制
 
-- Jigasi and Jibri have not yet been ported to work with any BSD systems.
+- Jigasi 和 Jibri 尚未移植到任何 BSD 系统。

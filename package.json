@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "examples": "docusaurus-examples",
-    "start": "docusaurus start",
+    "start": "PORT=20003 docusaurus start",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
     "publish-gh-pages": "docusaurus-publish",

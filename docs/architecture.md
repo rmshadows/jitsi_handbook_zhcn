@@ -1,63 +1,73 @@
 ---
 id: architecture
-title: Architecture
+title: Architecture - 架构
 ---
 
-In this section, a global overview of the Jitsi infrastructure is provided. If you just started contributing to the project, we highly recommend reading this section thoroughly.
+本节提供了 Jitsi 基础设施的全局概览。如果你刚开始为该项目做贡献，我们强烈建议你仔细阅读本节内容。
 
 
-## Components
-Jitsi comprises a [collection of projects](https://jitsi.org/projects/):
+## 组件
+Jitsi 包含以下 [项目](https://jitsi.org/projects/) ：
 
-* [Jitsi Meet](https://jitsi.org/jitsi-meet) - WebRTC compatible JavaScript application that uses Jitsi Videobridge to provide high-quality, scalable video conferences. Build upon React and React Native.
-* [Jitsi Videobridge (JVB)](https://jitsi.org/jitsi-videobridge) - WebRTC compatible server designed to route video streams amongst participants in a conference.
-* [Jitsi Conference Focus (jicofo)](https://github.com/jitsi/jicofo) - server-side focus component used in Jitsi Meet conferences that manages media sessions and acts as a load balancer between each of the participants and the videobridge.
-* [Jitsi Gateway to SIP (jigasi)](https://github.com/jitsi/jigasi) - server-side application that allows regular SIP clients to join Jitsi Meet conferences
-* [Jitsi Broadcasting Infrastructure (jibri)](https://github.com/jitsi/jibri) - set of tools for recording and/or streaming a Jitsi Meet conference that works by launching a Chrome instance rendered in a virtual framebuffer and capturing and encoding the output with ffmpeg.
+* [Jitsi Meet](https://jitsi.org/jitsi-meet) - 一个兼容 WebRTC 的 JavaScript 应用程序，使用 Jitsi Videobridge 提供高质量、可扩展的视频会议。基于 React 和 React Native 构建。
+* [Jitsi Videobridge (JVB)](https://jitsi.org/jitsi-videobridge) - 兼容 WebRTC 的服务器，旨在充当会议参与者之间的视频流路由。
+* [Jitsi Conference Focus (jicofo)](https://github.com/jitsi/jicofo) -  Jitsi Meet 会议中的服务器端焦点组件，负责管理媒体会话，并作为参与者和 videobridge 之间的负载均衡器。
+* [Jitsi Gateway to SIP (jigasi)](https://github.com/jitsi/jigasi) - 服务器端应用程序，允许常规 SIP 客户端加入 Jitsi Meet 会议。
+* [Jitsi Broadcasting Infrastructure (jibri)](https://github.com/jitsi/jibri) - 一组用于录制和/或直播 Jitsi Meet 会议的工具，通过启动一个在虚拟帧缓冲区中呈现的 Chrome 实例，并使用 ffmpeg 捕获和编码输出。
 
-External Software used by Jitsi:
-* [Prosody](https://prosody.im/) - XMPP server used for signalling
+Jitsi 使用的外部软件：
+* [Prosody](https://prosody.im/) - 用于信令的 XMPP 服务器。
 
 
-## Architecture Diagram
-The individual connections between the previously described components, as well as their external integrations are described in the figure below.
+## 架构示意图
+下图描述了之前提到的各个组件之间的具体连接关系，以及它们与外部系统的集成方式。
 
-![](https://raw.githubusercontent.com/jitsi/handbook/master/docs/assets/ArchitectureDiagram.png)
 
-The external connections can be categorized into two main groups. Firstly, the connections between clients that request a video or audio connection are performed through remote requests and data streams. The second category of external connections is those to external services that help store recordings, stream recordings, stream videos, or help with creating meetings.
 
-## Code Map
-In this section, we will look at the main parts of the codebase and see what they can be used for.
+![](oimg/ArchitectureDiagram.png)
+
+
+
+外部通讯可以分为两个主要组别。首先，客户端之间请求视频或音频连接的通讯是通过远程请求和数据流进行的。第二类外部通讯是与外部服务的连接，这些服务帮助存储录音、直播录音、流媒体视频或协助创建会议。
+
+## 代码结构
+
+在本节中，我们将查看代码库的主要部分，并了解它们的用途。
 
 **./react/features**
-This folder is where it is best to start writing your code, as it contains most of the app components that are used in the apps on Android and iOS, as well as on the web version. This source folder is split up into all the different features that Jitsi has to offer, such as authentication, chat interaction, keyboard shortcuts, screenshot capture, remote control, and virtual background. Each of these features has a folder in this map, which is then again split up to keep a hierarchy and consistency throughout the code.
 
-Each feature folder consists of a subfolder called components, in this folder all of the React, or React Native for mobile, components are expressed. Usually, in this folder there will be a separation between native and web components, however, in some cases, the same component could be used for both Android, iOS, and web browsers, in which case there is no separation made.
+此文件夹是编写代码的最佳起点，因为它包含 Android、iOS 和网页版本应用中使用的大部分组件。该源文件夹根据 Jitsi 提供的不同功能进行划分，例如身份验证、聊天交互、键盘快捷键、截图、远程控制和虚拟背景。每个功能都有一个对应的文件夹，并进一步细分，以保持代码的层次结构和一致性。
 
-As stated before, the codebase mostly consists of React and React Native, which is the React version for mobile applications. Most of the features make use of the so-called class component by React [^class-comp], however, some new features start to use the new way to write functional components by using hooks[^func-comp].
+如前所述，代码库主要由 React 和 React Native 组成，后者是移动应用的 React 版本。大多数功能使用 React 的所谓类组件[^class-comp]，不过一些新功能开始使用 hooks[^func-comp] 这一新的方式来编写功能组件。
 
-The application makes use of React Redux as well, this is used as a general state store to keep track of important parameters that are used throughout the application. More on React Redux can be found here [^react-redux].
+该应用还使用 React Redux，作为一个通用状态存储，用于跟踪整个应用程序中使用的重要参数。有关 React Redux 的更多信息，请参见 [^react-redux]。
 
-Most features also contain a file called `middleware.js`. This file acts as a bridge between the component and the functionality of the rest of the application.
+大多数功能还包含一个名为 `middleware.js` 的文件。该文件充当组件与应用程序其他功能之间的桥梁。
 
 **./modules/external-api**
-In this folder, the external API can be found. This API can be used in various events like participants joining/leaving the meeting, changes in avatars or chat, as well as errors in using the microphone or camera.
+
+在此文件夹中，可以找到外部 API。该 API 可用于多种事件，如参与者加入/离开会议、头像或聊天的变化，以及使用麦克风或摄像头时的错误处理。
 
 **./android and ./ios**
-Both of these folders contain the basics of the Android and iOS apps respectively. However, the code for the application itself and its components can be found in the **react/features** folder, which is explained earlier in this section.
+
+这两个文件夹分别包含 Android 和 iOS 应用的基础内容。然而，应用程序本身及其组件的代码位于 **react/features** 文件夹中，该文件夹的详细说明已在本节前面介绍。
 
 **./conference.js**
-This file can be found at the root of the project and contains the foundation of any interaction between a user and a conference room. This consists of setting up a connection to it, joining the meeting room, muting and unmuting, but also functions to gather information about the participants that are in the room.
+
+此文件位于项目根目录中，包含用户与会议室之间所有交互的基础内容。它包括建立连接、加入会议室、静音与取消静音等功能，还负责收集会议室中参与者的信息。
 
 **./lang**
-This folder contains all the different translations that are present in Jitsi Meet. The translations can be found in the code with each of the keys in the translation maps that can be found in the `main-[language].json` files.
+
+该文件夹包含 Jitsi Meet 中的所有不同语言翻译。翻译内容可以在代码中通过翻译映射中的键找到，这些键位于 `main-[language].json` 文件中。
 
 **./css**
-This folder contains all the CSS that is used in the project. The files (mostly .scss files[^scss]) are split up into features like the React features that they are used in.
 
-## Testing
-The main form of testing code changes is done through torture tests, next to this the code is tested manually.
+该文件夹包含项目中使用的所有 CSS 文件。文件（主要是 .scss 文件[^scss]）按照它们所应用的功能进行划分，与 React 功能类似。
 
-The torture tests are located in a separate repository, [Jitsi Meet Torture](https://github.com/jitsi/jitsi-meet-torture). The project contains end-to-end tests for several key functions such as peer-to-peer and invites. The testing can be done for iOS, Android, and the web, which are all the platforms that Jitsi Meet can be used on. The testing is done automatically for pull requests by project members, where it is used in combination with the continuous integration by a Jenkins instance running the tests, testing on the [meet.jit.si](https://meet.jit.si) instance. Other members can run the tests locally. The test results can be viewed on an automatically generated web page.
+## 测试
 
-Manual testing is performed while doing code reviews, however, there are also testing releases that can be freely downloaded and deployed or can be used on the [beta test server](https://beta.meet.jit.si/).
+主要的代码更改测试通过自动化压力测试完成，除此之外还进行手动测试。
+
+压力测试位于一个单独的代码库 [Jitsi Meet Torture](https://github.com/jitsi/jitsi-meet-torture) 中。该项目包含多个关键功能的端到端测试，如点对点连接和邀请功能。测试可在 iOS、Android 和网页端进行，涵盖 Jitsi Meet 支持的所有平台。对于项目成员的拉取请求，测试将通过 Jenkins 实例与持续集成相结合自动运行，测试基于 [meet.jit.si](https://meet.jit.si) 实例。其他成员也可以在本地运行这些测试，测试结果会显示在自动生成的网页上。
+
+手动测试在代码审查时进行，此外，还有可以免费下载和部署的测试版本，或在 [beta 测试服务器](https://beta.meet.jit.si/) 上进行测试。

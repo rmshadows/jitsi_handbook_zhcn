@@ -1,83 +1,83 @@
 ---
 id: dev-guide-iframe-events
-title: Events
+title: Events - 事件
 ---
 
-The `JitsiMeetExternalAPI` object implements the [EventEmitter] API for emitting and listening for events.
+`JitsiMeetExternalAPI` 对象实现了 [EventEmitter] API，用于发出和监听事件。
 
-You can add event listeners to the embedded Jitsi Meet using the **`addListener`** method:
+您可以使用 **`addListener`** 方法向嵌入的 Jitsi Meet 添加事件监听器：
 
 ```javascript
 api.addListener(event, listener);
 ```
 
-If you want to remove a listener you can use the **`removeListener`** method:
+如果您想移除一个监听器，可以使用 **`removeListener`** 方法：
 
 ```javascript
 api.removeListener(event, listener);
 ```
 
-The **`event`** parameter is a string object with the name of the event.
+**`event`** 参数是一个字符串对象，表示事件的名称。
 
-The **`listener`** parameter is a function object with one argument that creates a notification when the event occurs along with related event data.
+**`listener`** 参数是一个函数对象，带有一个参数，当事件发生时会创建一个通知，并附带相关事件数据。
 
-The following events are currently supported:
+目前支持以下事件：
 
 ### cameraError
 
-Provides event notifications about Jitsi Meet having failed to access the meeting camera.
+提供有关 Jitsi Meet 无法访问会议摄像头的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    type: string, // A constant representing the overall type of the error.
-    message: string // Additional information about the error.
+    type: string, // 表示错误的总体类型的常量。
+    message: string // 有关错误的附加信息。
 }
 ```
 
 ### avatarChanged
 
-Provides event notifications about changes to a participant's avatar.
+提供有关参与者头像变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string, // the id of the participant that changed his avatar.
-    avatarURL: string // the new avatar URL.
+    id: string, // 改变头像的参与者的 ID。
+    avatarURL: string // 新的头像 URL。
 }
 ```
 
 ### audioAvailabilityChanged
 
-Provides event notifications about changes to audio availability status.
+提供有关音频可用状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    available: boolean // new available status - boolean
+    available: boolean // 新的可用状态 - 布尔值
 }
 ```
 
 ### audioMuteStatusChanged
 
-Provides event notifications about changes to audio mute status.
+提供有关音频静音状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    muted: boolean // new muted status - boolean
+    muted: boolean // 新的静音状态 - 布尔值
 }
 ```
 
 ### breakoutRoomsUpdated
 
-Provides notifications about breakout rooms changes.
+提供有关突发房间变化的通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
@@ -98,12 +98,11 @@ The listener receives an object with the following structure:
 }
 ```
 
-
 ### browserSupport
 
-Provides event notifications about the current browser support.
+提供有关当前浏览器支持的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
@@ -113,9 +112,9 @@ The listener receives an object with the following structure:
 
 ### contentSharingParticipantsChanged
 
-Provides real-time list of currently screen sharing participant ID's.
+提供当前正在共享屏幕的参与者 ID 的实时列表。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
@@ -125,83 +124,83 @@ The listener receives an object with the following structure:
 
 ### dataChannelOpened
 
-Indicates the data channel is open and thus messages can be sent over it.
+指示数据通道已打开，因此可以通过它发送消息。
 
 ### endpointTextMessageReceived
 
-Provides event notifications about a text messages received through data channels.
+提供通过数据通道接收到的文本消息的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
     senderInfo: {
-        jid: string, // the jid of the sender
-        id: string // the participant id of the sender
+        jid: string, // 发送者的 jid
+        id: string // 发送者的参与者 ID
     },
     eventData: {
-        name: string, // the name of the datachannel event: `endpoint-text-message`
-        text: string // the received text from the sender
+        name: string, // 数据通道事件的名称：`endpoint-text-message`
+        text: string // 来自发送者的接收到的文本
     }
 }
 ```
 
 ### nonParticipantMessageReceived
 
-Provides event notifications about a messages sent by a non-participant, e.g. a custom prosody message.
+提供有关非参与者发送的消息的事件通知，例如自定义 prosody 消息。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-        id: string, // the id of the message, may be null
-        message: string // the message received
+        id: string, // 消息的 ID，可能为 null
+        message: string // 接收到的消息
 }
 ```
 
 ### faceLandmarkDetected
 
-Provides event notifications when a face landmark is detected
+提供有关检测到面部地标的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
     faceBox: {
-        left: number, // face bounding box distance as percentage from the left video edge
-        right: number // face bounding box distance as percentage from the right video edge
-        width: number // face bounding box width as percentage of the total video width
-    }, // this might be undefined if config.faceLandmarks.faceCenteringThreshold is not passed
-    faceExpression: string // check https://github.com/jitsi/jitsi-meet/blob/master/react/features/face-landmarks/constants.js#L3 for available values
+        left: number, // 面部边界框距离左侧视频边缘的百分比
+        right: number, // 面部边界框距离右侧视频边缘的百分比
+        width: number // 面部边界框宽度占总视频宽度的百分比
+    }, // 如果未传递 config.faceLandmarks.faceCenteringThreshold，则可能为未定义
+    faceExpression: string // 请检查 https://github.com/jitsi/jitsi-meet/blob/master/react/features/face-landmarks/constants.js#L3 获取可用值
 }
 ```
 
 ### errorOccurred
 
-Provides event notifications about an error which has occurred.
+提供有关发生的错误的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    details: Object?, // additional error details
-    message: string?, // the error message
-    name: string, // the coded name of the error
-    type: string, // error type/source, one of : 'CONFIG', 'CONNECTION', 'CONFERENCE'
-    isFatal: boolean // whether this is a fatal error which triggered a reconnect overlay or not
+    details: Object?, // 附加错误细节
+    message: string?, // 错误消息
+    name: string, // 错误的编码名称
+    type: string, // 错误类型/来源，可能为：'CONFIG'，'CONNECTION'，'CONFERENCE'
+    isFatal: boolean // 这是否是导致重连覆盖的致命错误
 }
 ```
 
 ### knockingParticipant
 
-Provides event notifications about a knocking participant in the lobby.
+提供有关大厅中敲门参与者的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
     participant: {
-        // the id and name of the participant that is currently knocking in the lobby
+        // 当前在大厅敲门的参与者的 ID 和名称
         id: string,
         name: string
     }
@@ -210,56 +209,53 @@ The listener receives an object with the following structure:
 
 ### largeVideoChanged
 
-Provides event notifications about changes in the large video display.
+提供有关大视频显示变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string // id of the participant that is now on large video in the stage view.
+    id: string // 现在在大视频舞台视图中的参与者的 ID。
 }
 ```
 
 ### log
 
-Provides log event notifications with the log level being one of the values specified in the [config.js] file in the **`apiLogLevels`** property (if not specified the event does not fire).
+提供日志事件通知，日志级别是 [config.js] 文件中 **`apiLogLevels`** 属性中指定的值之一（如果未指定，则不会触发事件）。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    logLevel: string, // A constant representing the log type (info, error, debug, warn).
-    args: string // Additional log information.
+    logLevel: string, // 表示日志类型的常量（info, error, debug, warn）。
+    args: string // 附加日志信息。
 }
 ```
 
 ### micError
 
-Provides event notifications about Jitsi Meet issues with mic access.
+提供有关 Jitsi Meet 与麦克风访问问题的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    type: string, // A constant representing the overall type of the error.
-    message: string // Additional information about the error.
+    type: string, // 表示错误的总体类型的常量。
+    message: string // 有关错误的附加信息。
 }
 ```
 
 ### screenSharingStatusChanged
 
-Provides event notifications about either turning on or off local user screen sharing.
+提供有关本地用户屏幕共享开启或关闭的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    on: boolean, //whether screen sharing is on
+    on: boolean, // 是否开启屏幕共享
     details: {
-
-        // From where the screen sharing is capturing, if known. Values which are
-        // passed include 'window', 'screen', 'proxy', 'device'. The value undefined
-        // will be passed if the source type is unknown or screen share is off.
+        // 如果已知，屏幕共享的捕获来源。传递的值包括 'window'，'screen'，'proxy'，'device'。如果源类型未知或屏幕共享关闭，则会传递未定义的值。
         sourceType: string|undefined
     }
 }
@@ -267,73 +263,74 @@ The listener receives an object with the following structure:
 
 ### dominantSpeakerChanged
 
-Provides event notifications about dominant speaker changes.
+提供有关主导发言者变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string //participantId of the new dominant speaker
+    id: string // 新主导发言者的参与者 ID
 }
 ```
 
 ### raiseHandUpdated
 
-Provides event notifications about the participant raising/lowering the hand.
+提供有关参与者举手/放下手的事件通知。
 
-The listener will receive an object with the following structure:
+监听器将接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string,         // participantId of the user who raises/lowers the hand
-    handRaised: number  // 0 when hand is lowered and the hand raised timestamp when raised.
+    id: string,         // 举手/放下手的用户的参与者 ID
+    handRaised: number  // 当手被举起时的时间戳，放下手时为 0。
 }
 ```
 
 ### tileViewChanged
 
-Provides event notifications about entrance or exit from the tile view layout mode.
+提供有关进入或退出瓷砖视图布局模式的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    enabled: boolean, // whether tile view is not displayed or not
+    enabled: boolean, // 瓷砖视图是否未显示
 }
 ```
 
 ### chatUpdated
 
-Provides event notifications about chat state being updated.
+提供有关聊天状态更新的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    isOpen: boolean, // Whether the chat panel is open or not
-    unreadCount: number // The unread messages counter
+    isOpen: boolean, // 聊天面板是否打开
+    unreadCount: number // 未读消息计数
 }
 ```
 
 ### incomingMessage
 
-Provides event notifications about incoming chat messages.
+提供有关收到聊天消息的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    from: string, // The id of the user that sent the message
-    nick: string, // the nickname of the user that sent the message
-    privateMessage: boolean, // whether this is a private or group message
-    message: string // the text of the message
+    from: string, // 发送消息的用户的 ID
+    nick: string, // 发送消息的用户的昵称
+    privateMessage: boolean, // 是否为私人消息或群组消息
+    message: string // 消息文本
 }
 ```
 
 ### mouseEnter
 
-Provides event notifications when mouse enters the iframe.
-The listener receives an object with the following structure based on [MouseEvent]:
+提供鼠标进入 iframe 时的事件通知。
+
+监听器接收一个具有以下结构的对象，基于 [MouseEvent]：
 
 ```javascript
 {
@@ -356,8 +353,9 @@ The listener receives an object with the following structure based on [MouseEven
 
 ### mouseLeave
 
-Provides event notifications when mouse leaves the iframe.
-The listener receives an object with the following structure based on [MouseEvent]:
+提供鼠标离开 iframe 时的事件通知。
+
+监听器接收一个具有以下结构的对象，基于 [MouseEvent]：
 
 ```javascript
 {
@@ -380,10 +378,11 @@ The listener receives an object with the following structure based on [MouseEven
 
 ### mouseMove
 
-Provides event notifications when mouse moves inside the iframe.
-Tis event is triggered on an interval which can be configured by overriding the config.js mouseMoveCallbackInterval property.
+提供鼠标在 iframe 内移动时的事件通知。
 
-The listener receives an object with the following structure based on [MouseEvent]:
+该事件在可以通过覆盖 config.js 中的 mouseMoveCallbackInterval 属性进行配置的间隔内触发。
+
+监听器接收一个具有以下结构的对象，基于 [MouseEvent]：
 
 ```javascript
 {
@@ -406,370 +405,368 @@ The listener receives an object with the following structure based on [MouseEven
 
 ### participantMenuButtonClick
 
-Provides event notifications about a participant context menu button being clicked.
+提供关于参与者上下文菜单按钮被点击的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    key: string, // the pressed button's key. The key is as defined in `toolbarButtons` config,
-    participantId: string, // the id of the participant for which the button was clicked,
-    preventExecution: boolean // whether the execution of the button click was prevented or not
+    key: string, // 被按下的按钮键。键是 `toolbarButtons` 配置中定义的，
+    participantId: string, // 被点击按钮的参与者的 ID，
+    preventExecution: boolean // 按钮点击的执行是否被阻止
 }
 ```
 
 ### toolbarButtonClicked
 
-Provides event notifications about a toolbar button being clicked and whether the click routine was executed or not.
-For overriding a button's click, please use the following config overwrite:
+提供关于工具栏按钮被点击的事件通知，以及点击例程是否执行。
+
+要覆盖按钮的点击，请使用以下配置覆盖：
 https://github.com/jitsi/jitsi-meet/blob/042a2cb447bd9ff39ab3904e493952787bd30924/config.js#L547
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    key: string, // the pressed button's key. The key is as defined in `toolbarButtons` config,
-    preventExecution: boolean // whether the click routine execution was prevented or not.
+    key: string, // 被按下的按钮键。键是 `toolbarButtons` 配置中定义的，
+    preventExecution: boolean // 点击例程执行是否被阻止。
 }
 ```
 
 ### outgoingMessage
 
-Provides event notifications about outgoing chat messages.
+提供有关发送聊天消息的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    message: string, // the text of the message
-    privateMessage: boolean // whether this is a private or group message
+    message: string, // 消息文本
+    privateMessage: boolean // 是否为私人消息或群组消息
 }
 ```
 
 ### displayNameChange
 
-Provides event notifications about display name changes.
+提供有关显示名称变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string, // the id of the participant that changed their display name
-    displayname: string // the new display name
+    id: string, // 改变显示名称的参与者的 ID
+    displayname: string // 新的显示名称
 }
 ```
 
 ### deviceListChanged
 
-Provides event notifications about device list changes.
+提供有关设备列表变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    devices: Object // the new list of available devices.
+    devices: Object // 新的可用设备列表。
 }
 ```
 
-**NOTE:** The **`device`** object has the same format as the **`getAvailableDevices`** result format.
+**注意：** **`device`** 对象的格式与 **`getAvailableDevices`** 结果格式相同。
 
 ### emailChange
 
-Provides event notifications about email changes.
+提供有关电子邮件变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string, // the id of the participant that changed his email
-    email: string // the new email
+    id: string, // 改变电子邮件的参与者的 ID
+    email: string // 新的电子邮件
 }
 ```
 
 ### feedbackSubmitted
 
-Provides event notifications about conference feedback submissions:
+提供有关会议反馈提交的事件通知：
 
 ```javascript
 {
-    error: string // The error which occurred during submission, if any.
+    error: string // 提交过程中发生的错误（如果有）。
 }
 ```
 
 ### filmstripDisplayChanged
 
-Provides event visibility notifications for the filmstrip that is being updated:
+提供有关电影条更新的可见性通知：
 
 ```javascript
 {
-    visible: boolean // Whether or not the filmstrip is displayed or hidden.
+    visible: boolean // 电影条是否显示或隐藏。
 }
 ```
 
 ### moderationStatusChanged
 
-Provides event notifications about changes to moderation status.
+提供有关管理状态变化的事件通知。
 
 ```javascript
 {
-    mediaType: string, // The media type for which moderation changed.
-    enabled: boolean // Whether or not moderation changed to enabled.
+    mediaType: string, // 管理更改的媒体类型。
+    enabled: boolean // 管理是否启用。
 }
 ```
 
 ### moderationParticipantApproved
 
-Provides event notifications about participants approvals for moderation.
+提供有关参与者管理批准的事件通知。
 
 ```javascript
 {
-    id: string, // The ID of the participant that got approved.
-    mediaType: string // The media type for which the participant was approved.
+    id: string, // 获得批准的参与者的 ID。
+    mediaType: string // 参与者获得批准的媒体类型。
 }
 ```
 
 ### moderationParticipantRejected
 
-Provides event notifications about participants rejections for moderation.
+提供有关参与者管理拒绝的事件通知。
 
 ```javascript
 {
-    id: string, // The ID of the participant that got rejected.
-    mediaType: string // The media type for which the participant was rejected.
+    id: string, // 被拒绝的参与者的 ID。
+    mediaType: string // 参与者被拒绝的媒体类型。
 }
 ```
 
 ### notificationTriggered
 
-Provides event notifications when an application notification occurs.
+提供有关应用通知发生的事件通知。
 
 ```javascript
 {
-    title: string, // The notification title.
-    description: string // The notification description.
+    title: string, // 通知标题。
+    description: string // 通知描述。
 }
 ```
 
 ### participantJoined
 
-Provides event notifications about new participants who join the room.
+提供有关新参与者加入房间的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string, // the id of the participant
-    displayName: string // the display name of the participant
+    id: string, // 参与者的 ID
+    displayName: string // 参与者的显示名称
 }
 ```
 
 ### participantKickedOut
 
-Provides event notifications about participants being removed from the room.
+提供有关参与者被移出房间的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
     kicked: {
-        id: string, // the id of the participant removed from the room
-        local: boolean // whether or not the participant is the local particiapnt
+        id: string, // 被移出房间的参与者的 ID
+        local: boolean // 参与者是否为本地参与者
     },
     kicker: {
-        id: string // the id of the participant who kicked out the other participant
+        id: string // 移出其他参与者的参与者的 ID
     }
 }
 ```
 
 ### participantLeft
 
-Provides event notifications about participants that leave the meeting room.
+提供有关参与者离开会议室的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string // the id of the participant
+    id: string // 参与者的 ID
 }
 ```
 
 ### participantRoleChanged
 
-Provides event notifications that fire when the local user role has changed (e.g., none, moderator, participant).
+提供关于本地用户角色变化的事件通知（例如，无、主持人、参与者）。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    id: string // the id of the participant
-    role: string // the new role of the participant
+    id: string, // 参与者的 ID
+    role: string // 参与者的新角色
 }
 ```
 
 ### participantsPaneToggled
 
-Provides event notifications that fire when the participants pane status changes.
+提供关于参与者面板状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    open: boolean // whether the pane is open or not
+    open: boolean // 面板是否打开
 }
 ```
 
 ### passwordRequired
 
-Provides event notifications that fire when participants fail to join a password protected room.
+提供关于参与者无法加入受密码保护的房间的事件通知。
 
 ### videoConferenceJoined
 
-Provides event notifications that fire when the local user has joined the video conference.
+提供有关本地用户加入视频会议的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    roomName: string, // the room name of the conference
-    id: string, // the id of the local participant
-    displayName: string, // the display name of the local participant
-    avatarURL: string, // the avatar URL of the local participant
-    breakoutRoom: boolean // whether the current room is a breakout room
+    roomName: string, // 会议的房间名称
+    id: string, // 本地参与者的 ID
+    displayName: string, // 本地参与者的显示名称
+    avatarURL: string, // 本地参与者的头像 URL
+    breakoutRoom: boolean // 当前房间是否为分组讨论室
 }
 ```
 
 ### videoConferenceLeft
 
-Provides event notifications that fire when the local user has left the video conference.
+提供有关本地用户离开视频会议的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    roomName: string // the room name of the conference
+    roomName: string // 会议的房间名称
 }
 ```
 
 ### conferenceCreatedTimestamp
 
-Provides notification of the start time of the video conference.
+提供视频会议开始时间的通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    timestamp: timestamp // time the conference started
+    timestamp: timestamp // 会议开始的时间
 }
 ```
 
 ### videoAvailabilityChanged
 
-Provides event notifications about video availability status changes.
+提供关于视频可用性状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    available: boolean // new available status - boolean
+    available: boolean // 新的可用状态 - 布尔值
 }
 ```
 
 ### videoMuteStatusChanged
 
-Provides event notifications about video mute status changes.
+提供关于视频静音状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    muted: boolean // new muted status - boolean
+    muted: boolean // 新的静音状态 - 布尔值
 }
 ```
 
 ### videoQualityChanged
 
-Provides event notifications about changes to video quality settings.
+提供关于视频质量设置变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    videoQuality: number // the height of the resolution related to the new video quality setting.
+    videoQuality: number // 与新的视频质量设置相关的分辨率高度。
 }
 ```
 
 ### readyToClose
 
-Provides event notifications that fire when Jitsi Meet is ready to be closed (i.e., hangup operations are completed).
+提供 Jitsi Meet 准备关闭时的事件通知（即，挂断操作已完成）。
 
 ### recordingLinkAvailable
 
-Provides event notifications about recording link becoming available.
+提供关于录制链接可用的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    link: string, // the recording link
-    ttl: number // the time to live of the recording link
+    link: string, // 录制链接
+    ttl: number // 录制链接的有效时间
 }
 ```
 
 ### recordingStatusChanged
 
-Provides event notifications about recording status changes.
+提供关于录制状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    on: boolean // new recording status - boolean,
-    mode: string // recording mode, `local`, `stream` or `file`,
-    error: string | undefined // error type if recording fails, undefined otherwise
-    transcription: boolean // whether a transcription is active or not
+    on: boolean // 新的录制状态 - 布尔值,
+    mode: string // 录制模式，`local`、`stream` 或 `file`，
+    error: string | undefined // 如果录制失败的错误类型，否则为未定义
+    transcription: boolean // 是否激活了转录
 }
 ```
 
 ### subjectChange
 
-Provides event notifications regarding the change of subject for a conference.
+提供关于会议主题变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    subject: string // the new subject
+    subject: string // 新主题
 }
 ```
 
 ### suspendDetected
 
-Provides notifications about detecting suspended events in the host computer.
+提供有关检测到主机计算机中的挂起事件的通知。
 
 ### peerConnectionFailure
 
-Notify the external application that a PeerConnection lost connectivity. This event is fired only if
-a PC `failed` but connectivity to the rtcstats server is still maintained signaling that there is a
-problem establishing a link between the app and the JVB server or the remote peer in case of P2P.
-Will only fire if rtcstats is enabled.
+通知外部应用程序 PeerConnection 丢失连接。仅在 PC `failed` 但与 rtcstats 服务器仍保持连接时触发，表示在应用与 JVB 服务器或在 P2P 情况下的远程对等方之间建立链接时出现问题。仅在启用 rtcstats 时触发。
 
 ```javascript
 {
-    // Type of PC, Peer2Peer or JVB connection.
+    // PC 的类型，Peer2Peer 或 JVB 连接。
     isP2P: boolean,
 
-    // Was this connection previously connected. If it was it could mean
-    // that connectivity was disrupted, if not it most likely means that the app could not reach
-    // the JVB server, or the other peer in case of P2P.
+    // 此连接是否之前已连接。如果是，则可能意味着
+    // 连接中断；如果不是，则很可能意味着应用无法到达
+    // JVB 服务器或在 P2P 的情况下，无法到达其他对等方。
     wasConnected: boolean
 }
 ```
 
 ### transcribingStatusChanged
 
-Provides event notifications about status changes in the transcribing process.
+提供有关转录过程状态变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
@@ -779,57 +776,57 @@ The listener receives an object with the following structure:
 
 ### transcriptionChunkReceived
 
-Provides event notifications about new transcription chunks being available.
+提供关于新转录块可用的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    // Transcription language
+    // 转录语言
     language: string,
 
-    // ID for this chunk.
+    // 此块的 ID。
     messageID: string,
 
-    // participant info
+    // 参与者信息
     participant: {
         avatarUrl: string,
-        id: string
+        id: string,
         name: string,
     },
 
-    // If the transcription is final, the text will be here.
+    // 如果转录是最终的，文本将位于这里。
     final: string,
 
-    // If the transcription is not final but has high accuracy the text will be here.
+    // 如果转录不是最终的，但准确性高，文本将位于这里。
     stable: string,
 
-    // If the transcription is not final but has low accuracy the text will be here.
+    // 如果转录不是最终的，但准确性低，文本将位于这里。
     unstable: string,
 }
 ```
 
 ### whiteboardStatusChanged
 
-Provides event notifications about changes to the whiteboard.
+提供有关白板变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    status: string // new whiteboard status
+    status: string // 新的白板状态
 }
 ```
 
 ### p2pStatusChanged
 
-Provides event notifications about changes to the connection type.
+提供有关连接类型变化的事件通知。
 
-The listener receives an object with the following structure:
+监听器接收一个具有以下结构的对象：
 
 ```javascript
 {
-    isP2p: boolean|null // whether the new connection type is P2P
+    isP2p: boolean|null // 新的连接类型是否为 P2P
 }
 ```
 

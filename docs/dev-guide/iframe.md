@@ -3,108 +3,108 @@ id: dev-guide-iframe
 title: IFrame API
 ---
 
-Embedding the Jitsi Meet API into your site or app enables you to host and provide secure video meetings with your colleagues, teams, and stakeholders. The Meet API provides a full complement of comprehensive meeting features.
+将 Jitsi Meet API 嵌入到您的网站或应用程序中，使您能够与同事、团队和利益相关者举办并提供安全的视频会议。Meet API 提供了一整套全面的会议功能。
 
-Your Jitsi meetings can be hosted and attended using any device while keeping your data and privacy protected. You can reach your meeting participants anywhere in the world eliminating the need for travel and the associated inconvenience.
+您的 Jitsi 会议可以在任何设备上托管和参加，同时保护您的数据和隐私。您可以随时与会议参与者联系，消除旅行及其相关的不便。
 
-The IFrame API enables you to embed Jitsi Meet functionality into your meeting application so you can experience the full functionality of the globally distributed and highly available deployment available with [meet.jit.si](https://meet.jit.si/).
+IFrame API 使您能够将 Jitsi Meet 功能嵌入到您的会议应用程序中，因此您可以体验 [meet.jit.si](https://meet.jit.si/) 提供的全球分布式和高度可用的部署的全部功能。
 
-You can also embed and integrate the globally distributed and highly available deployment on the [meet.jit.si](https://meet.jit.si/) platform itself. 
+您还可以嵌入并集成在 [meet.jit.si](https://meet.jit.si/) 平台上全球分布式和高度可用的部署。
 
-:::note NOTE
-JaaS customers, please make sure you also read [this](https://developer.8x8.com/jaas/docs/iframe-api-overview)!
+:::note 注意
+JaaS 客户，请确保您还阅读 [此处](https://developer.8x8.com/jaas/docs/iframe-api-overview)!
 :::
 
 :::tip
-If you use React in your web application you might want to use our [React SDK](dev-guide-react-sdk) instead.
+如果您在 Web 应用程序中使用 React，您可能想使用我们的 [React SDK](dev-guide-react-sdk)。
 :::
 
-## Integration
+## 集成
 
-To enable the Jitsi Meet API in your application you must use one of the following JavaScript (JS) Jitsi Meet API library scripts and integrate it into your application:
+要在您的应用程序中启用 Jitsi Meet API，您必须使用以下 JavaScript (JS) Jitsi Meet API 库脚本之一并将其集成到您的应用程序中：
 
-For self-hosting in your domain:
+对于自托管在您的域中：
 
 ```javascript
 <script src='https://<your-domain>/external_api.js'></script>
 ```
 
-meet.jit.si:
+使用 meet.jit.si：
+
 ```javascript
 <script src='https://meet.jit.si/external_api.js'></script>
-
 ```
 
-## Mobile support
+## 移动支持
 
-The iframe API works on mobile browsers the same way as it does on desktop browsers.
+IFrame API 在移动浏览器上的工作方式与在桌面浏览器上相同。
 
-### Opening meetings in the Jitsi Meet app
+### 在 Jitsi Meet 应用中打开会议
 
-In order to open meetings with the Jitsi Meet app you can use our custom URL scheme as follows:
+要使用 Jitsi Meet 应用打开会议，您可以使用我们的自定义 URL 方案，如下所示：
 
-(let's assume the meeting is https://meet.jit.si/test123)
+（假设会议为 https://meet.jit.si/test123）
 
 * Android: `intent://meet.jit.si/test123#Intent;scheme=org.jitsi.meet;package=org.jitsi.meet;end`
 * iOS: `org.jitsi.meet://meet.jit.si/test123`
 
-This works with custom servers too, just replace `meet.jit.si` with your custom server URL.
+这也适用于自定义服务器，只需将 `meet.jit.si` 替换为您的自定义服务器 URL。
 
-## Creating the Jitsi Meet API object
+## 创建 Jitsi Meet API 对象
 
-After you have integrated the Meet API library, you must then create the Jitsi Meet API object.
+在您集成了 Meet API 库后，您必须创建 Jitsi Meet API 对象。
 
-The Meet API object takes the following form:
+Meet API 对象的格式为：
 
 **`api = new JitsiMeetExternalAPI(domain, options)`**
 
-The API object constructor uses the following options:
+API 对象构造函数使用以下选项：
 
-* `domain`: The domain used to build the conference URL (e.g., **`meet.jit.si`**).
-* `options`: The object with properties. 
+* `domain`：用于构建会议 URL 的域名（例如，**`meet.jit.si`**）。
 
-  IFrame arguments include:
-  
-    * `roomName`: The name of the room to join.
+* `options`：包含属性的对象。
 
-    * `width`: _Optional._ The created IFrame width.
-    
-      The width argument has the following characteristics:
-    
-      - A numerical value indicates the width in pixel units.
-    
-      - If a string is specified the format is a number followed by **`px`**, **`em`**, **`pt`**, or **`%`**.
-    
-    * `height`: _Optional._ The height for the created IFrame. 
-    
-      The height argument has the following characteristics: 
-    
-      - A numerical value indicates the height in pixel units.
-    
-      - If a string is specified the format is a number followed by **`px`**, **`em`**, **`pt`**, or **`%`**. 
-    
-    * `parentNode`: The HTML DOM Element where the IFrame is added as a child.
-    
-    * `configOverwrite`: _Optional._ The JS object with overrides for options defined in the [config.js] file.
-    
-    * `interfaceConfigOverwrite`: _Optional._ The JS object with overrides for options defined in the [interface_config.js] file.
-    
-    * `jwt`: _Optional._ The [JWT](https://jwt.io/) token.
-    
-    * `onload`: _Optional._ The IFrame onload event handler.
-    
-    * `invitees`: _Optional._ Object arrays that contain information about participants invited to a call.
-    
-    * `devices`: _Optional._ Information map about the devices used in a call.
-    
-    * `userInfo`: _Optional._ The JS object that contains information about the participant starting or joining the meeting (e.g., email).
+  IFrame 参数包括：
 
-    * `lang`: _Optional._ The default meeting language.
+    * `roomName`：要加入的房间名称。
 
-    * `iceServers`: _Optional._ Object with rules that will be used to modify/remove the existing ice server configuration. **NOTE: This property is currently experimental and may be removed in the future!**
+    * `width`：_可选._ 创建的 IFrame 宽度。
 
+      宽度参数具有以下特征：
 
-For example:
+      - 数值表示以像素为单位的宽度。
+
+      - 如果指定为字符串，格式为数字后跟 **`px`**、**`em`**、**`pt`** 或 **`%`**。
+
+    * `height`：_可选._ 创建的 IFrame 的高度。
+
+      高度参数具有以下特征：
+
+      - 数值表示以像素为单位的高度。
+
+      - 如果指定为字符串，格式为数字后跟 **`px`**、**`em`**、**`pt`** 或 **`%`**。
+
+    * `parentNode`：将 IFrame 添加为子元素的 HTML DOM 元素。
+
+    * `configOverwrite`：_可选._ 用于覆盖 [config.js] 文件中定义的选项的 JS 对象。
+
+    * `interfaceConfigOverwrite`：_可选._ 用于覆盖 [interface_config.js] 文件中定义的选项的 JS 对象。
+
+    * `jwt`：_可选._ [JWT](https://jwt.io/) 令牌。
+
+    * `onload`：_可选._ IFrame 加载事件处理程序。
+
+    * `invitees`：_可选._ 包含有关被邀请参加通话的参与者信息的对象数组。
+
+    * `devices`：_可选._ 有关通话中使用的设备的信息映射。
+
+    * `userInfo`：_可选._ 包含有关启动或加入会议的参与者信息（例如，电子邮件）的 JS 对象。
+
+    * `lang`：_可选._ 默认会议语言。
+
+    * `iceServers`：_可选._ 用于修改/删除现有 ice 服务器配置的规则对象。**注意：此属性目前是实验性的，未来可能会被删除！**
+
+例如：
 
 ```javascript
 const domain = 'meet.jit.si';
@@ -118,7 +118,7 @@ const options = {
 const api = new JitsiMeetExternalAPI(domain, options);
 ```
 
-You can set the initial media devices for the call using the following:
+您可以使用以下内容设置通话的初始媒体设备：
 
 ```javascript
 const domain = 'meet.jit.si';
@@ -134,9 +134,9 @@ const options = {
 const api = new JitsiMeetExternalAPI(domain, options);
 ```
 
-You can override options set in the [config.js] file and the [interface_config.js] file using the **`configOverwrite`** and **`interfaceConfigOverwrite`** objects, respectively.
+您可以使用 **`configOverwrite`** 和 **`interfaceConfigOverwrite`** 对象覆盖 [config.js] 文件和 [interface_config.js] 文件中设置的选项。
 
-For example:
+例如：
 
 ```javascript
 const options = {
@@ -147,7 +147,8 @@ const options = {
 };
 const api = new JitsiMeetExternalAPI(domain, options);
 ```
-To pass a JWT token to Jitsi Meet use the following:
+
+要将 JWT 令牌传递给 Jitsi Meet，请使用以下内容：
 
  ```javascript
 const options = {
@@ -158,7 +159,7 @@ const options = {
 const api = new JitsiMeetExternalAPI(domain, options);
  ```
 
-You can set the **`userInfo`** (e.g., email, display name) for the call using the following:
+您可以使用以下内容设置通话的 **`userInfo`**（例如，电子邮件、显示名称）：
 
 ```javascript
 var domain = "meet.jit.si";
@@ -172,19 +173,20 @@ var options = {
 var api = new JitsiMeetExternalAPI(domain, options);
 ```
 
+```javascript
 export const Anchor = ({children, name}) => (
   <a
-    name = { name }
-    id = { name }
-    href = { "#" + name }>
+    name={name}
+    id={name}
+    href={"#" + name}>
     {children}
   </a>
 );
 
-<Anchor name = { "ice-servers" }></Anchor>
+<Anchor name={"ice-servers"}></Anchor>
+```
 
-You can modify the default ice servers configuration with the **`iceServers`** property (**NOTE: This property is currently experimental and may be removed in the future!**) using the following:
-
+您可以使用 **`iceServers`** 属性修改默认的 ice 服务器配置（**注意：此属性目前是实验性的，未来可能会被删除！**）：
 
 ```javascript
 var domain = "meet.jit.si";
@@ -192,15 +194,15 @@ var options = {
     ...
     iceServers: {
         replace: [
-            { // replace the URL of all existing ice servers with type matching targetType 
+            { // 用目标类型匹配的现有 ice 服务器的 URL 替换
                 targetType: 'turn',
                 urls: 'turn:example.com:443'
             },
-            { // replace the URL of all existing ice servers with type matching targetType 
+            { // 用目标类型匹配的现有 ice 服务器的 URL 替换
                 targetType: 'turns',
                 urls: 'turns:example.com:443?transport=tcp'
             },
-            { // remove all existing ice servers with type matching targetType 
+            { // 删除目标类型匹配的现有 ice 服务器
                 targetType: 'stun',
                 urls: null
             }
@@ -211,9 +213,9 @@ var options = {
 var api = new JitsiMeetExternalAPI(domain, options);
 ```
 
-Configuring the tile view:
+配置瓦片视图：
 
-You can configure the maximum number of columns in the tile view by overriding the **`TILE_VIEW_MAX_COLUMNS`** property from the [interface_config.js] file via the **`interfaceConfigOverwrite`** object:
+您可以通过 **`interfaceConfigOverwrite`** 对象覆盖 [interface_config.js] 文件中的 **`TILE_VIEW_MAX_COLUMNS`** 属性来配置瓦片视图中的最大列数：
 
 ```javascript
 const options = {
@@ -223,22 +225,23 @@ const options = {
 };
 const api = new JitsiMeetExternalAPI(domain, options);
 ```
+
 :::note
-**`TILE_VIEW_MAX_COLUMNS`** accepts values from 1 to 5. The default value is 5.
+**`TILE_VIEW_MAX_COLUMNS`** 接受的值范围从 1 到 5。默认值为 5。
 :::
 
 
-## Functions
+## 函数
 
-All functions are documented [here](/handbook/docs/dev-guide/dev-guide-iframe-functions) now.
+所有函数的文档已在 [此处](/handbook/docs/dev-guide/dev-guide-iframe-functions) 中记录。
 
-## Commands
+## 命令
 
-All commands are documented [here](/handbook/docs/dev-guide/dev-guide-iframe-commands) now.
+所有命令的文档已在 [此处](/handbook/docs/dev-guide/dev-guide-iframe-commands) 中记录。
 
-## Events
+## 事件
 
-All events are documented [here](/handbook/docs/dev-guide/dev-guide-iframe-events) now.
+所有事件的文档已在 [此处](/handbook/docs/dev-guide/dev-guide-iframe-events) 中记录。
 
 [config.js]: https://github.com/jitsi/jitsi-meet/blob/master/config.js
 [interface_config.js]: https://github.com/jitsi/jitsi-meet/blob/master/interface_config.js

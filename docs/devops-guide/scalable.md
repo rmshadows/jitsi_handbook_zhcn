@@ -1,36 +1,24 @@
 ---
 id: devops-guide-scalable
-title: DevOps Guide (scalable setup)
-sidebar_label: Scalable setup
+title: DevOps Guide - Scalable setup - 可扩展性配置
+sidebar_label: Scalable setup - 可扩展性配置
 ---
 
-A single server Jitsi installation is good for a limited size of concurrent conferences.
-The first limiting factor is the videobridge component, that handles the actual video and audio traffic.
-It is easy to scale the video bridges horizontally by adding as many as needed.
-In a cloud based environment, additionally the bridges can be scaled up or down as needed.
+对于Jitsi的单服务器安装，适用于有限数量的并发会议。首个限制因素是**videobridge**组件，它负责处理实际的视频和音频流量。你可以通过水平扩展视频桥（videobridges）来应对更大的流量需求。在云环境中，还可以根据需求动态地增加或减少视频桥的数量。
 
 :::warning
-The [Youtube Tutorial on Scaling](https://www.youtube.com/watch?v=LyGV4uW8km8) is outdated and describes an old configuration method.
-The current default Jitsi Meet install is already configured for horizontal scalability.
+[Youtube上关于扩展的教程](https://www.youtube.com/watch?v=LyGV4uW8km8)已经过时，描述的是旧的配置方法。当前默认的Jitsi Meet安装已经配置为支持水平扩展。
 :::
 
 :::note
-Building a scalable infrastructure is not a task for beginning Jitsi Administrators.
-The instructions assume that you have installed a single node version successfully, and that
-you are comfortable installing, configuring and debugging Linux software.
-This is not a step-by-step guide, but will show you, which packages to install and which
-configurations to change.
-It is highly recommended to use configuration management tools like Ansible or Puppet to manage the
-installation and configuration.
+构建可扩展的基础架构并不适合初学的Jitsi管理员。此说明假设你已成功安装了单节点版本，并且对Linux软件的安装、配置和调试感到熟悉。这并不是逐步的指导，而是展示需要安装哪些软件包以及需要更改哪些配置。强烈建议使用配置管理工具（如Ansible或Puppet）来管理安装和配置过程。
 :::
 
-## Architecture (Single Jitsi-Meet, multiple videobridges)
+## 架构（单个Jitsi-Meet，多个videobridges）
 
-A first step is to split the functions of the central jitsi-meet instance (with nginx, prosody and jicofo) and
-videobridges.
+首个步骤是将中心Jitsi-Meet实例的功能（包括nginx、prosody和jicofo）与videobridges分离。
 
-A simplified diagram (with open network ports) of an installation with one Jitsi-Meet instance and three
-videobridges that are load balanced looks as follows. Each box is a server/VM.
+以下是一个简化的安装示意图，其中包含一个Jitsi-Meet实例和三个负载均衡的视频桥。每个方框代表一台服务器或虚拟机（VM）。
 
 ```
                +                                       +
@@ -57,23 +45,19 @@ videobridges that are load balanced looks as follows. Each box is a server/VM.
                                             +---------------------+
 ```
 
-## Machine Sizing
+## 服务器规格
 
-The Jitsi-Meet server will generally not have that much load (unless you have many) conferences
-going at the same time. A 4 CPU, 8 GB machine will probably be fine.
+Jitsi-Meet服务器的负载通常不会太大（除非你同时有许多会议）。通常，4个CPU和8GB内存的机器已经足够。
 
-The videobridges will have more load. 4 or 8 CPU with 8 GB RAM seems to be a good configuration.
+相对而言，videobridge的负载更大，4或8个CPU以及8GB内存是一个不错的配置。
 
+### Jitsi-Meet的安装
 
-### Installation of Jitsi-Meet
+假设安装将运行在以下FQDN：`meet.example.com`，并且你已将SSL证书和密钥存放在`/etc/ssl/meet.example.com.{crt,key}`。
 
-Assuming that the installation will run under the following FQDN: `meet.example.com` and you have
-SSL cert and key in `/etc/ssl/meet.example.com.{crt,key}`
+在安装这些软件包之前，设置如下DebConf变量。（我们并不安装`jitsi-meet`包，它会为我们处理这些设置）
 
-Set the following DebConf variables prior to installing the packages.
-(We are not installing the `jitsi-meet` package which would handle that for us)
-
-Install the `debconf-utils` package
+首先安装`debconf-utils`包：
 
 ```
 $ cat << EOF | sudo debconf-set-selections
@@ -87,10 +71,9 @@ jitsi-meet-web-config	jitsi-meet/jaas-choice	boolean	false
 EOF
 ```
 
-To enable integration with [Jitsi Meet Components](https://jaas.8x8.vc/#/components) for telephony support, set
-the `jitsi-meet/jaas-choice` option above to `true`.
+如果你需要启用与[Jitsi Meet组件](https://jaas.8x8.vc/#/components)的集成以支持电话功能，将上述`jitsi-meet/jaas-choice`选项设为`true`。
 
-On the jitsi-meet server, install the following packages:
+在jitsi-meet服务器上，安装以下软件包：
 
 * `nginx`
 * `prosody`
@@ -99,58 +82,55 @@ On the jitsi-meet server, install the following packages:
 * `jitsi-meet-prosody`
 * `jitsi-meet-web-config`
 
-### Installation of Videobridge(s)
+### 安装视频桥（Videobridge）
 
-For simplicities sake, set the same `debconf` variables as above and install
+为了简化起见，设置与前面相同的`debconf`变量并安装：
 
 * `jitsi-videobridge2`
 
-### Configuration of jitsi-meet
+### Jitsi-Meet的配置
 
-#### Firewall
+#### 防火墙
 
-Open the following ports:
+打开以下端口：
 
-Open to world:
+对外开放：
 
 * 80 TCP
 * 443 TCP
 
-Open to the videobridges only
+仅对视频桥开放：
 
-* 5222 TCP (for Prosody)
-
+* 5222 TCP（用于Prosody）
 
 #### NGINX
 
-Create the `/etc/nginx/sites-available/meet.example.com.conf` as usual
+像往常一样创建 `/etc/nginx/sites-available/meet.example.com.conf`
 
 #### Jitsi-Meet
 
-Adapt `/usr/share/jitsi-meet/config.js` and `/usr/share/jitsi-meet/interface-config.js` to your specific needs
+根据你的具体需求修改 `/usr/share/jitsi-meet/config.js` 和 `/usr/share/jitsi-meet/interface-config.js`
 
 #### Jicofo
 
-No changes necessary from the default install.
+无需对默认安装进行任何更改。
 
-### Configuration of the Videobridge
+### 视频桥的配置
 
-#### Firewall
+#### 防火墙
 
-Open the following ports:
+打开以下端口：
 
-Open to world:
+对外开放：
 
-* 10000 UDP (for media)
+* 10000 UDP（用于媒体传输）
 
 #### jitsi-videobridge2
 
-No changes necessary from the default setup.
+无需对默认设置进行更改。
 
-## Testing
+## 测试
 
-After restarting all services (`prosody`, `jicofo` and all the `jitsi-videobridge2`) you can see in
-`/var/log/prosody/prosody.log` and
-`/var/log/jitsi/jicofo.log` that the videobridges connect to Prososy and that Jicofo picks them up.
+重启所有服务（`prosody`、`jicofo`和所有`jitsi-videobridge2`）后，你可以在`/var/log/prosody/prosody.log`和`/var/log/jitsi/jicofo.log`中看到视频桥连接到Prosody，Jicofo也会识别到它们。
 
-When a new conference starts, Jicofo picks a videobridge and schedules the conference on it.
+当新的会议开始时，Jicofo会选择一个视频桥并在其上安排会议。

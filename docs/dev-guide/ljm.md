@@ -1,63 +1,62 @@
 ---
 id: dev-guide-ljm
-title: Modifying lib-jitsi-meet
+title: Modifying lib-jitsi-meet - 修改lib-jitsi-meet
 ---
 
-# Modifying `lib-jitsi-meet`
+# 修改 `lib-jitsi-meet`
 
-By default the library is referenced as a prebuilt artifact in a GitHub release. Packages are NOT published to npm. The default dependency path in package.json is:
+默认情况下，该库作为GitHub发布中的预构建工件进行引用。包并未发布到npm。`package.json`中的默认依赖路径为：
 
 ```json
-"lib-jitsi-meet": "https://github.com/jitsi/lib-jitsi-meet/releases/download/v<version>+<commit-hash>/lib-jitsi-meet.tgz)",
+"lib-jitsi-meet": "https://github.com/jitsi/lib-jitsi-meet/releases/download/v<version>+<commit-hash>/lib-jitsi-meet.tgz",
 ```
 
-To work with local copy you may change the path to:
+要使用本地副本，您可以将路径更改为：
 
 ```json
 "lib-jitsi-meet": "file:///Users/name/local-lib-jitsi-meet-packed-copy.tgz",
 ```
 
-In order to create the packed file run `npm pack` in the lib-jitsi-meet project directory.
+为了创建打包文件，在 `lib-jitsi-meet` 项目目录中运行 `npm pack`。
 
-To make the project you must force it to take the sources as 'npm update':
+要使项目生效，您必须强制它将源视为“npm更新”：
 
 ```
 npm install lib-jitsi-meet --force && make
 ```
 
-Or if you are making only changes to the library:
+或者如果您只对库进行更改：
 
 ```
 npm install lib-jitsi-meet --force && make deploy-lib-jitsi-meet
 ```
 
-Alternative way is to use [npm link](https://docs.npmjs.com/cli/link).
-It allows to link `lib-jitsi-meet` dependency to local source in few steps:
+另一种方法是使用 [npm link](https://docs.npmjs.com/cli/link)。它允许将 `lib-jitsi-meet` 依赖项链接到本地源，步骤如下：
 
 ```bash
 cd lib-jitsi-meet
 
-#### create global symlink for lib-jitsi-meet package
+#### 为lib-jitsi-meet包创建全局符号链接
 npm link
 
 cd ../jitsi-meet
 
-#### create symlink from the local node_modules folder to the global lib-jitsi-meet symlink
+#### 从本地node_modules文件夹创建指向全局lib-jitsi-meet符号链接的符号链接
 npm link lib-jitsi-meet
 ```
 
 :::note
-Linking will not work when building the mobile applications.
+在构建移动应用程序时，链接将不起作用。
 :::
 
-After changes in your local `lib-jitsi-meet` repository, you can rebuild it with `npm run build` and your `jitsi-meet` repository will use that modified library:
+在您对本地 `lib-jitsi-meet` 仓库进行更改后，可以使用 `npm run build` 重新构建它，并且您的 `jitsi-meet` 仓库将使用该修改后的库：
 
 ```bash
 cd node_modules/lib-jitsi-meet
 npm run build
 ```
 
-If you do not want to use local repository anymore you should run:
+如果您不再想使用本地仓库，则应运行：
 
 ```bash
 cd jitsi-meet

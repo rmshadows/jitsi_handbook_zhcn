@@ -3,112 +3,127 @@ id: dev-guide-react-sdk
 title: React SDK
 ---
 
-The Jitsi Meet React SDK provides the same user experience as the Jitsi Meet app, in a customizable way which you can embed in your apps.
+Jitsi Meet React SDK 提供与 Jitsi Meet 应用相同的用户体验，以可自定义的方式嵌入到您的应用中。
 
 :::important
-React 16 or higher is required.
+需要 React 16 或更高版本。
 :::
 
-## Sample application using the SDK
-If you want to see how easy integrating the Jitsi Meet React SDK into a React application is, take a look at our [example](https://github.com/jitsi/jitsi-meet-react-sdk/tree/main/example).
+## 使用 SDK 的示例应用
 
-## Installation
-To access the React SDK modules in your application you need to install it as a dependency:
+如果您想看看如何将 Jitsi Meet React SDK 轻松集成到 React 应用中，请查看我们的 [示例](https://github.com/jitsi/jitsi-meet-react-sdk/tree/main/example)。
+
+## 安装
+
+要在应用中访问 React SDK 模块，您需要将其作为依赖项安装：
+
 ```bash
 npm install @jitsi/react-sdk
 ```
 
-## Modules
-The SDK exposes two components with similar properties, intended for different use-cases.
+## 模块
+
+SDK 提供两个具有类似属性的组件，旨在用于不同的用例。
 
 ### JitsiMeeting
-To be used with custom domains as-it-is in React projects:
+
+在 React 项目中直接与自定义域一起使用：
+
 ```jsx
 <JitsiMeeting
-    domain = { YOUR_DOMAIN }
-    roomName = "PleaseUseAGoodRoomName"
-    configOverwrite = {{
+    domain={YOUR_DOMAIN}
+    roomName="PleaseUseAGoodRoomName"
+    configOverwrite={{
         startWithAudioMuted: true,
         disableModeratorIndicator: true,
         startScreenSharing: true,
         enableEmailInStats: false
     }}
-    interfaceConfigOverwrite = {{
+    interfaceConfigOverwrite={{
         DISABLE_JOIN_LEAVE_NOTIFICATIONS: true
     }}
-    userInfo = {{
+    userInfo={{
         displayName: 'YOUR_USERNAME'
     }}
-    onApiReady = { (externalApi) => {
-        // here you can attach custom event listeners to the Jitsi Meet External API
-        // you can also store it locally to execute commands
-    } }
-    getIFrameRef = { (iframeRef) => { iframeRef.style.height = '400px'; } }
+    onApiReady={(externalApi) => {
+        // 在这里您可以为 Jitsi Meet 外部 API 附加自定义事件监听器
+        // 您也可以将其存储以执行命令
+    }}
+    getIFrameRef={(iframeRef) => { iframeRef.style.height = '400px'; }}
 />
 ```
-#### Properties specific to the `JitsiMeeting` component
-* `domain`: Optional. Field used to retrieve the external_api.js file that initializes the IFrame. If omitted, defaults to `meet.jit.si`.
+
+#### `JitsiMeeting` 组件特有属性
+
+* `domain`：可选。用于检索初始化 IFrame 的 external_api.js 文件的字段。如果省略，则默认为 `meet.jit.si`。
 
 ### JaaSMeeting
-To be used with the `8x8.vc` domain as-it-is in React projects:
+
+在 React 项目中直接与 `8x8.vc` 域一起使用：
+
 ```jsx
 <JaaSMeeting
-    appId = { YOUR_APP_ID }
-    roomName = "PleaseUseAGoodRoomName"
-    jwt = { YOUR_VALID_JWT }
-    configOverwrite = {{
+    appId={YOUR_APP_ID}
+    roomName="PleaseUseAGoodRoomName"
+    jwt={YOUR_VALID_JWT}
+    configOverwrite={{
         disableThirdPartyRequests: true,
         disableLocalVideoFlip: true,
         backgroundAlpha: 0.5
     }}
-    interfaceConfigOverwrite = {{
+    interfaceConfigOverwrite={{
         VIDEO_LAYOUT_FIT: 'nocrop',
         MOBILE_APP_PROMO: false,
         TILE_VIEW_MAX_COLUMNS: 4
     }}
-    spinner = { SpinnerView }
-    onApiReady = { (externalApi) => { ... } }
+    spinner={SpinnerView}
+    onApiReady={(externalApi) => { ... }}
 />
 ```
-...or with the `stage.8x8.vc` domain:
+
+...或与 `stage.8x8.vc` 域一起使用：
+
 ```js
 <JaaSMeeting
-    appId = { YOUR_APP_ID }
-    roomName = "PleaseUseAGoodRoomName"
+    appId={YOUR_APP_ID}
+    roomName="PleaseUseAGoodRoomName"
     ...
-    useStaging = { true }
+    useStaging={true}
 />
 ```
-#### Properties specific to the `JaaSMeeting` component
-* `appId`: Required. Provides an isolated context and prefixes the room name.
-* `useStaging`: Optional. Tells whether to use the staging environment or not.
 
-## Common properties
-The component modules support a similar kind of customization to the Jitsi Meet IFrame. The following properties can be passed down to your instances of `JitsiMeeting` or `JaaSMeeting`.
+#### `JaaSMeeting` 组件特有属性
 
-* `roomName`: Required. The name of the room to join.
+* `appId`：必填。提供一个独立的上下文并为房间名称加上前缀。
+* `useStaging`：可选。指示是否使用暂存环境。
 
-* `configOverwrite`: Optional. The JS object with overrides for options defined in the [config.js] file.
+## 公共属性
 
-* `interfaceConfigOverwrite`: Optional. The JS object with overrides for options defined in the [interface_config.js] file.
+组件模块支持与 Jitsi Meet IFrame 相似的自定义。以下属性可以传递给您的 `JitsiMeeting` 或 `JaaSMeeting` 实例。
 
-* `jwt`: Optional. The [JWT](https://jwt.io/) token.
+* `roomName`：必填。要加入的房间名称。
 
-* `invitees`: Optional. Object arrays that contain information about participants invited to a call.
+* `configOverwrite`：可选。用于覆盖在 [config.js] 文件中定义的选项的 JS 对象。
 
-* `devices`: Optional. Information map about the devices used in a call.
+* `interfaceConfigOverwrite`：可选。用于覆盖在 [interface_config.js] 文件中定义的选项的 JS 对象。
 
-* `userInfo`: Optional. The JS object that contains information about the participant starting or joining the meeting (e.g., email).
+* `jwt`：可选。JWT（[JWT](https://jwt.io/)）令牌。
 
-* `release`: Optional. Information regarding the `stage.8x8.vc` or `8x8.vc` release version. Expects the following format: `release-1234`.
+* `invitees`：可选。包含被邀请参与通话的参与者信息的对象数组。
 
-* `spinner`: Optional. The custom spinner to be displayed while the IFrame is loading.
+* `devices`：可选。关于在通话中使用的设备的信息映射。
 
-* `onApiReady`: Optional. The external API reference for events and commands.
+* `userInfo`：可选。包含开始或加入会议的参与者信息的 JS 对象（例如，电子邮件）。
 
-* `onReadyToClose`: Optional. The callback for when the meeting is ready to be closed.
+* `release`：可选。关于 `stage.8x8.vc` 或 `8x8.vc` 发布版本的信息。期望格式为：`release-1234`。
 
-* `getIFrameRef`: Optional. The parent node used by the IFrame.
+* `spinner`：可选。IFrame 加载时显示的自定义加载动画。
+
+* `onApiReady`：可选。用于事件和命令的外部 API 引用。
+
+* `onReadyToClose`：可选。会议准备关闭时的回调。
+
+* `getIFrameRef`：可选。IFrame 使用的父节点。
 
 [config.js]: https://github.com/jitsi/jitsi-meet/blob/master/config.js
 [interface_config.js]: https://github.com/jitsi/jitsi-meet/blob/master/interface_config.js

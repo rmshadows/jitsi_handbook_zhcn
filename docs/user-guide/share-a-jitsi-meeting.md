@@ -1,13 +1,13 @@
 ---
 id: user-guide-share-a-jitsi-meeting
-title: Share a Jitsi Meeting
-sidebar_label: Share a Jitsi Meeting
+title: Share a Jitsi Meeting - 共享会议
+sidebar_label: Share a Jitsi Meeting - 共享会议
 ---
 
-First, you need to [Join](https://jitsi.github.io/handbook/docs/user-guide/user-guide-join-jitsi-meeting) / [Start](https://jitsi.github.io/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting) a Jitsi Meeting.
+首先，您需要 [加入](https://jitsi.github.io/handbook/docs/user-guide/user-guide-join-jitsi-meeting) / [开始](https://jitsi.github.io/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting) 一场 Jitsi 会议。
 
-Next:
+接下来：
 
-- Click on the **More actions** "..." Button.
-- Click on **Invite people**.
-- Select the desired option using which you want to share the meeting.
+- 点击 **更多操作** "..." 按钮。
+- 点击 **邀请人员**。
+- 选择您想要分享会议的选项。

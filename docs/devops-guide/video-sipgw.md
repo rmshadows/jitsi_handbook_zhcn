@@ -1,45 +1,50 @@
 ---
 id: videosipgw
-title: Configuring a video SIP gateway
-sidebar_label: Video SIP gateway
+title: Configuring a video SIP gateway - 配置一个视频SIP网关
+sidebar_label: Video SIP gateway - 视频SIP网关
 ---
 
-This document describes how you can configure jitsi-meet to use sipgw jibri and enable rooms in 'Add people dialog'
-You will need a working deployment of jibri configured to use a regular sip video device, for more info check out the [jibri documentation](https://github.com/jitsi/jibri/blob/master/README.md).
+本文档描述了如何配置 jitsi-meet 以使用 sipgw jibri 并启用“添加人员对话框”中的房间。您需要有一个已配置为使用常规 SIP 视频设备的工作 Jibri 部署，更多信息请查看 [jibri 文档](https://github.com/jitsi/jibri/blob/master/README.md)。
 
-This feature is available for non-guests of the system, so this relies on setting in config.js ``enableUserRolesBasedOnToken: true`` and providing a jwt token when accessing the conference.
+该功能适用于系统的非访客，因此这依赖于 config.js 中的设置 `enableUserRolesBasedOnToken: true`，并在访问会议时提供 JWT 令牌。
 
-* Jicofo configuration:
-edit /etc/jitsi/jicofo/sip-communicator.properties (or similar), set the appropriate MUC to look for the Jibri Controllers. This should be the same MUC as is referenced in jibri's config.json file. Restart Jicofo after setting this property.
+* Jicofo 配置：
+  编辑 `/etc/jitsi/jicofo/sip-communicator.properties`（或类似文件），设置适当的 MUC 以查找 Jibri 控制器。这应该与 Jibri 的 config.json 文件中引用的相同 MUC。设置此属性后重新启动 Jicofo。
 
 ```
   org.jitsi.jicofo.jibri.SIP_BREWERY=TheSipBrewery@conference.yourdomain.com
- ```
+```
 
-* Jitsi Meet configuration:
- - config.js: add 
+* Jitsi Meet 配置：
+
+ - config.js：添加 
+
 ```
   enableUserRolesBasedOnToken: true,
   peopleSearchQueryTypes: ['conferenceRooms'],
   peopleSearchUrl: 'https://api.yourdomain.com/testpath/searchpeople',
 ```
 
-The combination of the above settings and providing a jwt token will enable a button under invite option which will show the dialog 'Add people'.
+上述设置与提供 JWT 令牌的组合将在邀请选项下启用一个按钮，该按钮将显示“添加人员”对话框。
 
-## People search service
+## 人员搜索服务
 
-When searching in the dialog, a request for results is made to the `peopleSearchUrl` service.
+在对话框中进行搜索时，将向 `peopleSearchUrl` 服务发出请求以获取结果。
 
-The request is in the following format:
+请求的格式如下：
+
 ```
 https://api.yourdomain.com/testpath/searchpeople?query=testroomname&queryTypes=[%22conferenceRooms%22]&jwt=somejwt
 ```
-The parameters are:
- - query - The text entered by the user.
- - queryTypes - What type of results we want people, rooms, conferenceRooms. This is the value from config.js `peopleSearchQueryTypes`
- - jwt - The token used by the user to access the conference.
 
-The response of the service is a json in the following format:
+参数包括：
+
+ - query - 用户输入的文本。
+ - queryTypes - 我们想要的结果类型，包括人员、房间、会议室。这是来自 config.js 的 `peopleSearchQueryTypes` 的值。
+ - jwt - 用户用于访问会议的令牌。
+
+该服务的响应为以下格式的 JSON：
+
 ```
 [
    {
@@ -54,4 +59,5 @@ The response of the service is a json in the following format:
   }
 ]
 ```
-Type should be `videosipgw`, `name` is the name shown to the user and `id` is the sip address to be called by the sipgw jibri.
+
+类型应为 `videosipgw`，`name` 是显示给用户的名称，`id` 是 SIP 地址，由 sipgw jibri 拨打。

@@ -1,59 +1,52 @@
 ---
 id: devops-guide-requirements
-title: Requirements
+title: Requirements - 配置要求
 ---
 
 :::note
-Jitsi Meet is a real-time system.
-Requirements are very different from a web server and depend on many factors.
-Miscalculations can very easily destroy basic functionality rather than cause slow performance.
-Avoid adding other functions to your Jitsi Meet setup as it can harm performance and complicate optimizations.
 
-Note that Jitsi Meet design priorizes scalability by adding servers on using a huge server. Check Jitsi-videobridge documentation on adding several bridges to a Jitsi Meet server, and OCTO to go even beyond that (federation of Jitsi Meet servers). If you feel that you are a network and server administration newbie, don't even think of going there.
+Jitsi Meet 是一个实时系统。
+其配置要求与 Web 服务器非常不同，并且取决于许多因素。
+错误的计算很容易会破坏基本功能，而不是导致性能缓慢。
+避免在 Jitsi Meet 设置中添加其他功能，因为这会影响性能并使优化变得复杂。
+
+请注意，Jitsi Meet 的设计优先考虑可扩展性，通过添加服务器来使用大型服务器。请查看 Jitsi-videobridge 文档，了解如何将多个桥接器添加到 Jitsi Meet 服务器，以及使用 OCTO 进行更高级的联邦（Jitsi Meet 服务器的联邦）。如果您觉得自己是网络和服务器管理的新手，请不要考虑去做这些。
+
 :::
 
-# Jitsi Meet needs, by order of importance
+# Jitsi Meet 需求（按重要性排序）
 
-- Network link: basic speed and reliability are essential. Check speed against the provider claims using any download tool (or ftp), and
-verify latency using a tool such as iperf3.
-Exact calculation is very complex and depend on many optimisations and tricks, but you should at least remember these numbers on resolution:
-180 = 200 kbits/s
-360 = 500 kbits/s
-720 (HD) = 2500 kbits/s
-4k = 10 Mbits/s
-So don't expect to have 20 users using 4K on a server with 100Mbits/s upload and download.
-For a friends/small organization server, 1 Gbits/s will often be enough but for a serious server 10 Gbits/s
-is advisable. Several (or many...) bridges having each a 10 Gbits/s link are used by big deployments.
+- **网络链接：** 基本的速度和可靠性是必不可少的。使用任何下载工具（或 FTP）检查速度与提供商声明的是否一致，并使用 iperf3 等工具验证延迟。
+  精确计算非常复杂，依赖于许多优化和技巧，但您至少应记住以下关于分辨率的数字：
+  180 = 200 kbit/s  、360 = 500 kbit/s  、720 (HD) = 2500 kbit/s  、4k = 10 Mbit/s  。
+  因此，请不要指望在上传和下载速度为 100 Mbit/s 的服务器上，有 20 个用户使用 4K。  
+  对于朋友/小型组织的服务器，1 Gbit/s 通常就足够了，但对于一个正式的服务器，建议使用 10 Gbit/s。  
+  多个（或许多……）桥接器，每个桥接器都有 10 Gbit/s 的链接，通常用于大型部署。
 
-**These requirements concern the videobridge. If there are only external videobridges (as can be the case on high end Jitsi Meet servers), network performance matters much less.**
+**这些配置要求考虑到视频桥接带来的性能问题。如果有外部视频桥接（如在高端 Jitsi Meet 服务器上可能有多个外部视频桥接器），受到网络性能影响的会小得多。**
 
-- **RAM:** it's usually suggested to get 8 GB.
- For small meetings you can get away with 4 GB, for test servers or very small meetings you can try to use 2 GB.
- For big meetings it's suggested to go the scalable way over getting huge amounts of memory.
+- **RAM：** 通常建议至少 8 GB。  
+  对于小型会议，4 GB 可能足够，对于测试服务器或非常小型的会议，您可以尝试使用 2 GB。  
+  对于大型会议，建议采用可扩展的方式，而不是获取大量内存。
 
+- **CPU：** 非常低的处理器性能会严重影响实时系统，尤其是在使用共享服务器时（您的 CPU 性能可能会被托管商的其他客户盗取或共享。比如您购买的是 VPS，而不是物理服务器，请检查“专用 CPU”）。  
+  但是，需要考虑的是，Jitsi Meet 组件 Prosody 只能使用一个（1）核心。因此，获取很多核心，比如超过 32 个，并不总是有用。对于基本服务器，4 个专用核心可能就足够了。
 
-- **CPU:** very low processor performance can seriously harm a real time system, especially when using a shared server (where your CPU performance can be stolen by other customers of your hoster, check on 'dedicated CPU' if you are getting a VPS, rather than a physical server). However, a consideration is that a Jitsi Meet component, Prosody, can only use ONE (1) core. So getting a lot of cores, let's say more than 32, is not always useful. For a basic server, 4 dedicated cores can be enough.
+- **磁盘：** 除非您进行大量日志记录或有非常具体的需求，否则您可以使用 20 GB 的标准硬盘。  
+  SSD 更像是锦上添花，而不是必需品。
 
-- **Disk:** unless you are doing heavy logging or have very specific needs, you can get away with 20 Gbytes of standard hard disk.
-SSD are more a nice to have than a necessity.
+**如果您想要额外的服务，需求可能会增加。**
 
+# 录制
 
-**If you want additional services, requirements can go up.**
+Jibri 每录制一个会议需要一个系统。  
+一个 Jibri 实例 = 一个会议。要同时录制 5 个会议，您需要 5 个 Jibri。  
+没有替代方法。  
+如果您有经验，可以在容器中设置 Jibri，并使用大型服务器节省一些资源，但就是这样。
 
+Jibri 的 RAM、CPU 和硬盘需求远高于 Jitsi Meet 本身，因为它需要进行视频编码。  
+对于 `1080x720`，目前至少需要 8 GB RAM，对于 `1280x1024` 需要 12 GB（这是用于录制 __单个__ 会议）。  
+对于云存储，您将至少需要 SSD 驱动器。  
+如果内存不足，CPU 无法足够快地编码或硬盘速度不够快，录制将失败。
 
-# Recording
-
-Jibri needs ONE system per recording.
-One Jibri instance = one meeting. For 5 meetings recorded simultaneously, you need 5 Jibris.
-There is no workaround to that.
-If you are knowledgeable, you can setup Jibris in containers and use a big server to save a bit on resources but that's about it.
-
-Jibri RAM, CPU and hard disk needs are far higher than Jitsi Meet itself, as it does video encoding.
-For `1080x720` you currently need at least 8 GB RAM, for `1280x1024` 12 GB (this is for recording a __single__  meeting).
-For cloud storage you will need at least SSD drives.
-If memory is not sufficient, CPU can't encode fast enough or hard disk is not fast enough, recordings will fail.
-
-While Jibri and Jitsi Meet can technically be hosted in a single server, it's not recommended because Jibri is a resource drain and it can harm Jitsi Meet performance, and can exhaust disk space and stop Jitsi Meet function altogether.
-
-
-
+虽然技术上可以将 Jibri 和 Jitsi Meet 托管在单台服务器上，但不推荐这样做，因为 Jibri 会消耗资源，这可能会影响 Jitsi Meet 的性能，并且可能耗尽磁盘空间，从而完全停止 Jitsi Meet 的功能。

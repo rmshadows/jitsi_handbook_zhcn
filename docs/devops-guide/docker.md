@@ -1,190 +1,190 @@
 ---
 id: devops-guide-docker
-title: Self-Hosting Guide - Docker
+title: 自托管指南 - Docker
 sidebar_label: Docker
 ---
 
-## Quick start
+## Quick start - 快速上手
 
-In order to quickly run Jitsi Meet on a machine running Docker and Docker Compose,
-follow these steps:
+要在运行 Docker 和 Docker Compose 的机器上快速运行 Jitsi Meet，按照以下步骤操作：
 
-1. Download and extract the [latest release]. **DO NOT** clone the git repository. See below if you are interested in running test images:
+1. 下载并解压 [最新发布版本]。 **请勿** 直接克隆 git 仓库。如果您想运行测试镜像，请参见下文：
 
-    ```bash
-    wget $(curl -s https://api.github.com/repos/jitsi/docker-jitsi-meet/releases/latest | grep 'zip' | cut -d\" -f4)
-    ```
+   ```bash
+   wget $(curl -s https://api.github.com/repos/jitsi/docker-jitsi-meet/releases/latest | grep 'zip' | cut -d\" -f4)
+   ```
 
-1. Unzip the package:
+2. 解压包：
 
-    ```bash
-    unzip <filename>
-    ```
+   ```bash
+   unzip <filename>
+   ```
 
-1. Create a `.env` file by copying and adjusting `env.example`:
+3. 通过复制并调整 `env.example` 来创建 `.env` 文件：
 
    ```bash
    cp env.example .env
    ```
 
-1. Set strong passwords in the security section options of `.env` file by running the following bash script
+4. 通过运行以下 bash 脚本，在 `.env` 文件的安全部分设置强密码：
 
    ```bash
    ./gen-passwords.sh
    ```
 
-1. Create required `CONFIG` directories
-   * For linux:
+5. 创建所需的 `CONFIG` 目录
+
+   * 对于 Linux：
 
    ```bash
    mkdir -p ~/.jitsi-meet-cfg/{web,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri}
    ```
 
-   * For Windows:
+   * 对于 Windows：
 
    ```bash
    echo web,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri | % { mkdir "~/.jitsi-meet-cfg/$_" }
    ```
 
-1. Run ``docker compose up -d``
-1. Access the web UI at [``https://localhost:8443``](https://localhost:8443) (or a different port, in case you edited the `.env` file).
+6. 运行以下命令启动服务（译者：建议使用`docker-compose`输出更简洁）：
+
+   ```bash
+   docker compose up -d
+   ```
+
+7. 通过 [``https://localhost:8443``](https://localhost:8443) 访问 Web UI（如果您编辑了 `.env` 文件中的端口，请使用相应的端口）。
 
 :::note
-HTTP (not HTTPS) is also available (on port 8000, by default), but that's e.g. for a reverse proxy setup;
-direct access via HTTP instead HTTPS leads to WebRTC errors such as
-_Failed to access your microphone/camera: Cannot use microphone/camera for an unknown reason. Cannot read property 'getUserMedia' of undefined_
-or _navigator.mediaDevices is undefined_.
+HTTP（非 HTTPS）也可用（默认端口为 8000），但这主要用于反向代理设置；直接通过 HTTP 访问而非 HTTPS 会导致 WebRTC 错误，例如：
+
+* _无法访问您的麦克风/摄像头：因未知原因无法使用麦克风/摄像头。无法读取属性 'getUserMedia' 的值 'undefined'_ 
+* _navigator.mediaDevices 未定义_
+
 :::
 
-**IMPORTANT**: When deploying Jitsi Meet for real use you must set the `PUBLIC_URL` env variable to the real domain where your setup is running.
+**重要**：当实际部署 Jitsi Meet 时，必须将 `PUBLIC_URL` 环境变量设置为您的真实域名（译者：这点非常重要！）。
 
-If you want to use jigasi too, first configure your env file with SIP credentials
-and then run Docker Compose as follows:
+如果您还想使用 jigasi，请首先在 `.env` 文件中配置 SIP 凭据，然后使用以下命令运行 Docker Compose：
 
 ```bash
 docker compose -f docker-compose.yml -f jigasi.yml up
 ```
 
-If you want to enable document sharing via [Etherpad],
-configure it and run Docker Compose as follows:
+如果您想启用文档共享功能（通过 [Etherpad]），请配置它并使用以下命令运行 Docker Compose：
 
 ```bash
 docker compose -f docker-compose.yml -f etherpad.yml up
 ```
 
-If you want to use jibri too, first configure a host as described in Jitsi Broadcasting Infrastructure configuration section
-and then run Docker Compose as follows:
+如果您还想使用 jibri，请首先按照 Jitsi 广播基础设施配置部分的说明配置主机，然后使用以下命令运行 Docker Compose：
 
 ```bash
 docker compose -f docker-compose.yml -f jibri.yml up -d
 ```
 
-or to use jigasi too:
+或者同时使用 jigasi：
 
 ```bash
 docker compose -f docker-compose.yml -f jigasi.yml -f jibri.yml up -d
 ```
 
-For the log analysis project, you will need both log-analyser.yml and grafana.yml files. This project allows you to analyze docker logs in grafana. If you want to run the log analyzer, run the Docker files as follows:
+对于日志分析项目，您需要 `log-analyser.yml` 和 `grafana.yml` 文件。该项目允许您在 grafana 中分析 Docker 日志。如果您想运行日志分析器，请按以下命令运行 Docker 文件：
 
 ```bash
 docker-compose -f docker-compose.yml -f log-analyser.yml -f grafana.yml up -d
 ```
-Follow [this](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-log-analyser) document for detailed information on log analysis.
 
-### Updating
+有关日志分析的详细信息，请参阅 [此文档](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-log-analyser)。
 
-If you want to update, simply run 
+### 更新
+
+如果您想更新，只需再次运行以下命令：
 
 ```bash
 wget $(curl -s https://api.github.com/repos/jitsi/docker-jitsi-meet/releases/latest | grep 'zip' | cut -d\" -f4)
 ```
 
-again (just like how you initially downloaded Jitsi). Then unzip and overwrite all when being asked:
+（就像最初下载 Jitsi 时一样）。然后解压并在被询问时选择覆盖所有文件：
 
 ```bash
 unzip <filename>
 ```
 
-### Testing development / unstable builds
+### 测试开发/不稳定版本构建
 
-Download the latest code:
+下载最新代码：
 
 ```bash
 git clone https://github.com/jitsi/docker-jitsi-meet && cd docker-jitsi-meet
 ```
 
 :::note
-The code in `master` is designed to work with the unstable images. Do not run it with release images.
+`master` 分支的代码设计为与不稳定镜像一起使用。请勿与发行版镜像一起运行。
 :::
 
-Run `docker compose up` as usual.
+按照正常方式运行 `docker compose up`。
 
-Every day a new "unstable" image build is uploaded.
+每天都会上传一个新的“不稳定”镜像构建版本。
 
-### Building your own images
+### 构建您自己的镜像
 
-Download the latest code:
+下载最新代码：
 
 ```bash
 git clone https://github.com/jitsi/docker-jitsi-meet && cd docker-jitsi-meet
 ```
 
-The provided `Makefile` provides a comprehensive way of building the whole stack or individual images.
+提供的 `Makefile` 提供了一种全面的方式来构建整个堆栈或单个镜像。
 
-To build all images:
+要构建所有镜像：
 
 ```bash
 make
 ```
 
-To build a specific image (the web image for example):
+要构建特定的镜像（例如，Web 镜像）：
 
 ```bash
 make build_web
 ```
 
-Once your local build is ready make sure to add `JITSI_IMAGE_VERSION=latest` to your `.env` file.
+一旦您的本地构建完成，请确保将 `JITSI_IMAGE_VERSION=latest` 添加到您的 `.env` 文件中。
 
-### Security note
+### 安全提示
 
-This setup used to have default passwords for internal accounts used across components.
-In order to make the default setup secure by default these have been removed and the respective containers won't start without having a password set.
+此设置曾经为跨组件使用的内部账户提供默认密码。为了使默认设置安全，默认密码已被删除，相应的容器在没有设置密码的情况下不会启动。
 
-Strong passwords may be generated as follows: `./gen-passwords.sh`
-This will modify your `.env` file (a backup is saved in `.env.bak`) and set strong passwords for each of the
-required options. Passwords are generated using `openssl rand -hex 16` .
+可以通过以下方式生成强密码：`./gen-passwords.sh`  
+这将修改您的 `.env` 文件（会保存一份备份到 `.env.bak` 中），并为每个必需选项设置强密码。密码使用 `openssl rand -hex 16` 生成。
 
-DO NOT reuse any of the passwords.
+**请勿重用任何密码。**
 
-## Architecture
+## 架构
 
-A Jitsi Meet installation can be broken down into the following components:
+Jitsi Meet 的安装可以分为以下组件：
 
-* A web interface
-* An XMPP server
-* A conference focus component
-* A video router (could be more than one)
-* A SIP gateway for audio calls
-* A Broadcasting Infrastructure for recording or streaming a conference.
+* Web 界面
+* XMPP 服务器
+* 会议焦点组件
+* 视频路由器（可以有多个）
+* 音频通话的 SIP 网关
+* 用于录制或流式传输会议的广播基础设施
 
 ![](../assets/docker-jitsi-meet.png)
 
-The diagram shows a typical deployment in a host running Docker. This project
-separates each of the components above into interlinked containers. To this end,
-several container images are provided.
+该图显示了在运行 Docker 的主机上的典型部署。此项目将上述每个组件分隔到相互连接的容器中。为此，提供了多个容器镜像。
 
-### External Ports
+### 外部端口
 
-The following external ports must be opened on a firewall:
+以下外部端口必须在防火墙上打开：
 
-* `80/tcp` for Web UI HTTP (really just to redirect, after uncommenting `ENABLE_HTTP_REDIRECT=1` in `.env`)
-* `443/tcp` for Web UI HTTPS
-* `10000/udp` for RTP media over UDP
+* `80/tcp` 用于 Web UI HTTP（实际上只是重定向，在 `.env` 文件中取消注释 `ENABLE_HTTP_REDIRECT=1` 后）
+* `443/tcp` 用于 Web UI HTTPS
+* `10000/udp` 用于 UDP 的 RTP 媒体 
 
-Also `20000-20050/udp` for jigasi, in case you choose to deploy that to facilitate SIP access.
+另外 `20000-20050/udp` 用于 jigasi，如果您选择部署该组件以方便 SIP 访问。
 
-E.g. on a CentOS/Fedora server this would be done like this (without SIP access):
+例如，在 CentOS/Fedora 服务器上，可以通过以下方式打开这些端口（不包括 SIP 访问）：
 
 ```bash
 sudo firewall-cmd --permanent --add-port=80/tcp
@@ -193,92 +193,77 @@ sudo firewall-cmd --permanent --add-port=10000/udp
 sudo firewall-cmd --reload
 ```
 
-See [the corresponding section in the debian/ubuntu setup guide](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-quickstart#setup-and-configure-your-firewall).
+请参阅 [Debian/Ubuntu 安装指南中的相关部分](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-quickstart#setup-and-configure-your-firewall)。
 
-### Images
+### 镜像
 
-* **base**: Debian stable base image with the [S6 Overlay] for process control and the
-  [Jitsi repositories] enabled. All other images are based on this one.
-* **base-java**: Same as the above, plus Java (OpenJDK).
-* **web**: Jitsi Meet web UI, served with nginx.
-* **prosody**: [Prosody], the XMPP server.
-* **jicofo**: [Jicofo], the XMPP focus component.
-* **jvb**: [Jitsi Videobridge], the video router.
-* **jigasi**: [Jigasi], the SIP (audio only) gateway.
-* **jibri**: [Jibri], the broadcasting infrastructure.
+* **base**: Debian 稳定基础镜像，带有用于进程控制的 [S6 Overlay] 和启用的 [Jitsi 仓库]。所有其他镜像都基于此镜像。
+* **base-java**: 与上述相同，另加 Java（OpenJDK）。
+* **web**: Jitsi Meet Web UI，通过 nginx 提供服务。
+* **prosody**: [Prosody]，XMPP 服务器。
+* **jicofo**: [Jicofo]，XMPP 焦点组件。
+* **jvb**: [Jitsi Videobridge]，视频路由器。
+* **jigasi**: [Jigasi]，SIP（仅音频）网关。
+* **jibri**: [Jibri]，广播基础设施。
 
-### Design considerations
+### 设计考虑
 
-Jitsi Meet uses XMPP for signaling, thus the need for the XMPP server.
-The setup provided by these containers does not expose the XMPP server to the outside world.
-Instead, it's kept completely sealed, and routing of XMPP traffic only happens on a user-defined network.
+Jitsi Meet 使用 XMPP 进行信令，因此需要 XMPP 服务器。由这些容器提供的设置不会将 XMPP 服务器暴露给外部世界。相反，它被完全封闭，XMPP 流量的路由仅发生在用户定义的网络中。
 
-The XMPP server can be exposed to the outside world,
-but that's out of the scope of this project.
+XMPP 服务器可以暴露给外部世界，但这超出了本项目的范围。
 
-## Configuration
+## 配置
 
-The configuration is performed via environment variables contained in a ``.env`` file.
-You can copy the provided ``env.example`` file as a reference.
+配置通过包含在 ``.env`` 文件中的环境变量进行。您可以复制提供的 ``env.example`` 文件作为参考。
 
-Variable | Description | Example
---- | --- | ---
-`CONFIG` | Directory where all configuration will be stored | /opt/jitsi-meet-cfg
-`TZ` | System Time Zone | Europe/Amsterdam
-`HTTP_PORT` | Exposed port for HTTP traffic | 8000
-`HTTPS_PORT` | Exposed port for HTTPS traffic | 8443
-`JVB_ADVERTISE_IPS` | IP addresses of the Docker host (comma separated), needed for LAN environments | 192.168.1.1
-`PUBLIC_URL` | Public URL for the web service | https://meet.example.com
+| 变量                | 描述                                                  | 示例                     |
+| ------------------- | ----------------------------------------------------- | ------------------------ |
+| `CONFIG`            | 存储所有配置的目录                                    | /opt/jitsi-meet-cfg      |
+| `TZ`                | 系统时区                                              | Europe/Amsterdam         |
+| `HTTP_PORT`         | 暴露的 HTTP 流量端口                                  | 8000                     |
+| `HTTPS_PORT`        | 暴露的 HTTPS 流量端口                                 | 8443                     |
+| `JVB_ADVERTISE_IPS` | Docker 主机的 IP 地址（用逗号分隔），适用于局域网环境 | 192.168.1.1              |
+| `PUBLIC_URL`        | 用于 web 服务的公共 URL                               | https://meet.example.com |
+
+译者：大陆用户时区可以设置为：Asia/Shanghai
 
 :::note
-The mobile apps won't work with self-signed certificates (the default).
-See below for instructions on how to obtain a proper certificate with Let's Encrypt.
+移动端应用程序不支持自签名证书（默认情况下）。请参阅下文了解如何使用 Let’s Encrypt 获得正确的证书。
 :::
 
-### TLS Configuration
+### TLS 配置
 
-#### Let's Encrypt configuration
+#### Let's Encrypt 配置
 
-If you want to expose your Jitsi Meet instance to the outside traffic directly, but don't own a proper TLS certificate, you are in luck
-because Let's Encrypt support is built right in. Here are the required options:
+如果您希望将 Jitsi Meet 实例直接暴露给外部流量，但没有有效的 TLS 证书，幸运的是，Jitsi 已内置了对 Let’s Encrypt 的支持。以下是所需的选项：
 
-Variable | Description | Example
---- | --- | ---
-`ENABLE_LETSENCRYPT` | Enable Let's Encrypt certificate generation | 1
-`LETSENCRYPT_DOMAIN` | Domain for which to generate the certificate | meet.example.com
-`LETSENCRYPT_EMAIL` | E-Mail for receiving important account notifications (mandatory) | alice@atlanta.net
+| 变量                 | 描述                                     | 示例              |
+| -------------------- | ---------------------------------------- | ----------------- |
+| `ENABLE_LETSENCRYPT` | 启用 Let’s Encrypt 证书生成              | 1                 |
+| `LETSENCRYPT_DOMAIN` | 要为其生成证书的域名                     | meet.example.com  |
+| `LETSENCRYPT_EMAIL`  | 接收重要帐户通知的电子邮件地址（必填项） | alice@atlanta.net |
 
-In addition, you will need to set `HTTP_PORT` to 80 and `HTTPS_PORT` to 443 and PUBLIC_URL to your domain.
-You might also consider to redirect HTTP traffic to HTTPS by setting `ENABLE_HTTP_REDIRECT=1`.
+此外，您需要将 `HTTP_PORT` 设置为 80，将 `HTTPS_PORT` 设置为 443，并将 `PUBLIC_URL` 设置为您的域名。您还可以考虑通过设置 `ENABLE_HTTP_REDIRECT=1` 来将 HTTP 流量重定向到 HTTPS。
 
-**Let's Encrypt rate limit warning**: Let's Encrypt has a limit to how many times you can submit a request
-for a new certificate for your domain name. At the time of writing, the current limit is five new (duplicate)
-certificates for the same domain name every seven days. Because of this, it is recommended that you disable the
-Let's Encrypt environment variables from `.env` if you plan on deleting the `.jitsi-meet-cfg` folder.
-Otherwise, you might want to consider moving the `.jitsi-meet-cfg` folder to a different location so you have a safe place to find
-the certificate that already Let's Encrypt issued. Or do initial testing with Let's Encrypt disabled, then re-enable
-Let's Encrypt once you are done testing.
+**Let’s Encrypt 限制提醒**：Let’s Encrypt 对您为同一域名提交新证书请求的次数有限制。当前的限制是每 7 天最多提交 5 个新证书请求。因此，如果您打算删除 `.jitsi-meet-cfg` 文件夹，建议您禁用 `.env` 中的 Let’s Encrypt 相关环境变量。或者，您可以将 `.jitsi-meet-cfg` 文件夹移动到其他位置，以便安全地保留已经颁发的证书。或者，您可以先禁用 Let’s Encrypt 进行初步测试，然后在测试完成后再启用 Let’s Encrypt。
 
 :::note
-When you move away from `LETSENCRYPT_USE_STAGING`,
-you will have to manually clear the certificates from `.jitsi-meet-cfg/web`.
+当您不再使用 `LETSENCRYPT_USE_STAGING` 时，必须手动清除 `.jitsi-meet-cfg/web` 中的证书。
 :::
 
-For more information on Let's Encrypt's rate limits, visit:
+有关 Let’s Encrypt 限制的更多信息，请访问：
 https://letsencrypt.org/docs/rate-limits/
 
-#### Using existing TLS certificate and key
+#### 使用现有的 TLS 证书和密钥
 
-If you own a proper TLS certificate and don't need a Let's Encrypt certificate, you can configure Jitsi Meet container
-to use it.
+如果您拥有有效的 TLS 证书并且不需要使用 Let’s Encrypt 证书，您可以配置 Jitsi Meet 容器来使用它。
 
-Unlike Let's Encrypt certificates, this is not configured through the `.env`file, but by telling Jitsi Meet's `web` service
-to mount the following two volumes:
+与 Let’s Encrypt 证书不同，此操作不是通过 `.env` 文件配置的，而是通过告知 Jitsi Meet 的 `web` 服务挂载以下两个卷：
 
-* mount `/path/to/your/cert.key` file to `/config/keys/cert.key` mount point
-* mount `/path/to/your/cert.fullchain` file to the `/config/keys/cert.crt` mount point.
+- 将 `/path/to/your/cert.key` 文件挂载到 `/config/keys/cert.key` 挂载点
+- 将 `/path/to/your/cert.fullchain` 文件挂载到 `/config/keys/cert.crt` 挂载点
 
-Doing it in `docker-compose.yml` file should look like this:
+在 `docker-compose.yml` 文件中的配置如下：
 
 ```yaml
 services:
@@ -290,127 +275,125 @@ services:
             - /path/to/your/cert.key:/config/keys/cert.key
 ```
 
-### Features configuration (config.js)
+### 功能配置（config.js）
 
-Variable | Description | Example
---- | --- | ---
-`TOOLBAR_BUTTONS` | Configure toolbar buttons. Add the buttons name separated with comma(no spaces between comma) | |
-`HIDE_PREMEETING_BUTTONS` | Hide the buttons at pre-join screen. Add the buttons name separated with comma | |
-`ENABLE_LOBBY` | Control whether the lobby feature should be enabled or not | 1
-`ENABLE_AV_MODERATION` | Control whether the A/V moderation should be enabled or not | 1
-`ENABLE_PREJOIN_PAGE` | Show a prejoin page before entering a conference | 1
-`ENABLE_WELCOME_PAGE` | Enable the welcome page | 1
-`ENABLE_CLOSE_PAGE` | Enable the close page | 0
-`DISABLE_AUDIO_LEVELS` | Disable measuring of audio levels | 0
-`ENABLE_NOISY_MIC_DETECTION` | Enable noisy mic detection | 1
-`ENABLE_BREAKOUT_ROOMS` | Enable breakout rooms | 1
+| 变量                         | 描述                                                 | 示例 |
+| ---------------------------- | ---------------------------------------------------- | ---- |
+| `TOOLBAR_BUTTONS`            | 配置工具栏按钮。按钮名称以逗号分隔（逗号之间无空格） |      |
+| `HIDE_PREMEETING_BUTTONS`    | 隐藏会前屏幕上的按钮。按钮名称以逗号分隔             |      |
+| `ENABLE_LOBBY`               | 控制是否启用大厅功能                                 | 1    |
+| `ENABLE_AV_MODERATION`       | 控制是否启用音视频管理功能                           | 1    |
+| `ENABLE_PREJOIN_PAGE`        | 进入会议前显示预加入页面                             | 1    |
+| `ENABLE_WELCOME_PAGE`        | 启用欢迎页面                                         | 1    |
+| `ENABLE_CLOSE_PAGE`          | 启用关闭页面                                         | 0    |
+| `DISABLE_AUDIO_LEVELS`       | 禁用音频级别测量                                     | 0    |
+| `ENABLE_NOISY_MIC_DETECTION` | 启用噪音麦克风检测                                   | 1    |
+| `ENABLE_BREAKOUT_ROOMS`      | 启用分组讨论室                                       | 1    |
 
-### Jigasi SIP gateway (audio only) configuration
+### Jigasi SIP 网关（仅音频）配置
 
-If you want to enable the SIP gateway, these options are required:
+如果您希望启用 SIP 网关，以下选项是必需的：
 
-Variable | Description | Example
---- | --- | ---
-`JIGASI_SIP_URI` | SIP URI for incoming / outgoing calls | test@sip2sip.info
-`JIGASI_SIP_PASSWORD` | Password for the specified SIP account | `<unset>`
-`JIGASI_SIP_SERVER` | SIP server (use the SIP account domain if in doubt) | sip2sip.info
-`JIGASI_SIP_PORT` | SIP server port | 5060
-`JIGASI_SIP_TRANSPORT` | SIP transport | UDP
+| 变量                   | 描述                                        | 示例              |
+| ---------------------- | ------------------------------------------- | ----------------- |
+| `JIGASI_SIP_URI`       | 用于来电/去电的 SIP URI                     | test@sip2sip.info |
+| `JIGASI_SIP_PASSWORD`  | 指定 SIP 账号的密码                         | `<unset>`         |
+| `JIGASI_SIP_SERVER`    | SIP 服务器（不确定时可使用 SIP 账号的域名） | sip2sip.info      |
+| `JIGASI_SIP_PORT`      | SIP 服务器端口                              | 5060              |
+| `JIGASI_SIP_TRANSPORT` | SIP 传输协议                                | UDP               |
 
-#### Display Dial-In information
+#### 显示拨入信息
 
-Variable | Description | Example
---- | --- | ---
-`DIALIN_NUMBERS_URL` | URL to the JSON with all Dial-In numbers | https://meet.example.com/dialin.json
-`CONFCODE_URL` | URL to the API for checking/generating Dial-In codes | https://jitsi-api.jitsi.net/conferenceMapper
+| 变量                 | 描述                             | 示例                                         |
+| -------------------- | -------------------------------- | -------------------------------------------- |
+| `DIALIN_NUMBERS_URL` | 包含所有拨入号码的 JSON 文件 URL | https://meet.example.com/dialin.json         |
+| `CONFCODE_URL`       | 用于检查/生成拨入代码的 API URL  | https://jitsi-api.jitsi.net/conferenceMapper |
 
-The JSON with the Dial-In numbers should look like this:
+拨入号码的 JSON 文件应类似如下：
 
 ```json
 {"message":"Dial-In numbers:","numbers":{"DE": ["+49-721-0000-0000"]},"numbersEnabled":true}
 ```
 
-### Recording / live streaming configuration with Jibri
+### 使用 Jibri 进行录制/直播配置
 
 <details>
-  <summary>If you are using a release older than 7439 some extra setup is necessary.</summary>
-Before running Jibri **on releases older than 7439**, you need to set up an ALSA loopback device on the host.
-This **will not** work on a non-Linux host.
+  <summary>如果您使用的版本低于 7439，则需要一些额外的设置。</summary>
+在运行 **版本低于 7439** 的 Jibri 之前，您需要在主机上设置 ALSA 循环设备。这 **不** 适用于非 Linux 主机。
 
-For CentOS 7, the module is already compiled with the kernel, so just run:
+对于 CentOS 7，模块已经与内核一起编译，因此只需因此只需运行：
 
 ```bash
-# configure 5 capture/playback interfaces
+# 配置 5 个捕获/播放接口
 echo "options snd-aloop enable=1,1,1,1,1 index=0,1,2,3,4" > /etc/modprobe.d/alsa-loopback.conf
-# setup autoload the module
+# 设置模块自动加载
 echo "snd_aloop" > /etc/modules-load.d/snd_aloop.conf
-# load the module
+# 加载模块
 modprobe snd-aloop
-# check that the module is loaded
+# 检查模块是否已加载
 lsmod | grep snd_aloop
 ```
 
-For Ubuntu:
+对于 Ubuntu：
 
 ```bash
-# install the module
+# 安装模块
 apt update && apt install linux-image-extra-virtual
-# configure 5 capture/playback interfaces
+# 配置 5 个捕获/播放接口
 echo "options snd-aloop enable=1,1,1,1,1 index=0,1,2,3,4" > /etc/modprobe.d/alsa-loopback.conf
-# setup autoload the module
+# 设置模块自动加载
 echo "snd-aloop" >> /etc/modules
-# check that the module is loaded
+# 检查模块是否已加载
 lsmod | grep snd_aloop
 ```
 
 :::note
-If you are running on AWS you may need to reboot your machine to use the generic kernel instead
-of the "aws" kernel. If after reboot, your machine is still using the "aws" kernel, you'll need to manually update the grub file. So just run:
+如果您在 AWS 上运行，可能需要重启机器以使用通用内核，而不是 “aws” 内核。如果重启后机器仍在使用 “aws” 内核，您需要手动更新 grub 文件。操作如下：
 :::
 
 ```bash
-# open the grub file in editor
+# 用编辑器打开 grub 文件
 nano /etc/default/grub
-# Modify the value of GRUB_DEFAULT from "0" to "1>2"
-# Save and exit from file
+# 将 GRUB_DEFAULT 的值从 "0" 修改为 "1>2"
+# 保存并退出文件
 
-# Update grub
+# 更新 grub
 update-grub
-# Reboot the machine
+# 重启机器
 reboot now
 ```
 
-For using multiple Jibri instances, you have to select different loopback interfaces for each instance manually.
+对于多实例 Jibri，您需要为每个实例手动选择不同的循环设备。
 
-  Default the first instance has:
+默认情况下，第一个实例的 `.asoundrc` 文件如下：
 
-  ```
-  ...
-  slave.pcm "hw:Loopback,0,0"
-  ...
-  slave.pcm "hw:Loopback,0,1"
-  ...
-  slave.pcm "hw:Loopback,1,1"
-  ...
-  slave.pcm "hw:Loopback,1,0"
-  ...
-  ```
+```
+...
+slave.pcm "hw:Loopback,0,0"
+...
+slave.pcm "hw:Loopback,0,1"
+...
+slave.pcm "hw:Loopback,1,1"
+...
+slave.pcm "hw:Loopback,1,0"
+...
+```
 
-  To setup the second instance, run container with changed `/home/jibri/.asoundrc`:
+要设置第二个实例，运行容器时更改 `/home/jibri/.asoundrc` 文件：
 
-  ```
-  ...
-  slave.pcm "hw:Loopback_1,0,0"
-  ...
-  slave.pcm "hw:Loopback_1,0,1"
-  ...
-  slave.pcm "hw:Loopback_1,1,1"
-  ...
-  slave.pcm "hw:Loopback_1,1,0"
-  ...
-  ```
+```
+...
+slave.pcm "hw:Loopback_1,0,0"
+...
+slave.pcm "hw:Loopback_1,0,1"
+...
+slave.pcm "hw:Loopback_1,1,1"
+...
+slave.pcm "hw:Loopback_1,1,0"
+...
+```
 
-  Also you can use numbering id for set loopback interface. The third instance will have `.asoundrc` that looks like:
+您还可以使用编号 id 设置循环设备。第三个实例的 `.asoundrc` 文件应如下：
 
   ```
   ...
@@ -427,129 +410,113 @@ For using multiple Jibri instances, you have to select different loopback interf
 
 </details>
 
-If you want to enable Jibri these options are required:
+如果您想启用 Jibri，以下选项是必需的：
 
-Variable | Description | Example
---- | --- | ---
-`ENABLE_RECORDING` | Enable recording / live streaming | 1
+| 变量               | 描述          | 示例 |
+| ------------------ | ------------- | ---- |
+| `ENABLE_RECORDING` | 启用录制/直播 | 1    |
 
-Extended Jibri configuration:
+Jibri 扩展配置：
 
-Variable | Description | Example
---- | --- | ---
-`JIBRI_RECORDER_USER` | Internal recorder user for Jibri client connections | recorder
-`JIBRI_RECORDER_PASSWORD` | Internal recorder password for Jibri client connections | `<unset>`
-`JIBRI_RECORDING_DIR` | Directory for recordings inside Jibri container | /config/recordings
-`JIBRI_FINALIZE_RECORDING_SCRIPT_PATH` | The finalizing script. Will run after recording is complete | /config/finalize.sh
-`JIBRI_XMPP_USER` | Internal user for Jibri client connections. | jibri
-`JIBRI_STRIP_DOMAIN_JID` | Prefix domain for strip inside Jibri (please see env.example for details) | muc
-`JIBRI_BREWERY_MUC` | MUC name for the Jibri pool | jibribrewery
-`JIBRI_PENDING_TIMEOUT` | MUC connection timeout | 90
+| 变量                                   | 描述                                                  | 示例                |
+| -------------------------------------- | ----------------------------------------------------- | ------------------- |
+| `JIBRI_RECORDER_USER`                  | Jibri 客户端连接的内部录制用户                        | recorder            |
+| `JIBRI_RECORDER_PASSWORD`              | Jibri 客户端连接的内部录制密码                        | `<unset>`           |
+| `JIBRI_RECORDING_DIR`                  | Jibri 容器内的录制目录                                | /config/recordings  |
+| `JIBRI_FINALIZE_RECORDING_SCRIPT_PATH` | 完成录制后的脚本路径，将在录制完成后运行              | /config/finalize.sh |
+| `JIBRI_XMPP_USER`                      | Jibri 客户端连接的内部用户                            | jibri               |
+| `JIBRI_STRIP_DOMAIN_JID`               | Jibri 内的域名前缀剥离（详情请参阅 env.example 文件） | muc                 |
+| `JIBRI_BREWERY_MUC`                    | Jibri 池的 MUC 名称                                   | jibribrewery        |
+| `JIBRI_PENDING_TIMEOUT`                | MUC 连接超时时间                                      | 90                  |
 
-### Jitsi Meet configuration
+### Jitsi Meet 配置
 
-Jitsi-Meet uses two configuration files for changing default settings within
-the web interface: ``config.js`` and ``interface_config.js``. The files are
-located within the ``CONFIG/web/`` directory configured within your environment file.
+Jitsi Meet 使用两个配置文件来更改 Web 界面的默认设置：`config.js` 和 `interface_config.js`。这些文件位于您环境文件中配置的 `CONFIG/web/` 目录中。
 
-These files are re-created on every container restart.
-If you'd like to provide your own settings, create your own config files:
-``custom-config.js`` and ``custom-interface_config.js``.
+每次容器重启时，这些文件都会重新创建。如果您想提供自己的设置，创建自己的配置文件 `custom-config.js` 和 `custom-interface_config.js` 即可。
 
-It's enough to provide your relevant settings only, the docker scripts will
-append your custom files to the default ones!
+您只需提供相关设置，Docker 脚本会将您的自定义文件附加到默认文件中！
 
-### Authentication
+### 身份验证
 
-Authentication can be controlled with the environment variables below. If guest
-access is enabled, unauthenticated users will need to wait until a user authenticates
-before they can join a room. If guest access is not enabled, every user will need
-to authenticate before they can join.
+身份验证可以通过以下环境变量进行控制。如果启用了访客访问，未经身份验证的用户需要等待已认证用户加入后才能进入房间。如果未启用访客访问，每个用户都需要认证后才能加入。
 
-If authentication is enabled, once an authenticated user logged in, it is always
-logged in before the session timeout. You can set `ENABLE_AUTO_LOGIN=0` to disable
-this default auto login feature or you can set `JICOFO_AUTH_LIFETIME` to limit
-the session lifetime.
+如果启用了身份验证，一旦认证用户登录，该用户将在会话超时前始终保持登录状态。您可以通过设置 `ENABLE_AUTO_LOGIN=0` 来禁用默认的自动登录功能，或者设置 `JICOFO_AUTH_LIFETIME` 来限制会话时长。
 
-Variable | Description | Example
---- | --- | ---
-`ENABLE_AUTH` | Enable authentication | 1
-`ENABLE_GUESTS` | Enable guest access | 1
-`AUTH_TYPE` | Select authentication type (internal, jwt or ldap) | internal
-`ENABLE_AUTO_LOGIN` | Enable auto login  | 1
-`JICOFO_AUTH_LIFETIME` | Select session timeout value for an authenticated user | 3 hours
+| 变量                   | 描述                                      | 示例     |
+| ---------------------- | ----------------------------------------- | -------- |
+| `ENABLE_AUTH`          | 启用身份验证                              | 1        |
+| `ENABLE_GUESTS`        | 启用访客访问                              | 1        |
+| `AUTH_TYPE`            | 选择身份验证类型（internal、jwt 或 ldap） | internal |
+| `ENABLE_AUTO_LOGIN`    | 启用自动登录                              | 1        |
+| `JICOFO_AUTH_LIFETIME` | 选择认证用户的会话超时值                  | 3 hours  |
 
-#### Internal authentication
+#### 内部身份验证
 
-The default authentication mode (`internal`) uses XMPP credentials to authenticate users.
-To enable it you have to enable authentication with `ENABLE_AUTH` and set `AUTH_TYPE` to `internal`,
-then configure the settings you can see below.
+默认的身份验证模式是 `internal`，使用 XMPP 凭据认证用户。要启用此功能，需设置 `ENABLE_AUTH` 为 1，并将 `AUTH_TYPE` 设置为 `internal`，然后配置以下设置。
 
-Internal users must be created with the ``prosodyctl`` utility in the ``prosody`` container.
-In order to do that, first, execute a shell in the corresponding container:
+内部用户必须通过 `prosodyctl` 工具在 `prosody` 容器中创建。首先，进入对应的容器：
 
 ```bash
 docker compose exec prosody /bin/bash
 ```
 
-Once in the container, run the following command to create a user:
+进入容器后，运行以下命令创建用户：
 
 ```bash
-prosodyctl --config /config/prosody.cfg.lua register TheDesiredUsername meet.jitsi TheDesiredPassword
+prosodyctl --config /config/prosody.cfg.lua register 【TheDesiredUsername】 meet.jitsi 【TheDesiredPassword】
 ```
 
-Note that the command produces no output.
+注意，命令不会产生任何输出。
 
-To delete a user, run the following command in the container:
+要删除用户，请运行以下命令：
 
 ```bash
-prosodyctl --config /config/prosody.cfg.lua unregister TheDesiredUsername meet.jitsi
+prosodyctl --config /config/prosody.cfg.lua unregister 【TheDesiredUsername】 meet.jitsi
 ```
 
-To list all users, run the following command in the container:
+要列出所有用户，运行以下命令：
 
 ```bash
 find /config/data/meet%2ejitsi/accounts -type f -exec basename {} .dat \;
 ```
 
-#### Authentication using LDAP
+#### 使用 LDAP 进行身份验证
 
-You can use LDAP to authenticate users. To enable it you have to enable authentication with `ENABLE_AUTH` and
-set `AUTH_TYPE` to `ldap`, then configure the settings you can see below.
+您可以使用 LDAP 进行用户认证。要启用此功能，需设置 `ENABLE_AUTH` 为 1，并将 `AUTH_TYPE` 设置为 `ldap`，然后配置以下设置。
 
-Variable | Description | Example
---- | --- | ---
-`LDAP_URL` | URL for ldap connection | ldaps://ldap.domain.com/
-`LDAP_BASE` | LDAP base DN. Can be empty. | DC=example,DC=domain,DC=com
-`LDAP_BINDDN` | LDAP user DN. Do not specify this parameter for the anonymous bind. | CN=binduser,OU=users,DC=example,DC=domain,DC=com
-`LDAP_BINDPW` | LDAP user password. Do not specify this parameter for the anonymous bind. | LdapUserPassw0rd
-`LDAP_FILTER` | LDAP filter. | (sAMAccountName=%u)
-`LDAP_AUTH_METHOD` | LDAP authentication method. | bind
-`LDAP_VERSION` | LDAP protocol version | 3
-`LDAP_USE_TLS` | Enable LDAP TLS | 1
-`LDAP_TLS_CIPHERS` | Set TLS ciphers list to allow | SECURE256:SECURE128
-`LDAP_TLS_CHECK_PEER` | Require and verify LDAP server certificate | 1
-`LDAP_TLS_CACERT_FILE` | Path to CA cert file. Used when server certificate verification is enabled | /etc/ssl/certs/ca-certificates.crt
-`LDAP_TLS_CACERT_DIR` | Path to CA certs directory. Used when server certificate verification is enabled. | /etc/ssl/certs
-`LDAP_START_TLS` | Enable START_TLS, requires LDAPv3, URL must be ldap:// not ldaps:// | 0
+| 变量                   | 描述                                                        | 示例                                             |
+| ---------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| `LDAP_URL`             | LDAP 连接的 URL                                             | ldaps://ldap.domain.com/                         |
+| `LDAP_BASE`            | LDAP 基础 DN，可为空                                        | DC=example,DC=domain,DC=com                      |
+| `LDAP_BINDDN`          | LDAP 用户 DN，不指定此参数则使用匿名绑定                    | CN=binduser,OU=users,DC=example,DC=domain,DC=com |
+| `LDAP_BINDPW`          | LDAP 用户密码，不指定此参数则使用匿名绑定                   | LdapUserPassw0rd                                 |
+| `LDAP_FILTER`          | LDAP 过滤器                                                 | (sAMAccountName=%u)                              |
+| `LDAP_AUTH_METHOD`     | LDAP 认证方法                                               | bind                                             |
+| `LDAP_VERSION`         | LDAP 协议版本                                               | 3                                                |
+| `LDAP_USE_TLS`         | 启用 LDAP TLS                                               | 1                                                |
+| `LDAP_TLS_CIPHERS`     | 设置允许的 TLS 密码列表                                     | SECURE256:SECURE128                              |
+| `LDAP_TLS_CHECK_PEER`  | 要求并验证 LDAP 服务器证书                                  | 1                                                |
+| `LDAP_TLS_CACERT_FILE` | CA 证书文件路径，启用服务器证书验证时使用                   | /etc/ssl/certs/ca-certificates.crt               |
+| `LDAP_TLS_CACERT_DIR`  | CA 证书目录路径，启用服务器证书验证时使用                   | /etc/ssl/certs                                   |
+| `LDAP_START_TLS`       | 启用 START_TLS，需 LDAPv3，URL 必须为 ldap:// 而非 ldaps:// | 0                                                |
 
-#### Authentication using JWT tokens
+#### 使用 JWT 令牌进行身份验证
 
-You can use JWT tokens to authenticate users. To enable it you have to enable authentication with `ENABLE_AUTH` and
-set `AUTH_TYPE` to `jwt`, then configure the settings you can see below.
+您可以使用 JWT 令牌认证用户。要启用此功能，需设置 `ENABLE_AUTH` 为 1，并将 `AUTH_TYPE` 设置为 `jwt`，然后配置以下设置。
 
-Variable | Description | Example
---- | --- | ---
-`JWT_APP_ID` | Application identifier | my_jitsi_app_id
-`JWT_APP_SECRET` | Application secret known only to your token | my_jitsi_app_secret
-`JWT_ACCEPTED_ISSUERS` | (Optional) Set asap_accepted_issuers as a comma separated list | my_web_client,my_app_client
-`JWT_ACCEPTED_AUDIENCES` | (Optional) Set asap_accepted_audiences as a comma separated list | my_server1,my_server2
-`JWT_ASAP_KEYSERVER` | (Optional) Set asap_keyserver to a url where public keys can be found | https://example.com/asap>
-`JWT_ALLOW_EMPTY` | (Optional) Allow anonymous users with no JWT while validating JWTs when provided | 0
-`JWT_AUTH_TYPE` | (Optional) Controls which module is used for processing incoming JWTs | token
-`JWT_TOKEN_AUTH_MODULE` | (Optional) Controls which module is used for validating JWTs | token_verification
+| 变量                     | 描述                                                   | 示例                        |
+| ------------------------ | ------------------------------------------------------ | --------------------------- |
+| `JWT_APP_ID`             | 应用标识符                                             | my_jitsi_app_id             |
+| `JWT_APP_SECRET`         | 仅您的令牌知道的应用密钥                               | my_jitsi_app_secret         |
+| `JWT_ACCEPTED_ISSUERS`   | （可选）设置 asap_accepted_issuers 为逗号分隔列表      | my_web_client,my_app_client |
+| `JWT_ACCEPTED_AUDIENCES` | （可选）设置 asap_accepted_audiences 为逗号分隔列表    | my_server1,my_server2       |
+| `JWT_ASAP_KEYSERVER`     | （可选）设置 asap_keyserver 为一个可用于查找公钥的 URL | https://example.com/asap>   |
+| `JWT_ALLOW_EMPTY`        | （可选）允许没有 JWT 的匿名用户，同时验证提供的 JWT    | 0                           |
+| `JWT_AUTH_TYPE`          | （可选）控制用于处理传入 JWT 的模块                    | token                       |
+| `JWT_TOKEN_AUTH_MODULE`  | （可选）控制用于验证 JWT 的模块                        | token_verification          |
 
-This can be tested using the [jwt.io] debugger. Use the following sample payload:
+可以使用 [jwt.io](https://jwt.io/#debugger-io) 调试器进行测试。使用以下示例 payload：
 
 ```json
 {
@@ -567,224 +534,217 @@ This can be tested using the [jwt.io] debugger. Use the following sample payload
 }
 ```
 
-#### Authentication using Matrix
+#### 使用 Matrix 进行身份验证
 
-For more information see the documentation of the "Prosody Auth Matrix User Verification" [here](https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification).
+有关更多信息，请参阅 “Prosody Auth Matrix 用户验证” 的文档 [这里](https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification)。
 
-Variable | Description | Example
---- | --- | ---
-`MATRIX_UVS_URL` | Base URL to the matrix user verification service (without ending slash) | `https://uvs.example.com:3000`
-`MATRIX_UVS_ISSUER` | (optional) The issuer of the auth token to be passed through. Must match what is being set as `iss` in the JWT. | issuer (default)
-`MATRIX_UVS_AUTH_TOKEN` | (optional) user verification service auth token, if authentication enabled | changeme
-`MATRIX_UVS_SYNC_POWER_LEVELS` | (optional) Make Matrix room moderators owners of the Prosody room. | 1
+| 变量                           | 描述                                                         | 示例                           |
+| ------------------------------ | ------------------------------------------------------------ | ------------------------------ |
+| `MATRIX_UVS_URL`               | Matrix 用户验证服务的基本 URL（不带斜杠）                    | `https://uvs.example.com:3000` |
+| `MATRIX_UVS_ISSUER`            | （可选）通过的 auth token 的发行者，必须与 JWT 中的 `iss` 匹配 | issuer（默认）                 |
+| `MATRIX_UVS_AUTH_TOKEN`        | （可选）如果启用了身份验证，则为用户验证服务的 auth token    | changeme                       |
+| `MATRIX_UVS_SYNC_POWER_LEVELS` | （可选）使 Matrix 房间的主持人成为 Prosody 房间的拥有者      | 1                              |
 
-#### Authentication using Hybrid Matrix Token
+#### 使用混合 Matrix 令牌（Hybrid Matrix Token）进行身份验证
 
-You can use `Hybrid Matrix Token` to authenticate users. It supports `Matrix` and `JWT Token` authentications
-on the same setup. To enable it you have to enable authentication with `ENABLE_AUTH` and set `AUTH_TYPE` to
-`hybrid_matrix_token`, then configure the settings you can see below.
+您可以使用 `Hybrid Matrix Token` 认证用户。它支持在同一设置中使用 `Matrix` 和 `JWT Token` 进行身份验证。要启用此功能，需设置 `ENABLE_AUTH` 为 1，并将 `AUTH_TYPE` 设置为 `hybrid_matrix_token`，然后配置以下设置。
 
-For more information see the documentation of the "Hybrid Matrix Token"
-[here](https://github.com/jitsi-contrib/prosody-plugins/tree/main/auth_hybrid_matrix_token).
+有关更多信息，请参阅 “Hybrid Matrix Token” 的文档 [这里](https://github.com/jitsi-contrib/prosody-plugins/tree/main/auth_hybrid_matrix_token)。
 
-Variable | Description | Example
---- | --- | ---
-`MATRIX_UVS_URL` | Base URL to the matrix user verification service (without ending slash) | `https://uvs.example.com:3000`
-`MATRIX_UVS_ISSUER` | (optional) The issuer of the auth token to be passed through. Must match what is being set as `iss` in the JWT. It allows all issuers (`*`) by default. | my_issuer
-`MATRIX_UVS_AUTH_TOKEN` | (optional) user verification service auth token, if authentication enabled | my_matrix_secret
-`MATRIX_UVS_SYNC_POWER_LEVELS` | (optional) Make Matrix room moderators owners of the Prosody room. | 1
-`MATRIX_LOBBY_BYPASS` | (optional) Allow Matrix room members to bypass Jitsi lobby check. | 1
-`JWT_APP_ID` | Application identifier | my_jitsi_app_id
-`JWT_APP_SECRET` | Application secret known only to your token | my_jitsi_app_secret
-`JWT_ALLOW_EMPTY` | (Optional) Allow anonymous users with no JWT while validating JWTs when provided | 0
+| 变量                           | 描述                                                         | 示例                           |
+| ------------------------------ | ------------------------------------------------------------ | ------------------------------ |
+| `MATRIX_UVS_URL`               | Matrix 用户验证服务的基本 URL（不带斜杠）                    | `https://uvs.example.com:3000` |
+| `MATRIX_UVS_ISSUER`            | （可选）通过的 auth token 的发行者，必须与 JWT 中的 `iss` 匹配 | my_issuer                      |
+| `MATRIX_UVS_AUTH_TOKEN`        | （可选）如果启用了身份验证，则为用户验证服务的 auth token    | my_matrix_secret               |
+| `MATRIX_UVS_SYNC_POWER_LEVELS` | （可选）使 Matrix 房间的主持人成为 Prosody 房间的拥有者      | 1                              |
+| `MATRIX_LOBBY_BYPASS`          | （可选）允许 Matrix 房间成员绕过 Jitsi 大厅检查              | 1                              |
+| `JWT_APP_ID`                   | 应用标识符                                                   | my_jitsi_app_id                |
+| `JWT_APP_SECRET`               | 仅您的令牌知道的应用密钥                                     | my_jitsi_app_secret            |
+| `JWT_ALLOW_EMPTY`              | （可选）允许没有 JWT 的匿名用户，同时验证提供的 JWT          | 0                              |
 
-#### External authentication
+#### 外部身份验证
 
-Variable | Description | Example
---- | --- | ---
-`TOKEN_AUTH_URL` | Authenticate using external service or just focus external auth window if there is one already. | https://auth.meet.example.com/{room}>
+| 变量             | 描述                                                 | 示例                                  |
+| ---------------- | ---------------------------------------------------- | ------------------------------------- |
+| `TOKEN_AUTH_URL` | 使用外部服务进行身份验证或专注于已存在的外部认证窗口 | https://auth.meet.example.com/{room}> |
 
-### Shared document editing using Etherpad
+### 使用 Etherpad 进行文档协作编辑
 
-You can collaboratively edit a document via [Etherpad]. In order to enable it, set the config options below and run
-Docker Compose with the additional config file `etherpad.yml`.
+您可以通过 [Etherpad] 进行协作编辑文档。要启用它，请设置以下配置选项，并使用额外的配置文件 `etherpad.yml` 运行 Docker Compose。
 
-Here are the required options:
+以下是所需选项：
 
-Variable | Description | Example
---- | --- | ---
-`ETHERPAD_URL_BASE` | Set etherpad-lite URL | `http://etherpad.meet.jitsi:9001`
+| 变量                | 描述                      | 示例                              |
+| ------------------- | ------------------------- | --------------------------------- |
+| `ETHERPAD_URL_BASE` | 设置 etherpad-lite 的 URL | `http://etherpad.meet.jitsi:9001` |
 
-### Transcription configuration
+### 转录功能配置
 
-If you want to enable the Transcribing function, these options are required:
+如果您想启用转录功能，需要以下选项：
 
-Variable | Description | Example
---- | --- | ---
-`ENABLE_TRANSCRIPTIONS` | Enable Jigasi transcription in a conference | 1
-`GC_PROJECT_ID` | `project_id` from Google Cloud Credentials
-`GC_PRIVATE_KEY_ID` | `private_key_id` from Google Cloud Credentials
-`GC_PRIVATE_KEY` | `private_key` from Google Cloud Credentials
-`GC_CLIENT_EMAIL` | `client_email` from Google Cloud Credentials
-`GC_CLIENT_ID` | `client_id` from Google Cloud Credentials
-`GC_CLIENT_CERT_URL` | `client_x509_cert_url` from Google Cloud Credentials
-`JIGASI_TRANSCRIBER_RECORD_AUDIO` | Jigasi will record audio when transcriber is on | true
-`JIGASI_TRANSCRIBER_SEND_TXT` | Jigasi will send transcribed text to the chat when transcriber is on | true
-`JIGASI_TRANSCRIBER_ADVERTISE_URL` | Jigasi will post an url to the chat with transcription file | true
+| 变量                               | 描述                                            | 示例 |
+| ---------------------------------- | ----------------------------------------------- | ---- |
+| `ENABLE_TRANSCRIPTIONS`            | 启用会议中的 Jigasi 转录功能                    | 1    |
+| `GC_PROJECT_ID`                    | 来自 Google Cloud 凭据的 `project_id`           |      |
+| `GC_PRIVATE_KEY_ID`                | 来自 Google Cloud 凭据的 `private_key_id`       |      |
+| `GC_PRIVATE_KEY`                   | 来自 Google Cloud 凭据的 `private_key`          |      |
+| `GC_CLIENT_EMAIL`                  | 来自 Google Cloud 凭据的 `client_email`         |      |
+| `GC_CLIENT_ID`                     | 来自 Google Cloud 凭据的 `client_id`            |      |
+| `GC_CLIENT_CERT_URL`               | 来自 Google Cloud 凭据的 `client_x509_cert_url` |      |
+| `JIGASI_TRANSCRIBER_RECORD_AUDIO`  | 当转录器开启时，Jigasi 会录制音频               | true |
+| `JIGASI_TRANSCRIBER_SEND_TXT`      | 当转录器开启时，Jigasi 会将转录文本发送到聊天   | true |
+| `JIGASI_TRANSCRIBER_ADVERTISE_URL` | Jigasi 会将转录文件的链接发布到聊天             | true |
 
-For setting the Google Cloud Credentials please read https://cloud.google.com/text-to-speech/docs/quickstart-protocol> section "Before you begin" paragraph 1 to 5.
+有关设置 Google Cloud 凭据的详细信息，请参阅 https://cloud.google.com/text-to-speech/docs/quickstart-protocol> 中的 "Before you begin" 部分的第 1 到 5 段。
 
-### Sentry logging configuration
+### Sentry 日志配置
 
-Variable | Description | Default value
---- | --- | ---
-`JVB_SENTRY_DSN` | Sentry Data Source Name (Endpoint for Sentry project) | `https://public:private@host:port/1`
-`JICOFO_SENTRY_DSN` | Sentry Data Source Name (Endpoint for Sentry project) | `https://public:private@host:port/1`
-`JIGASI_SENTRY_DSN` | Sentry Data Source Name (Endpoint for Sentry project) | `https://public:private@host:port/1`
-`SENTRY_ENVIRONMENT` | Optional environment info to filter events | production
-`SENTRY_RELEASE` | Optional release info to filter events | 1.0.0
+| 变量                 | 描述                                   | 默认值                               |
+| -------------------- | -------------------------------------- | ------------------------------------ |
+| `JVB_SENTRY_DSN`     | Sentry 数据源名称（Sentry 项目的端点） | `https://public:private@host:port/1` |
+| `JICOFO_SENTRY_DSN`  | Sentry 数据源名称（Sentry 项目的端点） | `https://public:private@host:port/1` |
+| `JIGASI_SENTRY_DSN`  | Sentry 数据源名称（Sentry 项目的端点） | `https://public:private@host:port/1` |
+| `SENTRY_ENVIRONMENT` | 可选的环境信息，用于过滤事件           | production                           |
+| `SENTRY_RELEASE`     | 可选的版本信息，用于过滤事件           | 1.0.0                                |
 
-### TURN server configuration
+### TURN 服务器配置
 
-Configure external TURN servers.
+配置外部 TURN 服务器。
 
-Variable | Description | Default value
---- | --- | ---
-`TURN_CREDENTIALS` | Credentials for TURN servers |
-`TURN_HOST` | TURN server hostnames as a comma separated list (UDP or TCP transport) |
-`TURN_PORT` | TURN server port (UDP or TCP transport) | 443
-`TURN_TRANSPORT` | TURN server protocols as a comma separated list (UDP or TCP or both) | tcp
-`TURNS_HOST` | TURN server hostnames as a comma separated list (TLS transport) |
-`TURNS_PORT` | TURN server port (TLS transport) | 443
+| 变量               | 描述                                                     | 默认值 |
+| ------------------ | -------------------------------------------------------- | ------ |
+| `TURN_CREDENTIALS` | TURN 服务器的凭据                                        |        |
+| `TURN_HOST`        | TURN 服务器主机名，使用逗号分隔的列表（UDP 或 TCP 传输） |        |
+| `TURN_PORT`        | TURN 服务器端口（UDP 或 TCP 传输）                       | 443    |
+| `TURN_TRANSPORT`   | TURN 服务器协议，使用逗号分隔的列表（UDP 或 TCP 或两者） | tcp    |
+| `TURNS_HOST`       | TURN 服务器主机名，使用逗号分隔的列表（TLS 传输）        |        |
+| `TURNS_PORT`       | TURN 服务器端口（TLS 传输）                              | 443    |
 
-### Advanced configuration
+### 高级配置
 
-These configuration options are already set and generally don't need to be changed.
+这些配置选项已预设，通常无需更改。
 
-Variable | Description | Default value
---- | --- | ---
-`XMPP_DOMAIN` | Internal XMPP domain | meet.jitsi
-`XMPP_AUTH_DOMAIN` | Internal XMPP domain for authenticated services | auth.meet.jitsi
-`XMPP_SERVER` | Internal XMPP server name xmpp.meet.jitsi | xmpp.meet.jitsi
-`XMPP_BOSH_URL_BASE` | Internal XMPP server URL for BOSH module | `http://xmpp.meet.jitsi:5280`
-`XMPP_MUC_DOMAIN` | XMPP domain for the MUC | muc.meet.jitsi
-`XMPP_INTERNAL_MUC_DOMAIN` | XMPP domain for the internal MUC | internal-muc.meet.jitsi
-`XMPP_GUEST_DOMAIN` | XMPP domain for unauthenticated users | guest.meet.jitsi
-`XMPP_RECORDER_DOMAIN` | Domain for the jibri recorder | recorder.meet.jitsi
-`XMPP_MODULES` | Custom Prosody modules for XMPP_DOMAIN (comma separated) | info,alert
-`XMPP_MUC_MODULES` | Custom Prosody modules for MUC component (comma separated) | info,alert
-`XMPP_INTERNAL_MUC_MODULES` | Custom Prosody modules for internal MUC component (comma separated) | info,alert
-`GLOBAL_MODULES` | Custom prosody modules to load in global configuration (comma separated) | statistics,alert
-`GLOBAL_CONFIG` | Custom configuration string with escaped newlines | foo = bar;\nkey = val;
-`RESTART_POLICY` | Container restart policy | defaults to `unless-stopped`
-`DISABLE_HTTPS` | Handle TLS connections outside of this setup | 0
-`ENABLE_HTTP_REDIRECT` | Redirect HTTP traffic to HTTPS | 0
-`LOG_LEVEL` | Controls which logs are output from prosody and associated modules | info
-`ENABLE_HSTS` | Send a `strict-transport-security` header to force browsers to use a secure and trusted connection. Recommended for production use. | 1
-`ENABLE_IPV6` | Provides means to disable IPv6 in environments that don't support it | 1
-`ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX` | Enabled older unsafe regex for JVB colibri-ws URLs. WARNING: Enable with caution, this regex allows connections to arbitrary internal IP addresses and is not recommended for production use.  Unsafe regex is defined as `[a-zA-Z0-9-\._]+` | 0
-`COLIBRI_WEBSOCKET_JVB_LOOKUP_NAME` | DNS name to look up JVB IP address, used for default value of `COLIBRI_WEBSOCKET_REGEX` | jvb
-`COLIBRI_WEBSOCKET_REGEX` | Overrides the colibri regex used for proxying to JVB.  Recommended to override in production with values matching possible JVB IP ranges | defaults to `dig $COLIBRI_WEBSOCKET_JVB_LOOKUP_NAME` unless `DISABLE_COLIBRI_WEBSOCKET_JVB_LOOKUP` is set to true
-`DISABLE_COLIBRI_WEBSOCKET_JVB_LOOKUP` | Controls whether to run `dig $COLIBRI_WEBSOCKET_JVB_LOOKUP_NAME` when defining COLIBRI_WEBSOCKET_REGEX | 0
+| 变量                                    | 描述                                                         | 默认值                                                       |
+| --------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `XMPP_DOMAIN`                           | 内部 XMPP 域                                                 | meet.jitsi                                                   |
+| `XMPP_AUTH_DOMAIN`                      | 认证服务的内部 XMPP 域                                       | auth.meet.jitsi                                              |
+| `XMPP_SERVER`                           | 内部 XMPP 服务器名称 xmpp.meet.jitsi                         | xmpp.meet.jitsi                                              |
+| `XMPP_BOSH_URL_BASE`                    | BOSH 模块的内部 XMPP 服务器 URL                              | `http://xmpp.meet.jitsi:5280`                                |
+| `XMPP_MUC_DOMAIN`                       | MUC 的 XMPP 域                                               | muc.meet.jitsi                                               |
+| `XMPP_INTERNAL_MUC_DOMAIN`              | 内部 MUC 的 XMPP 域                                          | internal-muc.meet.jitsi                                      |
+| `XMPP_GUEST_DOMAIN`                     | 未认证用户的 XMPP 域                                         | guest.meet.jitsi                                             |
+| `XMPP_RECORDER_DOMAIN`                  | jibri 录制器的域                                             | recorder.meet.jitsi                                          |
+| `XMPP_MODULES`                          | XMPP_DOMAIN 的自定义 Prosody 模块（逗号分隔）                | info,alert                                                   |
+| `XMPP_MUC_MODULES`                      | MUC 组件的自定义 Prosody 模块（逗号分隔）                    | info,alert                                                   |
+| `XMPP_INTERNAL_MUC_MODULES`             | 内部 MUC 组件的自定义 Prosody 模块（逗号分隔）               | info,alert                                                   |
+| `GLOBAL_MODULES`                        | 自定义的 prosody 模块，在全局配置中加载（逗号分隔）          | statistics,alert                                             |
+| `GLOBAL_CONFIG`                         | 具有转义换行符的自定义配置字符串                             | foo = bar;\nkey = val;                                       |
+| `RESTART_POLICY`                        | 容器重启策略                                                 | 默认值为 `unless-stopped`                                    |
+| `DISABLE_HTTPS`                         | 处理此设置之外的 TLS 连接                                    | 0                                                            |
+| `ENABLE_HTTP_REDIRECT`                  | 将 HTTP 流量重定向到 HTTPS                                   | 0                                                            |
+| `LOG_LEVEL`                             | 控制 prosody 和相关模块输出的日志级别                        | info                                                         |
+| `ENABLE_HSTS`                           | 发送 `strict-transport-security` 头以强制浏览器使用安全和受信任的连接。建议在生产环境中使用。 | 1                                                            |
+| `ENABLE_IPV6`                           | 提供在不支持 IPv6 的环境中禁用 IPv6 的方式                   | 1                                                            |
+| `ENABLE_COLIBRI_WEBSOCKET_UNSAFE_REGEX` | 启用旧版不安全的正则表达式，用于 JVB colibri-ws URL。警告：谨慎启用，此正则表达式允许连接任意内部 IP 地址，不建议在生产环境中使用。不安全的正则表达式定义为 | 0                                                            |
+| `COLIBRI_WEBSOCKET_JVB_LOOKUP_NAME`     | 查找 JVB IP 地址的 DNS 名称，用于 `COLIBRI_WEBSOCKET_REGEX` 的默认值 | jvb                                                          |
+| `COLIBRI_WEBSOCKET_REGEX`               | 重写用于代理到 JVB 的 colibri 正则表达式。建议在生产中用匹配可能 JVB IP 范围的值覆盖 | 默认是 `dig $COLIBRI_WEBSOCKET_JVB_LOOKUP_NAME` 除非 `DISABLE_COLIBRI_WEBSOCKET_JVB_LOOKUP` 被设置为 true |
+| `DISABLE_COLIBRI_WEBSOCKET_JVB_LOOKUP`  | 控制在定义 `COLIBRI_WEBSOCKET_REGEX` 时是否运行 `dig $COLIBRI_WEBSOCKET_JVB_LOOKUP_NAME` | 0                                                            |
 
-#### Advanced Prosody options
+#### 高级 Prosody 选项
 
-Variable | Description | Default value
---- | --- | ---
-`PROSODY_RESERVATION_ENABLED` | Enable Prosody's reservation REST API | false
-`PROSODY_RESERVATION_REST_BASE_URL` | Base URL of Prosody's reservation REST API |
-`PROSODY_AUTH_TYPE` | Select authentication type for Prosody (internal, jwt or ldap) | `AUTH_TYPE`
-`PROSODY_ENABLE_METRICS` | Enables the http_openmetrics module which exposes Prometheus metrics at `/metrics` | false
-`PROSODY_METRICS_ALLOWED_CIDR` | CIDR block permitted to access metrics | 172.16.0.0/12
+| 变量                                | 描述                                                         | 默认值        |
+| ----------------------------------- | ------------------------------------------------------------ | ------------- |
+| `PROSODY_RESERVATION_ENABLED`       | 启用 Prosody 的预留 REST API                                 | false         |
+| `PROSODY_RESERVATION_REST_BASE_URL` | Prosody 的预留 REST API 的基本 URL                           |               |
+| `PROSODY_AUTH_TYPE`                 | 为 Prosody 选择认证类型（internal、jwt 或 ldap）             | `AUTH_TYPE`   |
+| `PROSODY_ENABLE_METRICS`            | 启用 http_openmetrics 模块，在 `/metrics` 处公开 Prometheus 指标 | false         |
+| `PROSODY_METRICS_ALLOWED_CIDR`      | 允许访问指标的 CIDR 块                                       | 172.16.0.0/12 |
 
-#### Advanced Jicofo options
+#### 高级 Jicofo 选项
 
-Variable | Description | Default value
---- | --- | ---
-`JICOFO_COMPONENT_SECRET` | XMPP component password for Jicofo | s3cr37
-`JICOFO_AUTH_USER` | XMPP user for Jicofo client connections | focus
-`JICOFO_AUTH_PASSWORD` | XMPP password for Jicofo client connections | `<unset>`
-`JICOFO_ENABLE_AUTH` | Enable authentication in Jicofo | `ENABLE_AUTH`
-`JICOFO_AUTH_TYPE` | Select authentication type for Jicofo (internal, jwt or ldap) | `AUTH_TYPE`
-`JICOFO_AUTH_LIFETIME` | Select session timeout value for an authenticated user | 24 hours
-`JICOFO_ENABLE_HEALTH_CHECKS` | Enable health checks inside Jicofo, allowing the use of the REST api to check Jicofo's status | false
+| 变量                          | 描述                                                         | 默认值        |
+| ----------------------------- | ------------------------------------------------------------ | ------------- |
+| `JICOFO_COMPONENT_SECRET`     | Jicofo 的 XMPP 组件密码                                      | s3cr37        |
+| `JICOFO_AUTH_USER`            | Jicofo 客户端连接的 XMPP 用户                                | focus         |
+| `JICOFO_AUTH_PASSWORD`        | Jicofo 客户端连接的 XMPP 密码                                | `<unset>`     |
+| `JICOFO_ENABLE_AUTH`          | 启用 Jicofo 的认证                                           | `ENABLE_AUTH` |
+| `JICOFO_AUTH_TYPE`            | 为 Jicofo 选择认证类型（internal、jwt 或 ldap）              | `AUTH_TYPE`   |
+| `JICOFO_AUTH_LIFETIME`        | 选择经过身份验证的用户的会话超时值                           | 24 hours      |
+| `JICOFO_ENABLE_HEALTH_CHECKS` | 启用 Jicofo 内部健康检查，允许使用 REST API 检查 Jicofo 的状态 | false         |
 
-#### Advanced JVB options
+#### 高级 JVB 选项
 
-Variable | Description | Default value
---- | --- | ---
-`JVB_AUTH_USER` | XMPP user for JVB MUC client connections | jvb
-`JVB_AUTH_PASSWORD` | XMPP password for JVB MUC client connections | `<unset>`
-`JVB_STUN_SERVERS` | STUN servers used to discover the server's public IP | stun.l.google.com:19302, stun1.l.google.com:19302, stun2.l.google.com:19302
-`JVB_PORT` | UDP port for media used by Jitsi Videobridge | 10000
-`JVB_COLIBRI_PORT` | COLIBRI REST API port of JVB exposed to localhost | 8080
-`JVB_BREWERY_MUC` | MUC name for the JVB pool | jvbbrewery
-`COLIBRI_REST_ENABLED` | Enable the COLIBRI REST API | true
-`SHUTDOWN_REST_ENABLED` | Enable the shutdown REST API | true
+| 变量                    | 描述                                       | 默认值                                                       |
+| ----------------------- | ------------------------------------------ | ------------------------------------------------------------ |
+| `JVB_AUTH_USER`         | JVB MUC 客户端连接的 XMPP 用户             | jvb                                                          |
+| `JVB_AUTH_PASSWORD`     | JVB MUC 客户端连接的 XMPP 密码             | `<unset>`                                                    |
+| `JVB_STUN_SERVERS`      | 用于发现服务器公共 IP 的 STUN 服务器       | stun.l.google.com:19302, stun1.l.google.com:19302, stun2.l.google.com:19302 |
+| `JVB_PORT`              | Jitsi Videobridge 使用的媒体 UDP 端口      | 10000                                                        |
+| `JVB_COLIBRI_PORT`      | JVB 暴露给本地主机的 COLIBRI REST API 端口 | 8080                                                         |
+| `JVB_BREWERY_MUC`       | JVB 池的 MUC 名称                          | jvbbrewery                                                   |
+| `COLIBRI_REST_ENABLED`  | 启用 COLIBRI REST API                      | true                                                         |
+| `SHUTDOWN_REST_ENABLED` | 启用关闭 REST API                          | true                                                         |
 
-#### Advanced Jigasi options
+#### 高级 Jigasi 选项
 
-Variable | Description | Default value
---- | --- | ---
-`JIGASI_ENABLE_SDES_SRTP` | Enable SDES srtp | 0
-`JIGASI_SIP_KEEP_ALIVE_METHOD` | Keepalive method | OPTIONS
-`JIGASI_HEALTH_CHECK_SIP_URI` | Health-check extension |
-`JIGASI_HEALTH_CHECK_INTERVAL` | Health-check interval | 300000
-`JIGASI_XMPP_USER` | XMPP user for Jigasi MUC client connections | jigasi
-`JIGASI_XMPP_PASSWORD` | XMPP password for Jigasi MUC client connections | `<unset>`
-`JIGASI_BREWERY_MUC` | MUC name for the Jigasi pool | jigasibrewery
-`JIGASI_PORT_MIN` | Minimum port for media used by Jigasi | 20000
-`JIGASI_PORT_MAX` | Maximum port for media used by Jigasi | 20050
+| 变量                           | 描述                              | 默认值        |
+| ------------------------------ | --------------------------------- | ------------- |
+| `JIGASI_ENABLE_SDES_SRTP`      | 启用 SDES srtp                    | 0             |
+| `JIGASI_SIP_KEEP_ALIVE_METHOD` | 保持连接的方法                    | OPTIONS       |
+| `JIGASI_HEALTH_CHECK_SIP_URI`  | 健康检查扩展                      |               |
+| `JIGASI_HEALTH_CHECK_INTERVAL` | 健康检查间隔                      | 300000        |
+| `JIGASI_XMPP_USER`             | Jigasi MUC 客户端连接的 XMPP 用户 | jigasi        |
+| `JIGASI_XMPP_PASSWORD`         | Jigasi MUC 客户端连接的 XMPP 密码 | `<unset>`     |
+| `JIGASI_BREWERY_MUC`           | Jigasi 池的 MUC 名称              | jigasibrewery |
+| `JIGASI_PORT_MIN`              | Jigasi 使用的媒体最小端口         | 20000         |
+| `JIGASI_PORT_MAX`              | Jigasi 使用的媒体最大端口         | 20050         |
 
-### Running behind NAT or on a LAN environment
+### 在 NAT 或局域网环境中运行
 
-When running running in a LAN environment, or on the public Internet via NAT, the ``JVB_ADVERTISE_IPS`` env variable should be set.
-This variable allows to control which IP addresses the JVB will advertise for WebRTC media traffic. It is necessary to set it regardless of the use of a reverse proxy, since it's the IP address that will receive the media (audio / video) and not HTTP traffic, hence it's oblivious to the reverse proxy.
+在局域网环境中运行，或通过 NAT 在公共互联网运行时，应设置 `JVB_ADVERTISE_IPS` 环境变量。此变量允许控制 JVB 将用于 WebRTC 媒体流量的 IP 地址。无论是否使用反向代理，都必须设置它，因为它是接收媒体（音频/视频）的 IP 地址，而不是 HTTP 流量，因此它与反向代理无关。
 
 :::note
-This variable used to be called ``DOCKER_HOST_ADDRESS`` but it got renamed for clarity and to support a list of IPs.
+此变量以前称为 `DOCKER_HOST_ADDRESS`，但为了清晰起见，它已被重命名以支持 IP 列表。
 :::
 
-If your users are coming in over the Internet (and not over LAN), this will likely be your public IP address. If this is not set up correctly, calls will crash when more than two users join a meeting.
+如果您的用户是通过互联网（而不是通过局域网）访问的，这通常是您的公共 IP 地址。如果未正确设置此项，当超过两名用户加入会议时，通话将崩溃。
 
-The public IP address is attempted to be discovered via [STUN].
-STUN servers can be specified with the ``JVB_STUN_SERVERS`` option.
+尝试通过 [STUN] 发现公共 IP 地址。可以使用 `JVB_STUN_SERVERS` 选项指定 STUN 服务器。
 
 :::note
-Due to a bug in the docker version currently in the Debian repos (20.10.5), [Docker does not listen on IPv6 ports](https://forums.docker.com/t/docker-doesnt-open-ipv6-ports/106201/2), so for that combination you will have to [manually obtain the latest version](https://docs.docker.com/engine/install/debian/).
+由于当前在 Debian 仓库中的 Docker 版本（20.10.5）中的一个 bug，[Docker 不会监听 IPv6 端口](https://forums.docker.com/t/docker-doesnt-open-ipv6-ports/106201/2)，因此对于该组合，您需要 [手动获取最新版本](https://docs.docker.com/engine/install/debian/)。
 :::
 
-#### Split horizon
+#### 拆分视图(Split horizon)
 
-If you are running in a split horizon environemt (LAN internal clients connect to a local IP and other clients connect to a public IP) you can specify
-multiple advertised IPs by separating them with commas:
+如果您在拆分视图环境中运行（局域网内部客户端连接到本地 IP，而其他客户端连接到公共 IP），可以通过用逗号分隔来指定多个广告 IP：
 
 ```
 JVB_ADVERTISE_IPS=192.168.1.1,1.2.3.4
 ```
 
-#### Offline / airgapped installation
+#### 离线 / 隔离安装
 
-If your setup does not have access to the Internet you'll need to disable STUN on the JVB since discovering its own IP address will fail, but that is not necessary on that type of environment.
+如果您的设置无法访问互联网，则需要在 JVB 上禁用 STUN，因为发现其自身 IP 地址将失败，但在此类环境中不需要此操作。
 
 ```
 JVB_DISABLE_STUN=true
 ```
 
-## Accessing server logs
+## 访问服务器日志
 
-The default bahavior of `docker-jitsi-meet` is to log to `stdout`.
+`docker-jitsi-meet` 的默认行为是将日志输出到 `stdout`。
 
-While the logs are sent to `stdout`, they are not lost: unless configured to drop all logs, Docker keeps them available for future retrieval and processing.
+虽然日志被发送到 `stdout`，但它们并未丢失：除非配置为丢弃所有日志，否则 Docker 会保留这些日志供将来检索和处理。
 
-If you need to access the container's logs you have multiple options. Here are the main ones:
+如果需要访问容器的日志，有多种方法可供选择。以下是主要方法：
 
-* run `docker compose logs -t -f <service_name>` from command line, where `<service_name>` is one of `web`, `prosody`,`jvb`, `jicofo`. This command will output the logs for the selected service to stdout with timestamps.
-* use a standard [docker logging driver](https://docs.docker.com/config/containers/logging/configure/) to redirect the logs to the desired target (for instance `syslog` or `splunk`).
-* search [docker hub](https://hub.docker.com/search?q=) for a third party [docker logging driver plugin](https://docs.docker.com/config/containers/logging/plugins/)
-* or [write your own driver plugin](https://docs.docker.com/engine/extend/plugins_logging/) if you have a very specific need.
+- 通过命令行运行 `docker compose logs -t -f <service_name>`，其中 `<service_name>` 是 `web`、`prosody`、`jvb`、`jicofo` 中的一个。此命令将日志输出到 `stdout`，并带有时间戳。
+- 使用标准的 [Docker 日志驱动程序](https://docs.docker.com/config/containers/logging/configure/) 将日志重定向到所需目标（例如 `syslog` 或 `splunk`）。
+- 在 [Docker Hub](https://hub.docker.com/search?q=) 搜索第三方 [Docker 日志驱动插件](https://docs.docker.com/config/containers/logging/plugins/)。
+- 或者，如果有非常具体的需求，可以[编写自己的日志驱动插件](https://docs.docker.com/engine/extend/plugins_logging/)。
 
-For instance, if you want to have all logs related to a `<service_name>` written to `/var/log/jitsi/<service_name>` as `json` output, you could use [docker-file-log-driver](https://github.com/deep-compute/docker-file-log-driver) and configure it by adding the following block in your `docker-compose.yml` file, at the same level as the `image` block of the selected `<service_name>`:
+例如，如果希望将与某个 `<service_name>` 相关的所有日志以 `json` 格式输出到 `/var/log/jitsi/<service_name>`，可以使用 [docker-file-log-driver](https://github.com/deep-compute/docker-file-log-driver)，并在 `docker-compose.yml` 文件中为所选 `<service_name>` 添加以下配置块：
 
 ```yaml
 services:
@@ -797,35 +757,35 @@ services:
                 fpath: "/jitsi/<service_name>.log"
 ```
 
-If you want to only display the `message` part of the log in `json` format, simply execute the following command (for instance if `fpath` was set to `/jitsi/jvb.log`) which uses `jq` to extract the relevant part of the logs:
+如果只想以 `json` 格式显示日志的 `message` 部分，只需执行以下命令（假设 `fpath` 被设置为 `/jitsi/jvb.log`），使用 `jq` 提取日志中的相关部分：
 
-```
+```bash
 sudo cat /var/log/jitsi/jvb.log | jq -r '.msg' | jq -r '.message'
 ```
 
-## Build Instructions
+## 构建说明
 
-Building your images allows you to edit the configuration files of each image individually, providing more customization for your deployment.
+构建映像使您能够单独编辑每个映像的配置文件，从而为部署提供更多自定义选项。
 
-The docker images can be built by running the `make` command in the main repository folder. If you need to overwrite existing images from the remote source, use `FORCE_REBUILD=1 make`.
+可以通过在主仓库文件夹中运行 `make` 命令来构建 Docker 映像。如果需要覆盖现有的远程源映像，使用 `FORCE_REBUILD=1 make`。
 
-If you are on the unstable branch, build the images with `FORCE_REBUILD=1 JITSI_RELEASE=unstable make`.
+如果处于不稳定分支，可以使用 `FORCE_REBUILD=1 JITSI_RELEASE=unstable make` 构建映像。
 
-You are now able to run `docker compose up` as usual.
+现在可以像往常一样运行 `docker compose up`。
 
-## Running behind a reverse proxy
+## 在反向代理后运行
 
-By default this setup is using WebSocket connections for 2 core components:
+默认情况下，此设置使用 WebSocket 连接来处理两个核心组件：
 
-* Signalling (XMPP)
-* Bridge channel (colibri)
+- 信令 - Signalling（XMPP）
+- 桥接通道 - Bridge channel （Colibri）
 
-Due to the hop-by-hop nature of WebSockets the reverse proxy must properly terminate and forward WebSocket connections. There 2 routes require such treatment:
+由于 WebSocket 的逐跳性质(hop-by-hop nature of WebSockets)，反向代理必须正确终止并转发 WebSocket 连接。以下两个路径需要进行处理：
 
-* /xmpp-websocket
-* /colibri-ws
+- /xmpp-websocket
+- /colibri-ws
 
-With nginx, these routes can be forwarded using the following config snippet:
+使用 nginx，可以通过以下配置片段转发这些路径：
 
 ```nginx
 location /xmpp-websocket {
@@ -842,8 +802,8 @@ location /colibri-ws {
 }
 ```
 
-In addition we need a route for /http-bind as XMPP over BOSH is still used by mobile clients:
-  
+此外，还需要为 `/http-bind` 配置一个路径，因为移动客户端仍然使用基于 BOSH 的 XMPP：
+
 ```nginx
 location /http-bind {
     proxy_pass https://localhost:8443;
@@ -853,7 +813,7 @@ location /http-bind {
 }
 ```
 
-With apache, `mod_proxy` and `mod_proxy_wstunnel` need to be enabled and these routes can be forwarded using the following config snippet:
+使用 Apache，需启用 `mod_proxy` 和 `mod_proxy_wstunnel`，并使用以下配置片段转发这些路径：
 
 ```apache
 <IfModule mod_proxy.c>
@@ -872,15 +832,15 @@ With apache, `mod_proxy` and `mod_proxy_wstunnel` need to be enabled and these r
 </IfModule>
 ```
 
-where `https://localhost:8443/` is the url of the web service's ingress.
+其中 `https://localhost:8443/` 是 Web 服务的入口 URL。
 
-### Disabling WebSocket connections
+### 禁用 WebSocket 连接
 
 :::note
-This is not the recommended setup.
+这不是推荐的设置。
 :::
 
-If using WebSockets is not an option, these environment variables can be set to fallback to HTTP polling and WebRTC datachannels:
+如果不能使用 WebSocket，可以设置以下环境变量以回退到 HTTP 轮询和 WebRTC 数据通道：
 
 ```bash
 ENABLE_SCTP=1

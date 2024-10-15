@@ -1,7 +1,7 @@
-# Getting help
+# Getting help - 获得帮助
 
-Jitsi is maintained by a dedicated group of enthusiasts.
+Jitsi 由一群热情的爱好者维护。
 
-If you need help with Jitsi [our community](https://community.jitsi.org) is the best place to start.
+如果您需要 Jitsi 的帮助，[我们的社区](https://community.jitsi.org) 是最好的起点。
 
-You can learn more about using Jitsi or developing applications with it by browsing our [docs](/handbook/docs/intro).
+您还可以通过浏览我们的[文档](/handbook/docs/intro)来了解更多关于使用 Jitsi 或开发相关应用程序的信息。

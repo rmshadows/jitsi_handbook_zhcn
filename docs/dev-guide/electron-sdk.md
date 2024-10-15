@@ -3,117 +3,124 @@ id: dev-guide-electron-sdk
 title: Electron SDK
 ---
 
-The Jitsi Meet Electron SDK provides a toolkit for adding Jitsi Meet into electron applications with additional features for a better desktop experience.
+Jitsi Meet Electron SDK 提供了一个工具包，用于将 Jitsi Meet 集成到 Electron 应用程序中，并为桌面体验提供额外的功能。
 
-Supported Electron versions: >= 16.
+**支持的 Electron 版本**: >= 16.
 
-## Sample Application
+## 示例应用程序
 
-The Jitsi Meet Electron Application is created using the Electron SDK and makes use of all its available features. The source code is available here: [jitsi-meet-electron application repository](https://github.com/jitsi/jitsi-meet-electron).
+Jitsi Meet Electron 应用程序是使用 Electron SDK 创建的，利用了其所有可用功能。源代码可在此处找到：[jitsi-meet-electron 应用程序库](https://github.com/jitsi/jitsi-meet-electron)。
 
-## Installation
+## 安装
 
-Install from npm:
+通过 npm 安装：
 
-    npm install @jitsi/electron-sdk
+```bash
+npm install @jitsi/electron-sdk
+```
 
-Note: This package contains native code on Windows for the remote control module. Binary prebuilds are packaged with prebuildify as part of the npm package.
+注意：该包包含 Windows 上的远程控制模块的本机代码。二进制预构建与 npm 包一起通过 prebuildify 打包。
 
-## Usage
+## 使用
 
-### Screen Sharing
+### 屏幕共享
 
-**Requirements**:
-The screen sharing utility requires iframe HTML Element that will load Jitsi Meet.
+**要求**：
+屏幕共享工具需要一个加载 Jitsi Meet 的 iframe HTML 元素。
 
-**Enable the screen sharing:**
+**启用屏幕共享**：
 
-In the **render** electron process of the window where Jitsi Meet is displayed:
+在显示 Jitsi Meet 的 **render** Electron 进程中：
 
-```js
+```javascript
 const {
     setupScreenSharingRender
 } = require("@jitsi/electron-sdk");
 
-// api - The Jitsi Meet iframe api object.
+// api - Jitsi Meet iframe API 对象。
 setupScreenSharingRender(api);
 ```
-In the **main** electron process:
 
-```js
+在 **main** Electron 进程中：
+
+```javascript
 const {
     setupScreenSharingMain
 } = require("@jitsi/electron-sdk");
 
-// jitsiMeetWindow - The BrowserWindow instance of the window where Jitsi Meet is loaded.
-// appName - Application name which will be displayed inside the content sharing tracking window
-// i.e. [appName] is sharing your screen.
-// osxBundleId - Mac Application bundleId for which screen capturer permissions will be reset if user denied them.  
+// jitsiMeetWindow - 加载 Jitsi Meet 的 BrowserWindow 实例。
+// appName - 在内容共享跟踪窗口中显示的应用程序名称。
+// 例如，[appName] 正在共享您的屏幕。
+// osxBundleId - Mac 应用程序的 bundleId，如果用户拒绝权限，将重置屏幕捕获权限。  
 setupScreenSharingMain(mainWindow, appName, osxBundleId);
 ```
 
-**Note**:
-An example using screensharing in Electron without the SDK is available here: [screensharing example without the SDK](https://github.com/gabiborlea/jitsi-meet-electron-example).
+**注意**：
+使用 Electron 的屏幕共享示例可以在这里找到：[没有 SDK 的屏幕共享示例](https://github.com/gabiborlea/jitsi-meet-electron-example)。
 
-### Remote Control
+### 远程控制
 
-**Requirements**:
-The remote control utility requires an iframe HTML Element that will load Jitsi Meet.
+**要求**：
+远程控制工具需要一个加载 Jitsi Meet 的 iframe HTML 元素。
 
-**Enable the remote control:**
+**启用远程控制**：
 
-In the **render** electron process of the window where Jitsi Meet is displayed:
+在显示 Jitsi Meet 的 **render** Electron 进程中：
 
-```js
+```javascript
 const {
     RemoteControl
 } = require("@jitsi/electron-sdk");
 
-// iframe - the Jitsi Meet iframe
+// iframe - Jitsi Meet iframe
 const remoteControl = new RemoteControl(iframe);
 ```
 
-To disable the remote control:
-```js
+要禁用远程控制：
+
+```javascript
 remoteControl.dispose();
 ```
 
-NOTE: The `dispose` method will be called automatically when the Jitsi Meet iframe unloads.
+注意：当 Jitsi Meet iframe 卸载时，`dispose` 方法将自动被调用。
 
-In the **main** electron process:
+在 **main** Electron 进程中：
 
-```js
+```javascript
 const {
     RemoteControlMain
 } = require("@jitsi/electron-sdk");
 
-// jitsiMeetWindow - The BrowserWindow instance of the window where Jitsi Meet is loaded.
+// jitsiMeetWindow - 加载 Jitsi Meet 的 BrowserWindow 实例。
 const remoteControl = new RemoteControlMain(mainWindow);
 ```
 
-### Always On Top
-Displays a small window with the currently active speaker video when the main Jitsi Meet window is not focused.
+### 始终在顶部
 
-**Requirements**:
-1. Jitsi Meet should be initialized through our [iframe API](https://github.com/jitsi/jitsi-meet/blob/master/doc/api.md)
-2. The `BrowserWindow` instance where Jitsi Meet is displayed should use the [Chrome's window.open implementation](https://github.com/electron/electron/blob/master/docs/api/window-open.md#using-chromes-windowopen-implementation) (set `nativeWindowOpen` option of `BrowserWindow`'s constructor to `true`).
-3. If you have a custom handler for opening windows you have to filter the always-on-top window. You can do this by its `frameName` argument which will be set to `AlwaysOnTop`.
+当主 Jitsi Meet 窗口未获得焦点时，显示一个小窗口，其中显示当前活动扬声器的视频。
 
-**Enable the aways on top:**
+**要求**：
 
-In the **main** electron process:
-```js
+1. Jitsi Meet 应通过我们的 [iframe API](https://github.com/jitsi/jitsi-meet/blob/master/doc/api.md) 初始化。
+2. 显示 Jitsi Meet 的 `BrowserWindow` 实例应使用 [Chrome 的 window.open 实现](https://github.com/electron/electron/blob/master/docs/api/window-open.md#using-chromes-windowopen-implementation)（将 `nativeWindowOpen` 选项设置为 `true`）。
+3. 如果您有自定义处理程序来打开窗口，您必须过滤始终在顶部的窗口。您可以通过其 `frameName` 参数来执行此操作，该参数将设置为 `AlwaysOnTop`。
+
+**启用始终在顶部**：
+
+在 **main** Electron 进程中：
+
+```javascript
 const {
     setupAlwaysOnTopMain
 } = require("@jitsi/electron-sdk");
 
-// jitsiMeetWindow - The BrowserWindow instance
-// of the window where Jitsi Meet is loaded.
+// jitsiMeetWindow - 加载 Jitsi Meet 的 BrowserWindow 实例。
 setupAlwaysOnTopMain(jitsiMeetWindow);
 ```
 
-In the **render** electron process of the window where Jitsi Meet is displayed:
-```js
+在显示 Jitsi Meet 的 **render** Electron 进程中：
+
+```javascript
 const {
     setupAlwaysOnTopRender
 } = require("@jitsi/electron-sdk");
@@ -124,31 +131,31 @@ const alwaysOnTop = setupAlwaysOnTopRender(api);
 alwaysOnTop.on('will-close', handleAlwaysOnTopClose);
 ```
 
-`setupAlwaysOnTopRender` returns an instance of EventEmitter with the following events:
+`setupAlwaysOnTopRender` 返回一个 EventEmitter 实例，具有以下事件：
 
-* _dismissed_ - emitted when the always-on-top window is explicitly dismissed via its close button
+* **dismissed** - 当始终在顶部窗口通过其关闭按钮显式关闭时发出
+* **will-close** - 在始终在顶部窗口即将关闭之前发出
 
-* _will-close_ - emitted right before the always-on-top window is going to close
+### 电源监控
 
+提供查询 Electron 系统空闲状态和接收电源监控事件的方法。
 
-### Power Monitor
+**启用电源监控**：
 
-Provides a way to query Electron for system idle and receive power monitor events.
+在 **main** Electron 进程中：
 
-**enable power monitor:**
-In the **main** electron process:
-```js
+```javascript
 const {
     setupPowerMonitorMain
 } = require("@jitsi/electron-sdk");
 
-// jitsiMeetWindow - The BrowserWindow instance
-// of the window where Jitsi Meet is loaded.
+// jitsiMeetWindow - 加载 Jitsi Meet 的 BrowserWindow 实例。
 setupPowerMonitorMain(jitsiMeetWindow);
 ```
 
-In the **render** electron process of the window where Jitsi Meet is displayed:
-```js
+在显示 Jitsi Meet 的 **render** Electron 进程中：
+
+```javascript
 const {
     setupPowerMonitorRender
 } = require("@jitsi/electron-sdk");
@@ -157,10 +164,12 @@ const api = new JitsiMeetExternalAPI(...);
 setupPowerMonitorRender(api);
 ```
 
-### NOTE:
-You'll need to add 'disable-site-isolation-trials' switch because of [https://github.com/electron/electron/issues/18214](https://github.com/electron/electron/issues/18214):
-```
-app.commandLine.appendSwitch('disable-site-isolation-trials')
+### 注意：
+
+您需要添加 `disable-site-isolation-trials` 开关，原因见 [https://github.com/electron/electron/issues/18214](https://github.com/electron/electron/issues/18214)：
+
+```javascript
+app.commandLine.appendSwitch('disable-site-isolation-trials');
 ```
 
-For more information please check out the SDK's repository [https://github.com/jitsi/jitsi-meet-electron-sdk](https://github.com/jitsi/jitsi-meet-electron-sdk).
+有关更多信息，请查看 SDK 的库 [https://github.com/jitsi/jitsi-meet-electron-sdk](https://github.com/jitsi/jitsi-meet-electron-sdk)。

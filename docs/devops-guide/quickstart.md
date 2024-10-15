@@ -1,145 +1,154 @@
 ---
 id: devops-guide-quickstart
-title: "Self-Hosting Guide - Debian/Ubuntu server"
+title: "自托管指南 - Debian/Ubuntu服务器"
 sidebar_label: "Debian/Ubuntu server"
 ---
 
-Follow these steps for a quick Jitsi-Meet installation on a Debian-based GNU/Linux system.
-The following distributions are supported out-of-the-box:
-- Debian 10 (Buster) or newer
-- Ubuntu 22.04 (Jammy Jellyfish) or newer (Ubuntu 18.04 or 20.04 can be used, but Prosody must be updated to version 0.11+ before installation)
+在 Debian 系统上快速安装 Jitsi-Meet，请按照以下步骤操作。以下发行版开箱即用地得到支持：
+
+- Debian 10（Buster）或更新版本
+- Ubuntu 22.04（Jammy Jellyfish）或更新版本（可以使用 Ubuntu 18.04 或 20.04，但必须在安装之前将 Prosody 更新到 0.11+ 版本）
 
 :::note
-Many of the installation steps require `root` or `sudo` access. So it's recommended to have `sudo`/`root` access to your system.
+许多安装步骤需要 `root` 或 `sudo` 权限。因此，建议您拥有系统的 `sudo`/`root` 访问权限。
 :::
 
-## Required packages and repository updates
+## 必需的包和软件仓库更新
 
-You will need the following packages:
+您需要以下软件包：
+
 * `gnupg2`
 * `nginx-full`
-* `sudo` => **Only needed if you use `sudo`**
-* `curl` => **Or** `wget` **to [Add the Jitsi package repository](#add-the-jitsi-package-repository)**
+* `sudo` => **仅在使用 `sudo` 时需要**
+* `curl` => **或者** `wget` **用于[添加 Jitsi 软件包仓库](#add-the-jitsi-package-repository)**
 
-:::note Note
-OpenJDK 11 must be used.
+:::note 注意
+必须使用 OpenJDK 11。
 :::
 
-Make sure your system is up-to-date and required packages are installed:
+确保您的系统是最新的，并且已安装所需的软件包：
 
-Run as `root` or with `sudo`:
+以 `root` 身份或使用 `sudo` 运行：
 
 ```bash
-# Retrieve the latest package versions across all repositories
+# 检索所有软件仓库中的最新软件包版本
 sudo apt update
 
-# Ensure support for apt repositories served via HTTPS
+# 确保支持通过 HTTPS 提供的 apt 软件仓库
 sudo apt install apt-transport-https
 ```
 
-On Ubuntu systems, Jitsi requires dependencies from Ubuntu's `universe` package repository.  To ensure this is enabled, run this command:
+在 Ubuntu 系统上，Jitsi 需要 Ubuntu 的 `universe` 软件包仓库中的依赖项。要确保此功能已启用，请运行以下命令：
 
 ```bash
 sudo apt-add-repository universe
 ```
 
-Retrieve the latest package versions across all repositories:
+再次检索所有软件仓库中的最新软件包版本：
+
 ```bash
 sudo apt update
 ```
 
-## Install Jitsi Meet
+## 安装 Jitsi Meet
 
-### Domain of your server and set up DNS
+### 服务器的域名和 DNS 设置
 
-Decide what domain your server will use. For example, `meet.example.org`.
+决定您的服务器将使用哪个域名。例如，`meet.example.org`。
 
-Set a DNS A record for that domain, using:
-- your server's public IP address, if it has its own public IP; or
-- the public IP address of your router, if your server has a private (RFC1918) IP address (e.g. 192.168.1.2) and connects through your router via Network Address Translation (NAT).
+为该域名设置一个 DNS A 记录，使用：
 
-If your computer/server or router has a dynamic IP address (the IP address changes constantly), you can use a dynamic dns-service instead. Example [DuckDNS](https://www.duckdns.org/).
+- 服务器的公共 IP 地址，如果它有自己的公共 IP；或者
+- 路由器的公共 IP 地址，如果您的服务器有私有（RFC1918）IP 地址（例如 192.168.1.2），并通过路由器进行网络地址转换（NAT）。
 
-DNS Record Example:
+如果您的计算机/服务器或路由器有动态 IP 地址（IP 地址不断变化），您可以使用动态 DNS 服务。例如 [DuckDNS](https://www.duckdns.org/)。
 
-| **Record Type** | **Hostname** | **Public IP** | **TTL (Seconds)** |
-|:---:|:---:|:---:|:---:|
-| `A` | `meet.example.org` | Your Meeting Server Public IP (`x.x.x.x`) | `1800` |
+DNS 记录示例：
 
-### Set up the Fully Qualified Domain Name (FQDN) (optional)
+| **记录类型** |     **主机名**     |            **公共 IP**            | **TTL（秒）** |
+| :----------: | :----------------: | :-------------------------------: | :-----------: |
+|     `A`      | `meet.example.org` | 您的会议服务器公共 IP (`x.x.x.x`) |    `1800`     |
 
-If the machine used to host the Jitsi Meet instance has a FQDN (for example `meet.example.org`) already set up in DNS, you can set it with the following command:
+### 设置完全合格域名（FQDN）（可选）
+
+如果用于托管 Jitsi Meet 实例的机器在 DNS 中已经设置了 FQDN（例如 `meet.example.org`），您可以使用以下命令设置它：
 
 ```bash
 sudo hostnamectl set-hostname meet.example.org
 ```
 
-Then add the same FQDN in the `/etc/hosts` file:
+然后在 `/etc/hosts` 文件中添加相同的 FQDN：
 
     127.0.0.1 localhost
     x.x.x.x meet.example.org
 
 :::note
-`x.x.x.x` is your server's public IP address.
+`x.x.x.x` 是您的服务器的公共 IP 地址。
 :::
 
-Finally on the same machine test that you can ping the FQDN with:
+最后，在同一台机器上测试您是否可以 ping 通 FQDN：
 
 `ping "$(hostname)"`
 
-If all worked as expected, you should see:
+如果一切正常，您应该看到：
 `meet.example.org`
 
-### Add the Prosody package repository
+### 添加 Prosody 软件包仓库
 
-This will add the Prosody repository so that an up to date Prosody is installed, which is necessary for features including the lobby feature.
+这将添加 Prosody 仓库，以便安装最新的 Prosody，这是实现包括大堂功能在内的功能所必需的。
 
-**Ubuntu 18.04 and 20.04**
+**Ubuntu 18.04 和 20.04**
+
 ```bash
 echo deb http://packages.prosody.im/debian $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list
 wget https://prosody.im/files/prosody-debian-packages.key -O- | sudo apt-key add -
 sudo apt install lua5.2
 ```
+
 **Ubuntu 22.04**
+
 ```bash
 sudo curl -sL https://prosody.im/files/prosody-debian-packages.key -o /etc/apt/keyrings/prosody-debian-packages.key
 echo "deb [signed-by=/etc/apt/keyrings/prosody-debian-packages.key] http://packages.prosody.im/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/prosody-debian-packages.list
 sudo apt install lua5.2
 ```
 
-### Add the Jitsi package repository
+### 添加 Jitsi 软件包仓库
 
-This will add the jitsi repository to your package sources to make the Jitsi Meet packages available.
+这将把 Jitsi 仓库添加到您的软件包源中，以使 Jitsi Meet 软件包可用。
 
-**Ubuntu 18.04 and 20.04**
+**Ubuntu 18.04 和 20.04**
+
 ```bash
 curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
 echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list > /dev/null
 ```
+
 **Ubuntu 22.04**
+
 ```bash
 curl -sL https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
 echo "deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/" | sudo tee /etc/apt/sources.list.d/jitsi-stable.list
 ```
 
-Update all package sources:
+更新所有软件包源：
 
 ```bash
 sudo apt update
 ```
 
-### Setup and configure your firewall
+### 设置和配置您的防火墙
 
-The following ports need to be open in your firewall, to allow traffic to the Jitsi Meet server:
+以下端口需要在您的防火墙中打开，以允许流量访问 Jitsi Meet 服务器：
 
-* `80 TCP` => For SSL certificate verification / renewal with Let's Encrypt. **Required**
-* `443 TCP` => For general access to Jitsi Meet. **Required**
-* `10000 UDP` => For General Network Audio/Video Meetings. **Required**
-* `22 TCP` => For Accessing your Server using SSH (change the port accordingly if it's not 22). **Required**
-* `3478 UDP` => For querying the stun server (coturn, optional, needs `config.js` change to enable it).
-* `5349 TCP` => For fallback network video/audio communications over TCP (when UDP is blocked for example), served by coturn. **Required**
+* `80 TCP` => 用于 SSL 证书验证/续订与 Let's Encrypt。**必需**
+* `443 TCP` => 用于一般访问 Jitsi Meet。**必需**
+* `10000 UDP` => 用于一般网络音视频会议。**必需**
+* `22 TCP` => 用于通过 SSH 访问您的服务器（如果不是 22，请相应更改端口）。**必需**
+* `3478 UDP` => 用于查询 STUN 服务器（coturn， 可选，需要更改 `config.js` 来启用它）。
+* `5349 TCP` => 用于通过 TCP 进行回退网络视频/音频通信（例如，当 UDP 被阻塞时），由 coturn 提供。**必需**
 
-If you are using `ufw`, you can use the following commands:
+如果您使用 `ufw`，可以使用以下命令：
 
 ```bash
 sudo ufw allow 80/tcp
@@ -151,158 +160,158 @@ sudo ufw allow 5349/tcp
 sudo ufw enable
 ```
 
-Check the firewall status with:
+使用以下命令检查防火墙状态：
 
 ```
 sudo ufw status verbose
 ```
 
-#### Using SSH
-For more details on using and hardening SSH access, see the corresponding [Debian](https://wiki.debian.org/SSH) or [Ubuntu](https://help.ubuntu.com/community/SSH/OpenSSH/Configuring) documentation.
+#### 使用 SSH
 
-#### Forward ports via your router
+有关使用和增强 SSH 访问的更多详细信息，请参阅相应的 [Debian](https://wiki.debian.org/SSH) 或 [Ubuntu](https://help.ubuntu.com/community/SSH/OpenSSH/Configuring) 文档。
 
-If you are running Jitsi Meet on a server [behind NAT](https://jitsi.github.io/handbook/docs/faq#how-to-tell-if-my-server-instance-is-behind-nat), forward the ports on your router to your server's IP address.
+#### 通过路由器转发端口
 
-_Note_: if participants cannot see or hear each other, double check your firewall / NAT rules.
+如果您在 NAT [后面运行 Jitsi Meet](https://jitsi.github.io/handbook/docs/faq#how-to-tell-if-my-server-instance-is-behind-nat)，请在路由器上将端口转发到服务器的 IP 地址。
 
-### TLS Certificate
+_注意_：如果参与者无法看到或听到彼此，请仔细检查防火墙 / NAT 规则。
 
-In order to have encrypted communications, you need a [TLS certificate](https://en.wikipedia.org/wiki/Transport_Layer_Security). 
+### TLS 证书
 
-During installation of Jitsi Meet you can choose between different options:
+为了实现加密通信，您需要一个 [TLS 证书](https://en.wikipedia.org/wiki/Transport_Layer_Security)。
 
-1. The recommended option is to choose Let's Encrypt Certificate option
+在安装 Jitsi Meet 时，您可以选择不同的选项：
 
-2. But if you want to use a different certificate you should get that certificate first and then install jitsi-meet and choose ___I want to use my own certificate___.
+1. 推荐的选项是选择 Let's Encrypt 证书选项。
 
-3. You could also use the self-signed certificate(___Generate a new self-signed certificate___) but this is not recommended for the following reasons:
+2. 如果您想使用其他证书，您应该首先获取该证书，然后安装 jitsi-meet 并选择___我想使用我自己的证书___。
 
-    * Using a self-signed certificate will result in warnings being shown in your users browsers, because they cannot verify your server's identity.
+3. 您还可以使用自签名证书（___生成新的自签名证书___），但不推荐这样做，原因如下：
 
-	* Jitsi Meet mobile apps *require* a valid certificate signed by a trusted [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) and will not be able to connect to your server if you choose a self-signed certificate.
+   * 使用自签名证书将导致用户浏览器中显示警告，因为他们无法验证您的服务器身份。
 
-### Install Jitsi Meet
+   * Jitsi Meet 移动应用 *需要* 一个由受信任的 [证书颁发机构](https://en.wikipedia.org/wiki/Certificate_authority) 签名的有效证书，如果选择自签名证书，将无法连接到您的服务器。
 
-_Note_: The installer will check if [Nginx](https://nginx.org/) or [Apache](https://httpd.apache.org/) are present (in that order) and configure a virtual host within the web server it finds to serve Jitsi Meet.
+### 安装 Jitsi Meet
 
-If you are already running Nginx on port 443 on the same machine, turnserver configuration will be skipped as it will conflict with your current port 443.
+_注意_：安装程序将检查 [Nginx](https://nginx.org/) 或 [Apache](https://httpd.apache.org/) 是否存在（按此顺序），并在其找到的 Web 服务器内配置虚拟主机以提供 Jitsi Meet。
 
+如果您已经在同一台机器上以端口 443 运行 Nginx，将跳过 turnserver 配置，因为这将与当前的端口 443 冲突。
 
 ```bash
-# jitsi-meet installation
+# 安装 jitsi-meet
 sudo apt install jitsi-meet
 ```
 
-**SSL/TLS certificate generation:**
-You will be asked about SSL/TLS certificate generation. 
-See [above](#tls-certificate) for details.
+**SSL/TLS 证书生成：**
+您将被询问关于 SSL/TLS 证书生成的相关信息。有关详细信息，请参阅 [上面](#tls-certificate)。
 
-**Hostname:**
-You will also be asked to enter the hostname of the Jitsi Meet instance. If you have a domain, use the specific domain name, for example:
-`meet.example.org`.
-Alternatively you can enter the IP address of the machine (if it is static or doesn't change).
+**主机名：**
+您还将被询问输入 Jitsi Meet 实例的主机名。如果您有域名，请使用特定的域名，例如：
+`meet.example.org`。
+或者，您可以输入机器的 IP 地址（如果它是静态的或不变）。
 
-This hostname will be used for virtualhost configuration inside Jitsi Meet and also, you and your correspondents will be using it to access the web conferences.
+该主机名将用于 Jitsi Meet 内的虚拟主机配置，您和您的联系人将使用它来访问网络会议。
 
-### Access Control
+### 访问控制
 
-**Jitsi Meet server:**
-_Note_: By default, anyone who has access to your Jitsi Meet server will be able to start a conference: if your server is open to the world, anyone can have a chat with anyone else. 
-If you want to limit the ability to start a conference to registered users, follow the instructions to set up a [secure domain](https://jitsi.github.io/handbook/docs/devops-guide/secure-domain/).
+**Jitsi Meet 服务器：**
+_注意_：默认情况下，任何访问您的 Jitsi Meet 服务器的人都可以启动会议：如果您的服务器向全世界开放，任何人都可以与其他人进行聊天。
+如果您希望限制启动会议的能力仅限注册用户，请按照说明设置 [安全域](https://jitsi.github.io/handbook/docs/devops-guide/secure-domain/)。
 
-**Conferences/Rooms:**
-The access control for conferences/rooms is managed in the rooms, you can set a password on the webpage of the specific room after creation.
-See the User Guide for details: https://jitsi.github.io/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting
+**会议/房间：**
+会议/房间的访问控制在房间内进行管理，您可以在特定房间创建后在网页上设置密码。
+有关详细信息，请参见用户指南：[用户指南](https://jitsi.github.io/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting)。
 
-#### Advanced configuration
+#### 高级配置
 
-If the installation is on a machine [behind NAT](https://jitsi.github.io/handbook/docs/faq#how-to-tell-if-my-server-instance-is-behind-nat) jitsi-videobridge should configure itself automatically on boot. If three way calls do not work, further configuration of jitsi-videobridge is needed in order for it to be accessible from outside.
+如果安装在 [NAT 后面](https://jitsi.github.io/handbook/docs/faq#how-to-tell-if-my-server-instance-is-behind-nat)，jitsi-videobridge 应在启动时自动配置。如果三方通话无法正常工作，则需要对 jitsi-videobridge 进行进一步配置，以使其可以从外部访问。
 
-Provided that all required ports are routed (forwarded) to the machine that it runs on. By default these ports are TCP/443 and UDP/10000.
+前提是所有必需的端口已转发到其运行的机器。默认情况下，这些端口是 TCP/443 和 UDP/10000。
 
-The following extra lines need to be added to the file `/etc/jitsi/videobridge/sip-communicator.properties`:
+需要在文件 `/etc/jitsi/videobridge/sip-communicator.properties` 中添加以下额外行：
 
 ```
 org.ice4j.ice.harvest.NAT_HARVESTER_LOCAL_ADDRESS=<Local.IP.Address>
 org.ice4j.ice.harvest.NAT_HARVESTER_PUBLIC_ADDRESS=<Public.IP.Address>
 ```
 
-And comment the existing `org.ice4j.ice.harvest.STUN_MAPPING_HARVESTER_ADDRESSES`.
+并注释掉现有的 `org.ice4j.ice.harvest.STUN_MAPPING_HARVESTER_ADDRESSES`。
 
-See [the documentation of ice4j](https://github.com/jitsi/ice4j/blob/master/doc/configuration.md)
-for details.
+有关详细信息，请参见 [ice4j 文档](https://github.com/jitsi/ice4j/blob/master/doc/configuration.md)。
 
-**Systemd/Limits:**
-Default deployments will have low values for maximum processes and open files. For greater than 100 participants, change `/etc/systemd/system.conf` to:
+**Systemd/限制：**
+默认部署将对最大进程和打开文件的值设置得很低。对于超过 100 个参与者，请更改 `/etc/systemd/system.conf` 为：
+
 ```
 DefaultLimitNOFILE=65000
 DefaultLimitNPROC=65000
 DefaultTasksMax=65000
 ```
 
-To check values just run:
+要检查值，只需运行：
+
 ```
 systemctl show --property DefaultLimitNPROC
 systemctl show --property DefaultLimitNOFILE
 systemctl show --property DefaultTasksMax
 ```
 
-To load the values and check them see [below](#systemd-details) for details.
+要加载值并检查，请参见 [下面](#systemd-details) 的详细信息。
 
-##### Systemd details
-To reload the systemd changes on a running system execute `sudo systemctl daemon-reload` and `sudo systemctl restart jitsi-videobridge2`.
-To check the tasks part execute `sudo systemctl status jitsi-videobridge2` and you should see `Tasks: XX (limit: 65000)`.
-To check the files and process part execute ```cat /proc/`cat /var/run/jitsi-videobridge/jitsi-videobridge.pid`/limits``` and you should see:
+##### Systemd 详情
+
+要在运行的系统上重新加载 systemd 更改，请执行 `sudo systemctl daemon-reload` 和 `sudo systemctl restart jitsi-videobridge2`。
+要检查任务部分，请执行 `sudo systemctl status jitsi-videobridge2`，您应该会看到 `Tasks: XX (limit: 65000)`。
+要检查文件和进程部分，请执行 ```cat /proc/`cat /var/run/jitsi-videobridge/jitsi-videobridge.pid`/limits```，您应该会看到：
+
 ```
-Max processes             65000                65000                processes
-Max open files            65000                65000                files
+最大进程             65000                65000                进程
+最大打开文件        65000                65000                文件
 ```
 
-### Confirm that your installation is working
+### 确认您的安装是否正常工作
 
-Launch a web browser (such as Firefox, Chrome or Safari) and enter the hostname or IP address from the previous step into the address bar.
+启动一个 Web 浏览器（例如 Firefox、Chrome 或 Safari），并将前一步中的主机名或 IP 地址输入地址栏。
 
-If you used a self-signed certificate (as opposed to using Let's Encrypt), your web browser will ask you to confirm that you trust the certificate. If you are testing from the iOS or Android app, it will probably fail at this point, if you are using a self-signed certificate.
+如果您使用自签名证书（而不是使用 Let's Encrypt），您的 Web 浏览器会询问您确认您信任该证书。如果您正在从 iOS 或 Android 应用测试，这可能会失败，如果您使用的是自签名证书。
 
-You should see a web page prompting you to create a new meeting.  
-Make sure that you can successfully create a meeting and that other participants are able to join the session.
+您应该看到一个网页，提示您创建一个新会议。  
+确保您能够成功创建会议，并且其他参与者能够加入会话。
 
-If this all worked, then congratulations!  You have an operational Jitsi conference service.
+如果这一切都正常工作，那么祝贺您！您已拥有一个可操作的 Jitsi 会议服务。
 
-
-## Uninstall
+## 卸载
 
 ```bash
 sudo apt purge jigasi jitsi-meet jitsi-meet-web-config jitsi-meet-prosody jitsi-meet-turnserver jitsi-meet-web jicofo jitsi-videobridge2
 ```
 
-Sometimes the following packages will fail to uninstall properly:
+有时，以下软件包将无法正确卸载：
 
 - jigasi
 - jitsi-videobridge
 
-When this happens, just run the uninstall command a second time and it should be ok.
+当这种情况发生时，只需第二次运行卸载命令，它应该没问题。
 
-The reason for the failure is that sometimes the uninstall script is faster than the process that stops the daemons. The second run of the uninstall command fixes this, as by then the jigasi or jitsi-videobridge daemons are already stopped.
+失败的原因是，有时卸载脚本的速度快于停止守护进程的过程。第二次运行卸载命令可以解决此问题，因为到那时 jigasi 或 jitsi-videobridge 守护进程已经停止。
 
+## 调试问题
 
-## Debugging problems
+* Web 浏览器：
+  您可以尝试使用其他 Web 浏览器。一些浏览器的某些版本已知与 Jitsi Meet 存在问题。
 
-* Web Browser:
-You can try to use a different web browser. Some versions of some browsers are known to have issues with Jitsi Meet. 
+* WebRTC、网络摄像头和麦克风：
+  您还可以访问 https://webrtc.github.io/samples/src/content/getusermedia/gum 来测试浏览器的 [WebRTC](https://en.wikipedia.org/wiki/WebRTC) 支持。
 
-* WebRTC, Webcam and Microphone:
-You can also visit https://webrtc.github.io/samples/src/content/getusermedia/gum to test your browser's [WebRTC](https://en.wikipedia.org/wiki/WebRTC) support.
+* 防火墙：
+  如果参与者无法看到或听到彼此，请仔细检查您的防火墙 / NAT 规则。
 
-* Firewall:
-If participants cannot see or hear each other, double check your firewall / NAT rules.
+* Nginx/Apache：
+  由于我们优先使用 Nginx 作为 Web 服务器，安装程序首先检查 Nginx 的存在，然后检查 Apache。如果您迫切需要强制使用 Apache，请尝试在 debconf 上预设变量 `jitsi-meet/enforce_apache` 用于软件包 `jitsi-meet-web-config`。
 
-* Nginx/Apache:
-As we prefer the usage of Nginx as webserver, the installer checks first for the presence of Nginx and then for Apache. In case you desperately need to enforce the usage of apache, try pre-setting the variable `jitsi-meet/enforce_apache` for package `jitsi-meet-web-config` on debconf.
-
-* Log files:
-Take a look at the various log files:
+* 日志文件：
+  查看各种日志文件：
 
 ```
 /var/log/jitsi/jvb.log
@@ -310,22 +319,22 @@ Take a look at the various log files:
 /var/log/prosody/prosody.log
 ```
 
-## Additional Functions
+## 附加功能
 
-### Adding sip-gateway to Jitsi Meet
+### 向 Jitsi Meet 添加 SIP 网关
 
-#### Install Jigasi
+#### 安装 Jigasi
 
-Jigasi is a server-side application acting as a gateway to Jitsi Meet conferences. It allows regular [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) clients to join meetings and provides transcription capabilities.
+Jigasi 是一个服务器端应用程序，充当 Jitsi Meet 会议的网关。它允许常规 [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 客户端加入会议并提供转录功能。
 
 ```bash
 sudo apt install jigasi
 ```
 
-During the installation, you will be asked to enter your SIP account and password. This account will be used to invite the other SIP participants.
+在安装过程中，您将被要求输入您的 SIP 账户和密码。该账户将用于邀请其他 SIP 参与者。
 
-#### Reload Jitsi Meet
+#### 重新加载 Jitsi Meet
 
-Launch again a browser with the Jitsi Meet URL and you'll see a telephone icon on the right end of the toolbar. Use it to invite SIP accounts to join the current conference.
+再次启动浏览器并访问 Jitsi Meet URL，您会在工具栏的右侧看到一个电话图标。使用它邀请 SIP 账户加入当前会议。
 
-Enjoy!
+享受吧！Enjoy!

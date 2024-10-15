@@ -1,28 +1,27 @@
 ---
 id: dev-guide-configuration
-title: Configuration
+title: Configuration - 配置
 ---
 
-This page describes available configuration options for Jitsi Meet. These are either set in `config.js` on the server
-side or overridden in the app.
+此页面描述了 Jitsi Meet 可用的配置选项。这些选项可以在服务器端的 `config.js` 文件中设置，或在应用程序中被覆盖。
 
 :::note
-Options marked with 🚫 are not overwritable through `configOverwrite`
+标有 🚫 的选项不能通过 `configOverwrite` 覆盖。
 :::
 
 :::warning
-This page is a work in progress. Not all options are described here yet.
+此页面仍在完善中，尚未涵盖所有选项。
 :::
 
 ## API
 
 ### apiLogLevels
 
-type: `Array`
+类型: `Array`
 
-Logs that should go be passed through the 'log' event if a handler is defined for it
+指定哪些日志应通过“log”事件传递，如果定义了相应的处理程序。
 
-Default: **unset**
+默认值: **未设置**(**unset**)
 
 ```javascript
 apiLogLevels: ['warn', 'log', 'error', 'info', 'debug']
@@ -30,11 +29,11 @@ apiLogLevels: ['warn', 'log', 'error', 'info', 'debug']
 
 ### buttonsWithNotifyClick
 
-type: `Array`
+类型: `Array`
 
-Toolbar buttons which have their click/tap event exposed through the API on `toolbarButtonClicked`. Passing a string for the button key will prevent execution of the click/tap routine; passing an object with `key` and `preventExecution` flag on false will not prevent execution of the click/tap routine. Below array with mixed mode for passing the buttons.
+工具栏按钮的点击/触摸事件可通过 API 的 `toolbarButtonClicked` 暴露。传递按钮的键（字符串）将阻止点击/触摸操作的执行；传递带有 `key` 和 `preventExecution` 为 `false` 的对象则不会阻止执行点击/触摸操作。以下数组展示了混合模式传递按钮的方式。
 
-Default: **unset**
+默认值: **未设置**
 
 ```javascript
 buttonsWithNotifyClick: [
@@ -82,6 +81,7 @@ buttonsWithNotifyClick: [
     'toggle-camera',
     'videoquality',
     // The add passcode button from the security dialog.
+    // 安全对话框中的添加密码按钮
     {
         key: 'add-passcode',
         preventExecution: false
@@ -92,11 +92,11 @@ buttonsWithNotifyClick: [
 
 ### customParticipantMenuButtons
 
-type: `Array<{ icon: string; id: string; text: string; }>`
+类型：`Array<{ icon: string; id: string; text: string; }>`
 
-Default: **unset**
+默认值：**未设置(unset)**
 
-A list of custom buttons that can be added to the Participant Context Menu. Each will have an icon, that can be either a base64 encoded image or the path to an image, a unique id, and a text that will be displayed alongside the icon in the menu. This custom button will trigger the `participantMenuButtonClick` event that will have the id set to the button as the `key` and the `participantId`, representing the id of the participant for which the button was clicked.
+可以在参与者上下文菜单中添加自定义按钮的列表。每个按钮将有一个图标，可以是 base64 编码的图像或图像的路径，一个唯一的 ID，以及一个显示在菜单中图标旁边的文本。此自定义按钮将触发 `participantMenuButtonClick` 事件，该事件将按钮的 ID 作为 `key`，并且 `participantId` 代表点击该按钮的参与者的 ID。
 
 ```javascript
 customParticipantMenuButtons: [
@@ -110,11 +110,11 @@ customParticipantMenuButtons: [
 
 ### customToolbarButtons
 
-type: `Array<{ icon: string; id: string; text: string; }>`
+类型：`Array<{ icon: string; id: string; text: string; }>`
 
-Default: **unset**
+默认值：**未设置(unset)**
 
-A list of custom buttons that can be added to the Toolbar. Each will have an icon, that can be either a base64 encoded image or the path to an image, a unique id, and a text that will be displayed alongside the icon in the menu. This custom button will trigger the `toolbarButtonClicked` event that will the id set to the button as the `key`.
+可以在工具栏中添加自定义按钮的列表。每个按钮将有一个图标，可以是 base64 编码的图像或图像的路径，一个唯一的 ID，以及一个显示在菜单中图标旁边的文本。此自定义按钮将触发 `toolbarButtonClicked` 事件，该事件将按钮的 ID 作为 `key`。
 
 ```javascript
 customToolbarButtons: [
@@ -128,11 +128,11 @@ customToolbarButtons: [
 
 ### mouseMoveCallbackInterval
 
-type: `Number`
+类型：`Number`
 
-Default interval (milliseconds) for triggering `mouseMoved` iframe API event.
+触发 `mouseMoved` iframe API 事件的默认间隔（毫秒）。
 
-Default: `1000`
+默认值：`1000`
 
 ```javascript
 mouseMoveCallbackInterval: 1000
@@ -140,11 +140,11 @@ mouseMoveCallbackInterval: 1000
 
 ### participantMenuButtonsWithNotifyClick
 
-type: `Array`
+类型：`Array`
 
-Participant context menu buttons which have their click/tap event exposed through the API on `participantMenuButtonClick`. Passing a string for the button key will prevent execution of the click/tap routine; passing an object with `key` and `preventExecution` flag on false will not prevent execution of the click/tap routine. Below array with mixed mode for passing the buttons.
+参与者上下文菜单按钮，其点击/点击事件通过 API 的 `participantMenuButtonClick` 公开。传递按钮键的字符串将阻止执行点击/点击例程；传递带有 `key` 和 `preventExecution` 标志为 false 的对象将不阻止执行点击/点击例程。下面是混合模式传递按钮的数组示例。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 participantMenuButtonsWithNotifyClick: [
@@ -181,27 +181,25 @@ participantMenuButtonsWithNotifyClick: [
 
 ### useHostPageLocalStorage
 
-type: `Boolean`
+类型：`Boolean`
 
-This property is related to the use case when Jitsi Meet is used via the IFrame API. When the property is true
-Jitsi Meet will use the local storage of the host page instead of its own. This option is useful if the browser
-is not persisting the local storage inside the iframe.
+当通过 IFrame API 使用 Jitsi Meet 时，此属性相关。为 `true` 时，Jitsi Meet 将使用宿主页面的本地存储，而不是其自己的存储。如果浏览器未在 iframe 内持久化本地存储，则此选项非常有用。
 
-Default: **unset**
+默认值：**未设置(unset)**
 
 ```javascript
 useHostPageLocalStorage: true
 ```
 
-## Audio
+## 音频 - Audio
 
 ### audioLevelsInterval
 
-type: `Number`
+类型：`Number`
 
-The interval (milliseconds) at which the audio levels are calculated.
+计算音频级别的间隔（毫秒）。
 
-Default: `200`
+默认值：`200`
 
 ```javascript
 audioLevelsInterval: 200
@@ -209,27 +207,26 @@ audioLevelsInterval: 200
 
 ### audioQuality
 
-type: `Object`
+类型：`Object`
 
-Specify audio quality stereo and opusMaxAverageBitrate values in order to enable HD audio.
-Beware, by doing so, you are disabling echo cancellation, noise suppression and AGC.
+指定音频质量的立体声和 opusMaxAverageBitrate 值以启用高清音频。请注意，启用此选项将禁用回声消除、噪声抑制和自动增益控制（AGC）。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 audioQuality: {
     stereo: false,
-    opusMaxAverageBitrate: null // Value to fit the 6000 to 510000 range.
+    opusMaxAverageBitrate: null // 范围在 6000 到 510000 之间的值。
 }
 ```
 
 ### disableAudioLevels
 
-type: `Boolean`
+类型：`Boolean`
 
-Disable measuring of audio levels.
+禁用音频级别的测量。
 
-Default: `false`
+默认值：`false`
 
 ```javascript
 disableAudioLevels: false
@@ -237,13 +234,13 @@ disableAudioLevels: false
 
 ### ~~disableSpeakerStatsSearch~~
 
-type: `Boolean`
+类型：`Boolean`
 
-Specifies whether there will be a search field in speaker stats or not.
+指定演讲者统计信息中是否有搜索字段。
 
-__DEPRECATED__ Use `speakerStats.disableSearch` instead.
+__已弃用__ 使用 `speakerStats.disableSearch` 替代。
 
-Default: false
+默认值：`false`
 
 ```javascript
 disableSpeakerStatsSearch: false
@@ -251,11 +248,11 @@ disableSpeakerStatsSearch: false
 
 ### disabledSounds
 
-type: `Array`
+类型：`Array`
 
-The sounds passed in this array will be disabled.
+此数组中传递的声音将被禁用。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 disabledSounds: [
@@ -284,13 +281,11 @@ disabledSounds: [
 
 ### enableNoAudioDetection
 
-type: `Boolean`
+类型：`Boolean`
 
-Enabling this will run the lib-jitsi-meet no audio detection module which
-will notify the user if the current selected microphone has no audio
-input and will suggest another valid device if one is present.
+启用此选项将运行 lib-jitsi-meet 的无音检测模块，如果当前选定的麦克风没有音频输入，将通知用户，并在存在有效设备时建议其他设备。
 
-Default: `true`
+默认值：`true`
 
 ```javascript
 enableNoAudioDetection: true
@@ -298,14 +293,11 @@ enableNoAudioDetection: true
 
 ### enableNoisyMicDetection
 
-type: `Boolean`
+类型：`Boolean`
 
-Enabling this will run the lib-jitsi-meet noise detection module which will
-notify the user if there is noise, other than voice, coming from the current
-selected microphone. The purpose it to let the user know that the input could
-be potentially unpleasant for other meeting participants.
+启用此选项将运行 lib-jitsi-meet 的噪声检测模块，如果当前选定的麦克风有除语音以外的噪声，将通知用户。其目的是让用户知道输入可能对其他会议参与者造成不适。
 
-Default: `true`
+默认值：`true`
 
 ```javascript
 enableNoisyMicDetection: true
@@ -313,54 +305,55 @@ enableNoisyMicDetection: true
 
 ### speakerStats
 
-type: `Object`
+类型：`Object`
 
-Options related to the speaker stats feature.
+与演讲者统计功能相关的选项。
 
-Properties: 
+属性：
 
-* `disabled` - Specifies whether the speaker stats is enable or not.
-* `disableSearch` - Specifies whether there will be a search field in speaker stats or not.
-* `order` - Specifies whether participants in speaker stats should be ordered or not, and with what priority.
+* `disabled` - 指定演讲者统计是否启用。
+* `disableSearch` - 指定演讲者统计中是否有搜索字段。
+* `order` - 指定演讲者统计中的参与者是否应排序，以及以何种优先级排序。
 
-Default:
+默认值：
 
 ```javascript
 speakerStats: {
     disabled: false,
     disableSearch: false,
     order: [
-        'role', // Moderators on top.
-        'name', // Alphabetically by name.
-        'hasLeft', // The ones that have left in the bottom.
-    ], // the order of the array elements determines priority.
+        'role', // 主持人在顶部。
+        'name', // 按名称字母顺序排列。
+        'hasLeft', // 离开的参与者在底部。
+    ], // 数组元素的顺序决定优先级。
 }
 ```
 
 ### ~~speakerStatsOrder~~
 
-type: `Array`
+类型：`Array`
 
-Specifies whether participants in speaker stats should be ordered or not, and with what priority.
+指定演讲者统计中的参与者是否应排序，以及以何种优先级排序。
 
-__DEPRECATED__ Use `speakerStats.order` instead.
+__已弃用__ 使用 `speakerStats.order` 替代。
 
-Default:
- ```javascript
-    speakerStatsOrder: [
-        'role', // Moderators on top.
-        'name', // Alphabetically by name.
-        'hasLeft', // The ones that have left in the bottom.
-    ], // the order of the array elements determines priority.
+默认值：
+
+```javascript
+speakerStatsOrder: [
+    'role', // 主持人在顶部。
+    'name', // 按名称字母顺序排列。
+    'hasLeft', // 离开的参与者在底部。
+], // 数组元素的顺序决定优先级。
 ```
 
 ### startAudioMuted
 
-type: `Number`
+类型：`Number`
 
-Every participant after the Nth will start audio muted.
+在第 N 个参与者之后，每个参与者将以静音状态开始音频。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 startAudioMuted: 10
@@ -368,11 +361,11 @@ startAudioMuted: 10
 
 ### startAudioOnly
 
-type: `Boolean`
+类型：`Boolean`
 
-Start the conference in audio only mode (no video is being received nor sent).
+以音频模式启动会议（不接收或发送视频）。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 startAudioOnly: false
@@ -380,12 +373,11 @@ startAudioOnly: false
 
 ### startSilent
 
-type: `Boolean`
+类型：`Boolean`
 
-Enabling it (with #params) will disable local audio output of remote
-participants and to enable it back a reload is needed.
+启用此选项（与 #params 一起）将禁用远程参与者的本地音频输出，要恢复，需重新加载。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 startSilent: false
@@ -393,33 +385,34 @@ startSilent: false
 
 ### startWithAudioMuted
 
-type: `Boolean`
+类型：`Boolean`
 
-Start calls with audio muted. This option is only applied locally.
+以静音状态开始通话。此选项仅适用于本地。
 
-Default: **unset**
+默认值：**未设置**
 
 ```javascript
 startWithAudioMuted: false
 ```
 
-## Breakout rooms
+## 分组会议 - Breakout rooms
 
 ### breakoutRooms
 
-type: `Object`
+类型：`Object`
 
-Options related to the breakout rooms feature.
+与分组会议功能相关的选项。
 
-Default: **unset**
+默认值：**未设置**
 
-Properties:
-* `hideAddRoomButton` - Hides the add breakout room button. This replaces `hideAddRoomButton`.
-* `hideAutoAssignButton` - Hides the auto assign participants button.
-* `hideJoinRoomButton` - Hides the join breakout room button.
-* `hideModeratorSettingsTab` - Hides the button to open the moderator settings tab.
-* `hideMoreActionsButton` - Hides the more actions button.
-* `hideMuteAllButton` - Hides the mute all button.
+属性：
+
+* `hideAddRoomButton` - 隐藏添加分组会议房间按钮。这替代了 `hideAddRoomButton`。
+* `hideAutoAssignButton` - 隐藏自动分配参与者按钮。
+* `hideJoinRoomButton` - 隐藏加入分组会议房间按钮。
+* `hideModeratorSettingsTab` - 隐藏打开主持人设置选项卡的按钮。
+* `hideMoreActionsButton` - 隐藏更多操作按钮。
+* `hideMuteAllButton` - 隐藏静音所有按钮。
 
 ```javascript
 breakoutRooms: {
@@ -431,53 +424,53 @@ breakoutRooms: {
 
 ### ~~hideAddRoomButton~~
 
-type: `Boolean`
+类型：`Boolean`
 
-__DEPRECATED__ Use `breakoutRooms.hideAddRoomButton` instead.
+__已弃用__ 使用 `breakoutRooms.hideAddRoomButton` 替代。
 
-Hides add breakout room button.
+隐藏添加分组会议房间按钮。
 
-Default: `false`
+默认值：`false`
 
 ```javascript
 hideAddRoomButton: false
 ```
 
-## Callstats
+## 呼叫统计 - Callstats
 
 ### callStatsConfigParams
 
-type: `Object`
+类型: `Object`
 
-The callstats initialize config params as described in the API [here](https://docs.callstats.io/docs/javascript#callstatsinitialize-with-app-secret).
+callstats 初始化配置参数，如 API 中所述 [这里](https://docs.callstats.io/docs/javascript#callstatsinitialize-with-app-secret)。
 
 ```javascript
 callStatsConfigParams: {
-    disableBeforeUnloadHandler: true, // disables callstats.js's window.onbeforeunload parameter.
-    applicationVersion: "app_version", // Application version specified by the developer.
-    disablePrecalltest: true, // disables the pre-call test, it is enabled by default.
-    siteID: "siteID", // The name/ID of the site/campus from where the call/pre-call test is made.
-    additionalIDs: { // additionalIDs object, contains application related IDs.
-        customerID: "Customer Identifier. Example, walmart.",
-        tenantID: "Tenant Identifier. Example, monster.",
-        productName: "Product Name. Example, Jitsi.",
-        meetingsName: "Meeting Name. Example, Jitsi loves callstats.",
-        serverName: "Server/MiddleBox Name. Example, jvb-prod-us-east-mlkncws12.",
-        pbxID: "PBX Identifier. Example, walmart.",
-        pbxExtensionID: "PBX Extension Identifier. Example, 5625.",
-        fqExtensionID: "Fully qualified Extension Identifier. Example, +71 (US) +5625.",
-        sessionID: "Session Identifier. Example, session-12-34"
+    disableBeforeUnloadHandler: true, // 禁用 callstats.js 的 window.onbeforeunload 参数。
+    applicationVersion: "app_version", // 开发者指定的应用程序版本。
+    disablePrecalltest: true, // 禁用预通话测试，默认启用。
+    siteID: "siteID", // 呼叫/预通话测试的站点/校园名称/ID。
+    additionalIDs: { // additionalIDs 对象，包含与应用程序相关的 ID。
+        customerID: "客户标识符。示例：walmart。",
+        tenantID: "租户标识符。示例：monster。",
+        productName: "产品名称。示例：Jitsi。",
+        meetingsName: "会议名称。示例：Jitsi loves callstats。",
+        serverName: "服务器/中间盒名称。示例：jvb-prod-us-east-mlkncws12。",
+        pbxID: "PBX 标识符。示例：walmart。",
+        pbxExtensionID: "PBX 扩展标识符。示例：5625。",
+        fqExtensionID: "完全限定的扩展标识符。示例：+71 (US) +5625。",
+        sessionID: "会话标识符。示例：session-12-34"
     },
-    collectLegacyStats: true, //enables the collection of legacy stats in chrome browser
-    collectIP: true //enables the collection localIP address
+    collectLegacyStats: true, // 启用 Chrome 浏览器中收集传统统计数据
+    collectIP: true // 启用本地 IP 地址的收集
 }
 ```
 
 ### callStatsID
 
-type: `String`
+类型: `String`
 
-You must provide the Application ID to enable sending statistics to callstats.io
+必须提供应用程序 ID 以启用向 callstats.io 发送统计数据
 
 ```javascript
 callStatsID: 'my-callstats-app-id'
@@ -485,9 +478,9 @@ callStatsID: 'my-callstats-app-id'
 
 ### callStatsSecret
 
-type: `String`
+类型: `String`
 
-You must provide the Secret to enable sending statistics to callstats.io
+必须提供密钥以启用向 callstats.io 发送统计数据
 
 ```javascript
 callStatsSecret: 'my-callstats-secret'
@@ -495,9 +488,9 @@ callStatsSecret: 'my-callstats-secret'
 
 ### enableDisplayNameInStats
 
-type: `Boolean`
+类型: `Boolean`
 
-Enables sending participants' display names to callstats.
+启用向 callstats 发送参与者的显示名称。
 
 ```javascript
 enableDisplayNameInStats: false
@@ -505,9 +498,9 @@ enableDisplayNameInStats: false
 
 ### enableEmailInStats
 
-type: `Boolean`
+类型: `Boolean`
 
-Enables sending participants' emails (if available) to callstats and other analytics
+启用向 callstats 和其他分析工具发送参与者的电子邮件（如果可用）
 
 ```javascript
 enableEmailInStats: false
@@ -515,46 +508,45 @@ enableEmailInStats: false
 
 ### feedbackPercentage
 
-type: `Number`
+类型: `Number`
 
-Controls the percentage of automatic feedback shown to participants when callstats is enabled.
-The default value is 100%. If set to 0, no automatic feedback will be requested
+控制在启用 callstats 时向参与者显示自动反馈的百分比。默认值为 100%。如果设置为 0，则不会请求自动反馈。
 
 ```javascript
 feedbackPercentage: 100
 ```
 
-## Transcriptions
+## 转录 - Transcriptions
 
 ### autoCaptionOnRecord 
 
-__DEPRECATED__ Use `transcription.autoTranscribeOnRecord` instead.
+__弃用__ 使用 `transcription.autoTranscribeOnRecord` 代替。
 
 ### preferredTranscribingLanguage
 
-__DEPRECATED__ Use `transcription.preferredLanguage` instead.
+__弃用__ 使用 `transcription.preferredLanguage` 代替。
 
 ### transcribeWithAppLanguage
 
-__DEPRECATED__ Use `transcription.useAppLanguage` instead.
+__弃用__ 使用 `transcription.useAppLanguage` 代替。
 
 ### transcribingEnabled
 
-__DEPRECATED__ Use `transcription.enabled` instead.
+__弃用__ 使用 `transcription.enabled` 代替。
 
 ### transcription
 
-type: `Object`
+类型: `Object`
 
-Transcription related options.
+转录相关选项。
 
-Properties:
+属性：
 
-* `enabled` - Enable transcription (in interface_config, subtitles and buttons can be configured). Default `false`.
-* `translationLanguages` - Translation languages. Available languages can be found in ./src/react/features/transcribing/translation-languages.json.
-* `useAppLanguage` - If `true` the transcriber will use the application language. The application language is either explicitly set by participants in their settings or automatically detected based on the environment, e.g. if the app is opened in a Chrome instance which is using French as its default language then transcriptions for that participant will be in french. Default: `true`.
-* `preferredLanguage` - Transcriber language. This settings will only work if `useAppLanguage` is explicitly set to `false`. Available languages can be found [here](https://github.com/jitsi/jitsi-meet/blob/master/react/features/transcribing/transcriber-langs.json). Default: `'en-US'`.
-* `autoTranscribeOnRecord` - Enables automatic turning on transcribing when recording is started. Default: `true`.
+* `enabled` - 启用转录（在 interface_config 中，可以配置字幕和按钮）。默认值：`false`。
+* `translationLanguages` - 翻译语言。可用语言可以在 ./src/react/features/transcribing/translation-languages.json 中找到。
+* `useAppLanguage` - 如果为 `true`，转录器将使用应用程序语言。应用程序语言可以由参与者在其设置中明确设置，也可以根据环境自动检测，例如如果应用程序在默认使用法语的 Chrome 实例中打开，则该参与者的转录将为法语。默认值：`true`。
+* `preferredLanguage` - 转录器语言。此设置仅在 `useAppLanguage` 显式设置为 `false` 时有效。可用语言可以在 [这里](https://github.com/jitsi/jitsi-meet/blob/master/react/features/transcribing/transcriber-langs.json) 找到。默认值：`'en-US'`。
+* `autoTranscribeOnRecord` - 启用在开始录制时自动启用转录。默认值：`true`。
 
 ```javascript
 transcription: {
@@ -566,13 +558,13 @@ transcription: {
 }
 ```
 
-## Connection
+## 连接 - Connection
 
 ### bosh*
 
-type: `String`
+类型: `String`
 
-The BOSH URL.
+BOSH URL。
 
 ```javascript
 bosh: '//jitsi-meet.example.com/http-bind'
@@ -580,11 +572,11 @@ bosh: '//jitsi-meet.example.com/http-bind'
 
 ### disableRtx
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables or enables RTX (RFC 4588).
+禁用或启用RTX（RFC 4588）。
 
-Default: `false`
+默认值: `false`
 
 ```javascript
 disableRtx: true
@@ -592,11 +584,11 @@ disableRtx: true
 
 ### disableSimulcast
 
-type: `Boolean`
+类型: `Boolean`
 
-Enable / disable simulcast support.
+启用/禁用多播支持。
 
-Default: `false`
+默认值: `false`
 
 ```javascript
 disableSimulcast: true
@@ -604,17 +596,17 @@ disableSimulcast: true
 
 ### e2ee
 
-type: `Object`
+类型: `Object`
 
-Configure End-to-End Encryption.
+配置端到端加密。
 
 ```javascript
 e2ee: {
     labels: {
-        labelTooltip: 'Tooltip',
-        description: 'Description',
+        labelTooltip: '提示',
+        description: '描述',
         label: 'E2EE',
-        warning: 'Warning'
+        warning: '警告'
     },
     externallyManagedKey: false
 }
@@ -622,16 +614,16 @@ e2ee: {
 
 ### e2eping
 
-type: `Object`
+类型: `Object`
 
-Options related to end-to-end (participant to participant) ping.
+端到端（参与者对参与者）ping相关的选项。
 
-Properties:
-* `enabled` - Whether end-to-end pings should be enabled.
-* `numRequests` - The number of responses to wait for.
-* `maxConferenceSize` - The max conference size in which e2e pings will be sent.
-* `maxMessagesPerSecond` - The maximum number of e2e ping messages per second for the whole conference to aim for.
-    This is used to contol the pacing of messages in order to reduce the load on the backend.
+属性:
+
+* `enabled` - 是否启用端到端ping。
+* `numRequests` - 等待响应的数量。
+* `maxConferenceSize` - 启用端到端ping的最大会议规模。
+* `maxMessagesPerSecond` - 整个会议每秒端到端ping消息的最大数量。用于控制消息的发送速度以减少后端负载。
 
 ```javascript
 e2eping: {
@@ -644,11 +636,9 @@ e2eping: {
 
 ### enableEncodedTransformSupport
 
-type: `Boolean`
+类型: `Boolean`
 
-Enable support for encoded transform in supported browsers. This allows
-E2EE to work in Safari if the corresponding flag is enabled in the browser.
-**Experimental**.
+启用支持浏览器中的编码转换。这允许在Safari浏览器中启用E2EE，前提是浏览器中启用了相应的标志。**实验功能**。
 
 ```javascript
 enableEncodedTransformSupport: false
@@ -656,23 +646,29 @@ enableEncodedTransformSupport: false
 
 ### enableForcedReload 🚫
 
-type: `Boolean`
+类型: `Boolean`
 
-Enables forced reload of the client when the call is migrated as a result of
-the bridge going down.
+当由于桥连接中断导致通话迁移时，启用客户端强制重新加载。
 
 ```javascript
 enableForcedReload: true
 ```
 
+### enableIceRestart
+
+类型: `Boolean`
+
+启用LJM中的ICE重启逻辑，并在ICE失败时显示页面重新加载的覆盖层。目前默认禁用，因为当Octo启用时，它会导致信令问题。另外，当执行“ICE重启”（实际上不是一个真正的ICE重启）时，客户端保持TCC序列号计数器，而桥则重置它。桥发送的媒体包从0开始的TCC序列号。
+
+```javascript
+enableIceRestart: true
+```
+
 ### gatherStats
 
-type: `Boolean`
+类型: `Boolean`
 
-Whether to enable stats collection or not in the `TraceablePeerConnection`.
-This can be useful for debugging purposes (post-processing/analysis of
-the WebRTC stats) as it is done in the jitsi-meet-torture bandwidth
-estimation tests.
+是否启用`TraceablePeerConnection`中的统计收集。这对调试（WebRTC统计的后处理/分析）很有用，正如在jitsi-meet-torture带宽估算测试中所做的那样。
 
 ```javascript
 gatherStats: false
@@ -680,16 +676,17 @@ gatherStats: false
 
 ### hosts
 
-type: `Object`
+类型: `Object`
 
-URLs for the app connection.
+应用连接的URL。
 
-Properties
-* `domain` - XMPP domain
-* `anonymousdomain` - When using authentication, domain for guest users.
-* `authdomain` - Domain for authenticated users. Defaults to `domain`.
-* `focus` - Focus component domain. Defaults to **focus.`domain`**.
-* `muc` - XMPP MUC domain.
+属性
+
+* `domain` - XMPP域名
+* `anonymousdomain` - 使用认证时，访客用户的域名。
+* `authdomain` - 认证用户的域名。默认值为`domain`。
+* `focus` - Focus组件的域名。默认值为 **focus.`domain`**。
+* `muc` - XMPP MUC域名。
 
 ```javascript
 hosts: {
@@ -703,29 +700,20 @@ hosts: {
 
 ### p2p
 
-type: `Object`
+类型: `Object`
 
-Peer-To-Peer mode: used (if enabled) when there are just 2 participants.
+点对点模式：当只有两个参与者时使用（如果启用）。
 
-Properties:
-* `enabled` - Enables peer to peer mode. When enabled the system will try to
-    establish a direct connection when there are exactly 2 participants
-    in the room. If that succeeds the conference will stop sending data
-    through the JVB and use the peer to peer connection instead. When a
-    3rd participant joins the conference will be moved back to the JVB
-    connection.
-* `iceTransportPolicy` - Sets the ICE transport policy for the p2p connection. At the time
-    of this writing the list of possible values are `all` and `relay`,
-    but that is subject to change in the future. The enum is defined in
-    the [WebRTC standard](https://www.w3.org/TR/webrtc/#rtcicetransportpolicy-enum).
-    If not set, the effective value is `all`.
-* `codecPreferenceOrder` - Provides a way to set the codec preference on desktop based endpoints.
-* `mobileCodecPreferenceOrder` - Provides a way to set the codec preference on mobile devices, both on RN and mobile browser based endpoints.
-* `preferredCodec` - __DEPRECATED__ Use `codecPreferenceOrder` or `mobileCodecPreferenceOrder` instead.
-* `disabledCodec` - __DEPRECATED__ Use `codecPreferenceOrder` or `mobileCodecPreferenceOrder` instead.
-* `backToP2PDelay` - How long we're going to wait, before going back to P2P after the 3rd
-    participant has left the conference (to filter out page reload).
-* `stunServers` - The STUN servers that will be used in the peer to peer connections.
+属性:
+
+* `enabled` - 启用点对点模式。当启用时，如果房间中只有2个参与者，系统会尝试建立直接连接。如果成功，会议将停止通过JVB发送数据，而改为使用点对点连接。当第3个参与者加入时，会议将切换回JVB连接。
+* `iceTransportPolicy` - 设置点对点连接的ICE传输策略。目前可用的值为`all`和`relay`，但未来可能会更改。枚举在[WebRTC标准](https://www.w3.org/TR/webrtc/#rtcicetransportpolicy-enum)中定义。如果未设置，默认值为`all`。
+* `codecPreferenceOrder` - 提供一种方式在桌面端设置编解码器的优先顺序。
+* `mobileCodecPreferenceOrder` - 提供一种方式在移动设备（包括React Native和移动浏览器端点）上设置编解码器的优先顺序。
+* `preferredCodec` - __已弃用__ 使用`codecPreferenceOrder`或`mobileCodecPreferenceOrder`代替。
+* `disabledCodec` - __已弃用__ 使用`codecPreferenceOrder`或`mobileCodecPreferenceOrder`代替。
+* `backToP2PDelay` - 第三位参与者离开后，等待多长时间再切换回点对点模式（用于过滤页面重新加载情况）。
+* `stunServers` - 点对点连接中将使用的STUN服务器。
 
 ```javascript
 p2p: {
@@ -742,11 +730,11 @@ p2p: {
 
 ### pcStatsInterval
 
-type: `Number`
+类型: `Number`
 
-The interval at which PeerConnection.getStats() is called.
+调用`PeerConnection.getStats()`的间隔。
 
-Default: `10000`
+默认值: `10000`
 
 ```javascript
 pcStatsInterval: 50000
@@ -754,11 +742,11 @@ pcStatsInterval: 50000
 
 ### peopleSearchQueryTypes
 
-type: `Array`
+类型: `Array`
 
-The entity types which are queriable when inviting people in a room. Valid values are "phone", "room", "sip", "user", "videosipgw" and "email". Authentication for Jitsi entity types is done by passing a jwt, authentication for external entity types (e. g. email) is done by passing an alternative token (e. g. peopleSearchTokenLocation).
+在会议中邀请人时可以查询的实体类型。有效值为"phone"、"room"、"sip"、"user"、"videosipgw"和"email"。Jitsi实体类型的认证通过传递jwt完成，外部实体类型（如email）的认证通过传递另一种令牌（如peopleSearchTokenLocation）完成。
 
-Default: `[]`
+默认值: `[]`
 
 ```javascript
 peopleSearchQueryTypes: ["user", "email"]
@@ -766,21 +754,21 @@ peopleSearchQueryTypes: ["user", "email"]
 
 ### peopleSearchUrl
 
-type: `String`
+类型: `String`
 
-Directory endpoint which is called for invite dialog autocomplete. Expected response format is an array of objects. Each object should be formatted as follows:
+用于邀请对话框自动补全的目录端点。期望的响应格式是一个对象数组。每个对象应按以下格式进行。
 
 ```javascript
 {
-    id: int,
-    type: string, # the entity type (phone, room, user, email etc.),
-    name: string, # the entity display name
-    avatar?: string, # full URL to the entity picture, not mandatory
-    number?: string, # required for phone numbers
+    id: int, // 实体ID
+    type: string, // 实体类型（phone, room, user, email等）
+    name: string, // 实体显示名称
+    avatar?: string, // 实体头像的完整URL，可选
+    number?: string, // 电话号码，必需
 }
 ```
 
-Default: `""`
+默认值: `""`
 
 ```javascript
 peopleSearchUrl: "https://myservice.com/api/people"
@@ -788,11 +776,11 @@ peopleSearchUrl: "https://myservice.com/api/people"
 
 ### inviteServiceUrl
 
-type: `String`
+类型: `String`
 
-Endpoint which is called to send invitation requests. The request is made in POST and contains as a POST body an array of objects formatted the same as the peopleSearchUrl response body.
+发送邀请请求的端点。请求以POST方式发送，POST的内容为对象数组，格式与`peopleSearchUrl`的响应体相同。
 
-Default: `""`
+默认值: `""`
 
 ```javascript
 inviteServiceUrl: "https://myservice.com/api/invite"
@@ -800,12 +788,11 @@ inviteServiceUrl: "https://myservice.com/api/invite"
 
 ### peopleSearchTokenLocation
 
-type: `String`
+类型: `String`
 
-Useful for authentication against directories holding entities which don't exist in Prosody (e. g. email). This indicates the localStorage key where the alternate authentication token value is to be found. This alternate token will be used if the JWT value is not set. It will be sent in the Authorization: Bearer header, as the JWT would have been.
+用于在目录中进行身份验证（如邮箱）。表示在localStorage中存储备用认证令牌的键名。如果未设置JWT值，将使用此备用令牌，并以`Authorization: Bearer`头部发送。
 
-
-Default: `""`
+默认值: `""`
 
 ```javascript
 peopleSearchTokenLocation: "service_token"
@@ -813,11 +800,9 @@ peopleSearchTokenLocation: "service_token"
 
 ### useTurnUdp
 
-type: `Boolean`
+类型: `Boolean`
 
-Use TURN/UDP servers for the jitsi-videobridge connection (by default
-we filter out TURN/UDP because it is usually not needed since the
-bridge itself is reachable via UDP)
+使用TURN/UDP服务器连接jitsi-videobridge（默认情况下，TURN/UDP被过滤，因为桥本身通常可以通过UDP连接）。
 
 ```javascript
 useTurnUdp: false
@@ -825,9 +810,9 @@ useTurnUdp: false
 
 ### webrtcIceTcpDisable
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables ICE/TCP by filtering out local and remote TCP candidates in signalling.
+通过在信令中过滤本地和远程的TCP候选者来禁用ICE/TCP。
 
 ```javascript
 webrtcIceTcpDisable: false
@@ -835,9 +820,9 @@ webrtcIceTcpDisable: false
 
 ### webrtcIceUdpDisable
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables ICE/UDP by filtering out local and remote UDP candidates in signalling.
+通过在信令中过滤本地和远程的UDP候选者来禁用ICE/UDP。
 
 ```javascript
 webrtcIceUdpDisable: false
@@ -845,22 +830,21 @@ webrtcIceUdpDisable: false
 
 ### websocket 🚫
 
-type: `String`
+类型: `String`
 
-Websocket URL
+WebSocket URL。
 
 ```javascript
 websocket: 'wss://jitsi-meet.example.com/xmpp-websocket'
 ```
 
-## Etherpad
+## 共享文档Etherpad - Etherpad
 
 ### etherpad_base
 
-type: `String`
+类型: `String`
 
-If set, it adds a "Open shared document" link to the bottom right menu that
-will open an etherpad document.
+如果设置，将在右下角菜单添加一个“打开共享文档”链接，点击后将打开一个etherpad文档。
 
 ```javascript
 etherpad_base: 'https://your-etherpad-installati.on/p/'
@@ -868,27 +852,23 @@ etherpad_base: 'https://your-etherpad-installati.on/p/'
 
 ### openSharedDocumentOnJoin
 
-type: `Boolean`
+类型: `Boolean`
 
-If etherpad integration is enabled, setting this to `true` will
-automatically open the etherpad when a participant joins.  This
-does not affect the mobile app since opening an etherpad
-obscures the conference controls -- it's better to let users
-choose to open the pad on their own in that case.
+如果启用了etherpad集成，将此设置为`true`时，参与者加入时会自动打开etherpad文档。此设置不影响移动应用程序，因为打开etherpad会遮盖会议控制，在这种情况下最好让用户自行选择是否打开etherpad。
 
 ```javascript
 openSharedDocumentOnJoin: false
 ```
 
-## Filmstrip
+## 影片条 - Filmstrip
 
 ### disableFilmstripAutohiding
 
-type: `Boolean`
+类型: `Boolean`
 
-Prevents the filmstrip from autohiding when screen width is under a certain threshold
+在屏幕宽度低于某个阈值时，阻止影片条自动隐藏。
 
-Default: `false`
+默认值: `false`
 
 ```javascript
 disableFilmstripAutohiding: true
@@ -896,17 +876,16 @@ disableFilmstripAutohiding: true
 
 ### filmstrip
 
-type: `Object`
+类型: `Object`
 
-Options related to the filmstrip.
+与影片条相关的选项。
 
-Default: **unset**
+默认值: **未设置**
 
-Properties:
-* `disableResizable` - Disables user resizable filmstrip. This also allows configuration of the filmstrip
-    (width, tiles aspect ratios) through the interfaceConfig options.
-* `disableStageFilmstrip` - Disables the stage filmstrip (displaying multiple
-    participants on stage besides the vertical filmstrip)
+属性:
+
+* `disableResizable` - 禁止用户调整影片条大小。这也允许通过interfaceConfig选项配置影片条（宽度，瓷砖长宽比）。
+* `disableStageFilmstrip` - 禁用舞台影片条（在垂直影片条旁边显示多个参与者）。
 
 ```javascript
 filmstrip: {
@@ -915,21 +894,22 @@ filmstrip: {
 }
 ```
 
-## Face Landmarks
+## 面部特征点 - FaceLandmarks
 
 ### faceLandmarks
 
-type: `Object`
+类型: `Object`
 
-Options related to the face landmarks features.
+与面部特征点功能相关的选项。
 
-Properties:
-* `enableFaceCentering` - Enables centering faces within a video by sharing face coordinates.
-* `enableFaceExpressionsDetection` - Enables detecting face expressions from video.
-* `enableDisplayFaceExpressions` - Enables displaying face expressions in speaker stats.
-* `enableRTCStats` - Enables anonymized stats collection for face landmarks.
-* `faceCenteringThreshold` - Minimum required face movement percentage threshold for sending new face centering coordinates data.
-* `captureInterval` - Milliseconds for processing a new image capture in order to detect face landmarks.
+属性：
+
+* `enableFaceCentering` - 通过共享面部坐标来启用视频中的面部居中。
+* `enableFaceExpressionsDetection` - 启用从视频中检测面部表情。
+* `enableDisplayFaceExpressions` - 启用在发言者统计中显示面部表情。
+* `enableRTCStats` - 启用对面部特征点的匿名统计收集。
+* `faceCenteringThreshold` - 发送新面部居中坐标数据所需的最小面部移动百分比阈值。
+* `captureInterval` - 处理新图像捕获以检测面部特征点的毫秒数。
 
 ```javascript
 faceLandmarks: {
@@ -946,23 +926,24 @@ faceLandmarks: {
 
 ### giphy
 
-type: `Object`
+类型: `Object`
 
-Setup for the Giphy integration.
+Giphy集成的设置。
 
-Properties:
-* `enabled` - Whether the feature is enabled or not.
-* `sdkKey` - SDK API Key from Giphy.
-* `displayMode` - Display mode can be one of:
-    - `tile` - show the GIF on the tile of the participant that sent it.
-    - `chat` - show the GIF as a message in chat.
-    - `all` - all of the above. This is the default option.
-* `tileTime` - How long the GIF should be displayed on the tile (in milliseconds).
-* `rating` - Limit results by audience rating: 
-    - `g` - broadly accepted as appropriate in a public environment. This is the default option.
-    - `pg` - commonly witnessed in a public environment, but not as broadly accepted as appropriate.
-    - `pg-13` - typically not seen unless sought out, but still commonly witnessed.
-    - `r` - typically not seen unless sought out, and could be considered alarming if witnessed.
+属性：
+
+* `enabled` - 功能是否启用。
+* `sdkKey` - 来自Giphy的SDK API密钥。
+* `displayMode` - 显示模式可以是：
+  - `tile` - 在发送GIF的参与者的瓷砖上显示GIF。
+  - `chat` - 作为消息在聊天中显示GIF。
+  - `all` - 以上所有。这是默认选项。
+* `tileTime` - GIF在瓷砖上显示的时间（以毫秒为单位）。
+* `rating` - 根据受众评级限制结果：
+  - `g` - 被广泛接受为在公共环境中合适。这是默认选项。
+  - `pg` - 在公共环境中常见，但不如广泛接受为合适。
+  - `pg-13` - 通常不被看到，除非被寻找，但仍然常见。
+  - `r` - 通常不被看到，除非被寻找，并且在看到时可能被认为令人不安。
 
 ```javascript
 giphy: {
@@ -978,13 +959,14 @@ giphy: {
 
 ### gravatar
 
-type: `Object`
+类型: `Object`
 
-Setup for Gravatar-compatible services.
+用于Gravatar兼容服务的设置。
 
-Properties:
-* `baseUrl` 🚫 - Base URL for a Gravatar-compatible service. Defaults to Gravatar.
-* `disabled` - True if Gravatar should be disabled.
+属性：
+
+* `baseUrl` 🚫 - Gravatar兼容服务的基本URL。默认值为Gravatar。
+* `disabled` - 如果Gravatar应被禁用，则为真。
 
 ```javascript
 gravatar: {
@@ -995,13 +977,13 @@ gravatar: {
 
 ### ~~gravatarBaseURL~~ 🚫
 
-type: `String`
+类型: `String`
 
-__DEPRECATED__ Use `gravatar.baseUrl` instead.
+__已弃用__ 使用 `gravatar.baseUrl` 替代。
 
-Base URL for a Gravatar-compatible service.
+Gravatar兼容服务的基本URL。
 
-Default: 'https://www.gravatar.com/avatar/'
+默认值: 'https://www.gravatar.com/avatar/'
 
 ```javascript
 gravatarBaseURL: 'https://www.gravatar.com/avatar/'
@@ -1011,9 +993,9 @@ gravatarBaseURL: 'https://www.gravatar.com/avatar/'
 
 ### channelLastN
 
-type: `Number`
+类型: `Number`
 
-Default value for the channel "last N" attribute. -1 for unlimited.
+频道“last N”属性的默认值。-1表示无限制。
 
 ```javascript
 channelLastN: -1
@@ -1021,16 +1003,11 @@ channelLastN: -1
 
 ### lastNLimits 🚫
 
-type: `Object`
+类型: `Object`
 
-Provides a way to use different "last N" values based on the number of participants in the conference.
-The keys in an Object represent number of participants and the values are "last N" to be used when number of
-participants gets to or above the number.
+根据会议参与者人数使用不同的“last N”值。对象中的键表示参与者人数，值为参与者人数达到或超过时要使用的“last N”。
 
-
-For the given example mapping, "last N" will be set to 20 as long as there are at least 5, but less than
-29 participants in the call and it will be lowered to 15 when the 30th participant joins. The 'channelLastN'
-will be used as default until the first threshold is reached.
+在给定的示例映射中，只要会议中有至少5人但少于29人，“last N”将设置为20。当第30个参与者加入时，将降低为15。在达到第一个阈值之前，将使用`channelLastN`作为默认值。
 
 ```javascript
 lastNLimits: {
@@ -1044,25 +1021,23 @@ lastNLimits: {
 
 ### startLastN
 
-type: `Number`
+类型: `Number`
 
-Provides a way for the lastN value to be controlled through the UI.
-When startLastN is present, conference starts with a last-n value of startLastN and channelLastN
-value will be used when the quality level is selected using "Manage Video Quality" slider.
+提供一种通过UI控制lastN值的方式。当startLastN存在时，会议以startLastN的last-n值开始，选择质量水平时将使用channelLastN值，通过“管理视频质量”滑块。
 
 ```javascript
 startLastN: 1
 ```
 
-## Lobby
+## 大厅 - Lobby
 
 ### ~~autoKnockLobby~~
 
-type: `Boolean`
+类型: `Boolean`
 
-__DEPRECATED__ Use `lobby.autoKnock` instead.
+__已弃用__ 使用 `lobby.autoKnock` 替代。
 
-If Lobby is enabled starts knocking automatically.
+如果启用了大厅，则会自动开始敲门。
 
 ```javascript
 autoKnockLobby: false
@@ -1070,11 +1045,11 @@ autoKnockLobby: false
 
 ### ~~enableLobbyChat~~
 
-type: `Boolean`
+类型: `Boolean`
 
-__DEPRECATED__ Use `lobby.enableChat` instead.
+__已弃用__ 使用 `lobby.enableChat` 替代。
 
-Enable lobby chat.
+启用大厅聊天。
 
 ```javascript
 enableLobbyChat: false
@@ -1082,11 +1057,11 @@ enableLobbyChat: false
 
 ### ~~hideLobbyButton~~
 
-type: `Boolean`
+类型: `Boolean`
 
-__DEPRECATED__ Use `securityUi.hideLobbyButton` instead.
+__已弃用__ 使用 `securityUi.hideLobbyButton` 替代。
 
-Hide the lobby button.
+隐藏大厅按钮。
 
 ```javascript
 hideLobbyButton: false
@@ -1094,15 +1069,16 @@ hideLobbyButton: false
 
 ### lobby
 
-type: `Object`
+类型: `Object`
 
-Options related to the lobby screen.
+与大厅界面相关的选项。
 
-Default: **unset**
+默认值: **未设置**
 
-Properties:
-* `autoKnock` - If the lobby is enabled, it starts knocking automatically. Replaces `autoKnockLobby`.
-* `enableChat` - Enables the lobby chat. Replaces `enableLobbyChat`.
+属性：
+
+* `autoKnock` - 如果启用了大厅，则会自动开始敲门。替代`autoKnockLobby`。
+* `enableChat` - 启用大厅聊天。替代`enableLobbyChat`。
 
 ```javascript
 lobby: {
@@ -1111,15 +1087,15 @@ lobby: {
 }
 ```
 
-## Moderator
+## 会议主持人 - Moderator
 
 ### disableModeratorIndicator
 
-type: `Boolean`
+类型: `Boolean`
 
-Hides the moderator indicators.
+隐藏会议主持人指示器。
 
-Default: `false`
+默认值: `false`
 
 ```javascript
 disableModeratorIndicator: true
@@ -1127,11 +1103,11 @@ disableModeratorIndicator: true
 
 ### disableReactionsModeration
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables the moderation of reactions feature.
+禁用反应的审核功能。
 
-Default: `false`
+默认值: `false`
 
 ```javascript
 disableReactionsModeration: true
@@ -1139,28 +1115,25 @@ disableReactionsModeration: true
 
 ### disableRemoteMute
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables muting operations of remote participants.
+禁用对远程参与者的静音操作。
 
-Default: `false`
+默认值: `false`
 
 ```javascript
 disableRemoteMute: true
 ```
 
-## Notifications
+## 通知 - Notifications
 
 ### notifications
 
-type: `Array`
+类型: `Array`
 
-Use this array to configure which notifications will be shown to the user.
-The items correspond to the title or description key of that notification.
-Some of these notifications also depend on some other internal logic to be displayed or not,
-so adding them here will not ensure they will always be displayed.
+使用此数组配置将显示给用户的通知。项目对应于该通知的标题或描述键。某些通知的显示还依赖于其他内部逻辑，因此在此处添加它们并不能确保它们始终显示。
 
-A falsy value for this prop will result in having all notifications enabled (e.g null, undefined, false).
+该属性的假值将导致所有通知启用（例如 null、undefined、false）。
 
 ```javascript
 notifications: []
@@ -1168,31 +1141,32 @@ notifications: []
 
 ### disabledNotifications
 
-type: `Array`
+类型: `Array`
 
-List of notifications to be disabled. Works in tandem with the above setting.
+要禁用的通知列表。与上述设置配合使用。
 
 ```javascript
 disabledNotifications: [
-    'notify.chatMessages', // shown when receiving chat messages while the chat window is closed
-    'notify.grantedTo', // shown when moderator rights were granted to a participant
+    'notify.chatMessages', // 在聊天窗口关闭时收到聊天消息时显示
+    'notify.grantedTo', // 当授予参与者主持人权限时显示
 ]
 ```
 
-## Participants Pane
+## 参与者面板 - Participants Pane
 
 ### participantsPane
 
-type: `Object`
+类型: `Object`
 
-Options related to the participants pane.
+与参与者面板相关的选项。
 
-Default: **unset**
+默认: **未设置**
 
-Properties:
-* `hideModeratorSettingsTab` - Hides the button to open the moderator settings tab.
-* `hideMoreActionsButton` - Hides the more actions button.
-* `hideMuteAllButton` - Hides the mute all button.
+属性：
+
+* `hideModeratorSettingsTab` - 隐藏打开主持人设置选项卡的按钮。
+* `hideMoreActionsButton` - 隐藏更多操作按钮。
+* `hideMuteAllButton` - 隐藏静音所有按钮。
 
 ```javascript
 participantsPane: {
@@ -1202,17 +1176,18 @@ participantsPane: {
 }
 ```
 
-## Recording
+## 录制 - Recording
 
 ### dropbox
 
-type: `Object`
+类型: `Object`
 
-Enable the dropbox integration.
+启用Dropbox集成。
 
-Properties:
-* `appKey` - Your APP Key.
-* `redirectURI` - A URL to redirect the user to, after authenticating by default uses
+属性：
+
+* `appKey` - 您的应用程序密钥。
+* `redirectURI` - 用户认证后重定向的URL，默认使用
 
 ```javascript
 dropbox: {
@@ -1223,9 +1198,9 @@ dropbox: {
 
 ### fileRecordingsEnabled
 
-type: `Boolean`
+类型: `Boolean`
 
-Whether to enable file recording or not.
+是否启用文件录制。
 
 ```javascript
 fileRecordingsEnabled: false
@@ -1233,12 +1208,9 @@ fileRecordingsEnabled: false
 
 ### fileRecordingsServiceEnabled 🚫
 
-type: `Boolean`
+类型: `Boolean`
 
-When integrations like dropbox are enabled only that will be shown,
-by enabling fileRecordingsServiceEnabled, we show both the integrations
-and the generic recording service (its configuration and storage type
-depends on jibri configuration)
+当启用像Dropbox这样的集成时，仅会显示该集成，通过启用fileRecordingsServiceEnabled，既显示集成又显示通用录制服务（其配置和存储类型取决于jibri配置）。
 
 ```javascript
 fileRecordingsServiceEnabled: true
@@ -1246,11 +1218,9 @@ fileRecordingsServiceEnabled: true
 
 ### fileRecordingsServiceSharingEnabled 🚫
 
-type: `Boolean`
+类型: `Boolean`
 
-Whether to show the possibility to share file recording with other people
-(e.g. meeting participants), based on the actual implementation
-on the backend.
+是否显示与其他人（例如会议参与者）共享文件录制的可能性，基于后端的实际实现。
 
 ```javascript
 fileRecordingsServiceSharingEnabled: false
@@ -1258,11 +1228,11 @@ fileRecordingsServiceSharingEnabled: false
 
 ### hideRecordingLabel
 
-type: `Boolean`
+类型: `Boolean`
 
-Set recording label to auto hide instead of staying always on screen.
+设置录制标签为自动隐藏，而不是始终在屏幕上显示。
 
-Default: `false`
+默认: `false`
 
 ```javascript
 hideRecordingLabel: true
@@ -1270,13 +1240,14 @@ hideRecordingLabel: true
 
 ### localRecording
 
-type: `Object`
+类型: `Object`
 
-Set local recording configuration.
+设置本地录制配置。
 
-Properties:
-* `disable` - Whether to disable the feature or not.
-* `notifyAllParticipants` - Whether to notify all the participants when a local recording is started.
+属性：
+
+* `disable` - 是否禁用该功能。
+* `notifyAllParticipants` - 是否在本地录制开始时通知所有参与者。
 
 ```javascript
 localRecording: {
@@ -1287,15 +1258,15 @@ localRecording: {
 
 ### recordingLimit 🚫
 
-type: `Object`
+类型: `Object`
 
-Options for the recording limit notification.
+录制限制通知的选项。
 
-Properties:
-* `limit` - The recording limit in minutes. Note: This number appears in the notification text
-    but doesn't enforce the actual recording time limit. This should be configured in jibri!
-* `appName` = The name of the app with unlimited recordings.
-* `appURL` - The URL of the app with unlimited recordings.
+属性：
+
+* `limit` - 录制限制（分钟）。注意：此数字出现在通知文本中，但不强制执行实际录制时间限制。应在jibri中进行配置！
+* `appName` - 具有无限录制的应用程序名称。
+* `appURL` - 具有无限录制的应用程序的URL。
 
 ```javascript
 recordingLimit: {
@@ -1307,14 +1278,15 @@ recordingLimit: {
 
 ### recordings
 
-type: `Object`
+类型: `Object`
 
-Options for the recordings features.
+录制功能的选项。
 
-Properties:
-* `recordAudioAndVideo` - If true (default) recording audio and video is selected by default in the recording dialog.
-* `suggestRecording` - If true, shows a notification at the start of the meeting with a call to action button to start recording (for users who can do so).
-* `showPrejoinWarning` - If true, shows a warning label in the prejoin screen to point out the possibility that the call you're joining might be recorded.
+属性：
+
+* `recordAudioAndVideo` - 如果为真（默认），则在录制对话框中默认选择录制音频和视频。
+* `suggestRecording` - 如果为真，则在会议开始时显示通知，并带有启动录制的行动按钮（供有此权限的用户使用）。
+* `showPrejoinWarning` - 如果为真，则在预加入屏幕中显示警告标签，指出您加入的通话可能会被录制。
 
 ```javascript
 recordings: {
@@ -1324,15 +1296,15 @@ recordings: {
 }
 ```
 
-## Screen Sharing
+## 屏幕共享 - Screen Sharing
 
 ### desktopSharingFrameRate
 
-type: `Object`
+类型: `Object`
 
-Optional desktop sharing frame rate options
+可选的桌面共享帧率选项。
 
-Default: `{
+默认: `{
     min: 5,
     max: 5
 }`
@@ -1346,9 +1318,9 @@ desktopSharingFrameRate: {
 
 ### disableScreensharingVirtualBackground
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables using screensharing as virtual background.
+禁用将屏幕共享用作虚拟背景的功能。
 
 ```javascript
 disableScreensharingVirtualBackground: false
@@ -1356,14 +1328,14 @@ disableScreensharingVirtualBackground: false
 
 ### screenshotCapture
 
-type: `Object`
+类型: `Object`
 
-Options for the screenshot capture feature.
+屏幕截图捕获功能的选项。
 
-Properties:
-* `enabled` - Enables the feature
-* `mode` - The mode for the screenshot capture feature. Can be either 'recording' - screensharing screenshots
-    are taken only when the recording is also on, or 'always' - screensharing screenshots are always taken.
+属性：
+
+* `enabled` - 启用该功能。
+* `mode` - 屏幕截图捕获功能的模式。可以是 'recording' - 仅在录制也开启时进行屏幕共享截图，或 'always' - 始终进行屏幕共享截图。
 
 ```javascript
 screenshotCapture: {
@@ -1372,18 +1344,20 @@ screenshotCapture: {
 }
 ```
 
-## Security UI
+## 安全用户界面 - SecurityUi
+
 ### securityUi
 
-type: `Object`
+类型: `Object`
 
-Options regarding the security-related UI elements.
+与安全相关的用户界面元素选项。
 
-Default: **unset**
+默认: **未设置**
 
-Properties:
-* `hideLobbyButton` - Hides the lobby button. Replaces `hideLobbyButton`.
-* `disableLobbyPassword` - Hides the possibility to set and enter a lobby password.
+属性：
+
+* `hideLobbyButton` - 隐藏大厅按钮。替换 `hideLobbyButton`。
+* `disableLobbyPassword` - 隐藏设置和输入大厅密码的选项。
 
 ```javascript
 securityUi: {
@@ -1392,45 +1366,43 @@ securityUi: {
 }
 ```
 
-## Testing
+## 测试 - Testing
+
 ### testing
 
-type: `Object`
+类型: `Object`
 
-Experimental features.
+实验性功能。
 
-Default: **unset**
+默认: **未设置**
 
-Properties:
-* `assumeBandwidth` - Allows the setting of a custom bandwidth value from the UI.
-* `disableE2EE` - Disables the End to End Encryption feature. Useful for debugging issues related to insertable streams.
-* `mobileXmppWsThreshold` - Enables XMPP WebSocket (as opposed to BOSH) for the given amount of users.
-* `p2pTestMode` - P2P test mode disables automatic switching to P2P when there are 2 participants in the conference.
-* `testMode` - Enables the test specific features consumed by jitsi-meet-torture.
-* `noAutoPlayVideo` - Disables the auto-play behavior of *all* newly created video element. This is useful when the client runs on a host with limited resources.
+属性：
+
+* `assumeBandwidth` - 允许从用户界面设置自定义带宽值。
+* `disableE2EE` - 禁用端对端加密功能。用于调试与可插入流相关的问题。
+* `mobileXmppWsThreshold` - 为给定数量的用户启用XMPP WebSocket（而不是BOSH）。
+* `p2pTestMode` - P2P测试模式在会议中有两个参与者时禁用自动切换到P2P。
+* `testMode` - 启用由jitsi-meet-torture消耗的测试特定功能。
+* `noAutoPlayVideo` - 禁用*所有*新创建的视频元素的自动播放行为。这在客户端运行在资源有限的主机上时非常有用。
 
 ```javascript
 testing: {
     assumeBandwidth: true,
     disableE2EE: false,
-    mobileXmppWsThreshold: 10, // enable XMPP WebSockets on mobile for 10% of the users
+    mobileXmppWsThreshold: 10, // 为10%的用户启用移动设备上的XMPP WebSockets
     p2pTestMode: false,
     testMode: false,
     noAutoPlayVideo: false
 }
 ```
 
-## Video
+## 视频 - Video
 
 ### constraints
 
-type: `Object`
+类型: `Object`
 
-W3C spec-compliant video constraints to use for video capture. Currently
-used by browsers that return true from lib-jitsi-meet's
-`util#browser#usesNewGumFlow`. The constraints are independent of
-this config's resolution value. Defaults to requesting an ideal
-resolution of 720p.
+用于视频捕获的符合W3C规范的视频约束。目前由返回true的浏览器使用lib-jitsi-meet的`util#browser#usesNewGumFlow`。约束与该配置的分辨率值独立。默认请求理想分辨率为720p。
 
 ```javascript
 constraints: {
@@ -1446,10 +1418,9 @@ constraints: {
 
 ### disableAddingBackgroundImages
 
-type: `Boolean`
+类型: `Boolean`
 
-When true the user cannot add more images to be used as a virtual background.
-Only the default ones will be available.
+当为真时，用户无法添加更多图像作为虚拟背景。只有默认图像可用。
 
 ```javascript
 disableAddingBackgroundImages: true
@@ -1457,9 +1428,9 @@ disableAddingBackgroundImages: true
 
 ### disableH264
 
-type: `Boolean`
+类型: `Boolean`
 
-If set to true, disable the H.264 video codec by stripping it out of the SDP.
+如果设置为true，禁用H.264视频编解码器，通过从SDP中删除它。
 
 ```javascript
 disableH264: true
@@ -1467,9 +1438,9 @@ disableH264: true
 
 ### disableLocalVideoFlip
 
-type: `Boolean`
+类型: `Boolean`
 
-Disable the Flip video option from the context menu for local video.
+禁用本地视频的翻转视频选项（从上下文菜单中）。
 
 ```javascript
 disableLocalVideoFlip: true
@@ -1477,9 +1448,9 @@ disableLocalVideoFlip: true
 
 ### disableSelfView
 
-type: `Boolean`
+类型: `Boolean`
 
-Disables self-view tile. (hides it from tile view and filmstrip)
+禁用自视图图块（从图块视图和影片条中隐藏）。
 
 ```javascript
 disableSelfView: true
@@ -1487,10 +1458,9 @@ disableSelfView: true
 
 ### doNotFlipLocalVideo
 
-type: `Boolean`
+类型: `Boolean`
 
-A property used to unset the default flip state of the local video.
-When it is set to `true`, the local(self) video will not be mirrored anymore.
+用于取消设置本地视频的默认翻转状态的属性。当设置为 `true` 时，本地（自）视频将不再镜像。
 
 ```javascript
 doNotFlipLocalVideo: true
@@ -1498,10 +1468,9 @@ doNotFlipLocalVideo: true
 
 ### maxFullResolutionParticipants
 
-type: `Boolean`
+类型: `Boolean`
 
-How many participants while in the tile view mode, before the receiving video quality is reduced from HD to SD?
-Use `-1` to disable.
+在图块视图模式下，多少参与者之前接收的视频质量从HD降低到SD？使用 `-1` 禁用。
 
 ```javascript
 maxFullResolutionParticipants: 5
@@ -1509,22 +1478,19 @@ maxFullResolutionParticipants: 5
 
 ### ~~preferH264~~
 
-type: `Boolean`
+类型: `Boolean`
 
-__DEPRECATED__ Use `preferredCodec` under the `videoQuality` section instead.
+__已弃用__ 请在 `videoQuality` 部分使用 `preferredCodec` 替代。
 
-Prefer to use the H.264 video codec (if supported).
-Note that it's not recommended to do this because simulcast is not
-supported when  using H.264. For 1-to-1 calls this setting is enabled by
-default and can be toggled in the p2p section.
+优先使用H.264视频编解码器（如果支持）。注意，建议不要这样做，因为在使用H.264时不支持多路复用。对于1对1通话，此设置默认启用，可以在P2P部分进行切换。
 
 ### resolution
 
-type: `Number`
+类型: `Number`
 
-Sets the preferred resolution (height) for local video
+设置本地视频的首选分辨率（高度）。
 
-Default: `720`
+默认: `720`
 
 ```javascript
 resolution: 1080
@@ -1532,9 +1498,9 @@ resolution: 1080
 
 ### startVideoMuted
 
-type: `Number`
+类型: `Number`
 
-Every participant after the Nth will start the video muted.
+第N个参与者之后的每位参与者将开始时视频静音。
 
 ```javascript
 startVideoMuted: 5
@@ -1542,9 +1508,9 @@ startVideoMuted: 5
 
 ### startWithVideoMuted
 
-type: `Boolean`
+类型: `Boolean`
 
-Start calls with video muted. Only applied locally.
+以视频静音开始通话。仅适用于本地。
 
 ```javascript
 startWithVideoMuted: true
@@ -1552,20 +1518,26 @@ startWithVideoMuted: true
 
 ### videoQuality
 
-type: `Object`
+类型: `Object`
 
-Specify the settings for video quality optimizations on the client.
+指定客户端的视频质量优化设置。
 
-Properties:
-* `codecPreferenceOrder` - Provides a way to set the codec preference on desktop-based endpoints.
+属性：
+
+* `codecPreferenceOrder` - 提供一种在基于桌面的端点上设置编解码器优先级的方法。
+
 ```javascript
 codecPreferenceOrder: [ 'AV1', 'VP9', 'VP8', 'H264' ],
 ```
-* `mobileCodecPreferenceOrder` - Provides a way to set the codec preference on mobile devices, both on RN and mobile browser-based endpoints.
+
+* `mobileCodecPreferenceOrder` - 提供一种在移动设备上设置编解码器优先级的方法，包括RN和基于移动浏览器的端点。
+
 ```javascript
 codecPreferenceOrder: [ 'VP8', 'H264', 'VP9' ],
 ```
-Codec specific settings for scalability modes and max bitrates.
+
+编解码器特定的可扩展模式和最大比特率设置。
+
 ```javascript
 av1: {
     maxBitratesVideo: {
@@ -1616,34 +1588,35 @@ vp9: {
     useKSVC: true
 },
 ```
-* `disabledCodec` - __DEPRECATED__ Use `codecPreferenceOrder` or `mobileCodecPreferenceOrder` instead.
-* `preferredCodec` - __DEPRECATED__ Use `codecPreferenceOrder` or `mobileCodecPreferenceOrder` instead.
-* `minHeightForQualityLvl` - The options can be used to override default thresholds of video thumbnail heights corresponding to
-    the video quality levels used in the application. At the time of this writing, the allowed levels are:
-    *    `low` - for the low-quality level (180p at the time of this writing)
-    *    `standard` - for the medium quality level (360p)
-    *    `high` - for the high-quality level (720p)
 
-    The keys should be positive numbers which represent the minimal thumbnail height for the quality level.
-    With the default config value below the application will use 'low' quality until the thumbnails are
-    at least 360 pixels tall. If the thumbnail height reaches 720 pixels then the application will switch to
-    the high quality.
+* `disabledCodec` - __已弃用__ 请使用 `codecPreferenceOrder` 或 `mobileCodecPreferenceOrder` 替代。
 
-## Whiteboard
+* `preferredCodec` - __已弃用__ 请使用 `codecPreferenceOrder` 或 `mobileCodecPreferenceOrder` 替代。
+
+* `minHeightForQualityLvl` - 此选项可用于覆盖与应用中使用的视频质量级别相对应的缩略图高度的默认阈值。在撰写本文时，允许的级别为：
+
+  *    `low` - 低质量级别（在撰写时为180p）
+  *    `standard` - 中等质量级别（360p）
+  *    `high` - 高质量级别（720p）
+
+  键应为正数，表示该质量级别的最小缩略图高度。使用默认配置值后，应用程序将在缩略图高度至少为360像素时使用“低”质量。如果缩略图高度达到720像素，则应用程序将切换到高质量。
+
+## 白板 - Whiteboard
 
 ### whiteboard
 
-type: `Object`
+类型: `Object`
 
-Options related to the Excalidraw whiteboard integration.
+与Excalidraw白板集成相关的选项。
 
-Default: **unset**
+默认: **未设置**
 
-Properties:
-* `enabled` - Whether the feature is enabled or not.
-* `collabServerBaseUrl` - The [server](https://github.com/jitsi/excalidraw-backend) used to support whiteboard collaboration.
-* `userLimit` - The user access limit to the whiteboard, introduced as a means to control the performance.
-* `limitUrl` - The url for more info about the whiteboard and its usage limitations.
+属性：
+
+* `enabled` - 此功能是否启用。
+* `collabServerBaseUrl` - 用于支持白板协作的 [服务器](https://github.com/jitsi/excalidraw-backend)。
+* `userLimit` - 白板的用户访问限制，引入作为控制性能的手段。
+* `limitUrl` - 有关白板及其使用限制的更多信息的链接。
 
 ```javascript
 whiteboard: {
@@ -1652,3 +1625,4 @@ whiteboard: {
     userLimit: 25,
     limitUrl: 'https://example.com/blog/whiteboard-limits'
 }
+```

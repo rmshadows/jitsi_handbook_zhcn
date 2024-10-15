@@ -1,32 +1,38 @@
 ---
 id: client connection status indicators
-title: Client Connection Status Indicators
+title: Client Connection Status Indicators - 客户端连接状态指示器
 ---
 
-This document explains what the different connection quality indicators on the video thumbnails actually mean.
+本文档解释了视频缩略图上不同连接质量指示器的实际含义。
 
-## GOOD
-* With video enabled, when the send bitrate for the video stream is at least 50% of the target bitrate expected for the stream. Please refer to the target bitrates table below.
-* With video disabled or screen sharing is in progress, when the downstream packet loss is less than 6%.
+## 良好（GOOD）
 
-## NON-OPTIMAL
-* With video enabled, when the send bitrate for the video stream is at least 30% of the target bitrate expected for the stream. Please refer to the target bitrates table below.
-* With video disabled or screen sharing is in progress, when the downstream packet loss is between 6% and 8%.
+* 当启用视频时，视频流的发送比特率至少达到目标比特率的50%。请参阅下方的目标比特率表。
+* 当禁用视频或进行屏幕共享时，下行数据包丢失率低于6%。
 
-## POOR
-* With video enabled, when the send bitrate for the video stream is at least 10% of the target bitrate expected for the stream. Please refer to the target bitrates table below.
-* With video disabled or screen sharing is in progress, when the downstream packet loss is between 8% and 12%.
+## 非最佳（NON-OPTIMAL）
 
-## LOST
-* When the user stops receiving video for the remote endpoint even when the endpoint is not video muted and it is in LastN as indicated by the bridge’s LastNEndpointChangeEvent.
-* When the bridge sends an EndpointConnectivityStatusChangeEvent indicating that the remote endpoint is no longer active, i.e., when the bridge has not received media from the remote endpoint for more than 3 secs.
+* 当启用视频时，视频流的发送比特率至少达到目标比特率的30%。请参阅下方的目标比特率表。
+* 当禁用视频或进行屏幕共享时，下行数据包丢失率在6%到8%之间。
 
-## GHOST/NINJA
-* When the user stops receiving video for the remote endpoint even when the endpoint is not video muted and it is not in LastN as indicated by the bridge’s LastNEndpointChangeEvent. This means that the bridge decided to suspend the video for this user. Bridge takes into consideration the available downlink bandwidth for the receiving endpoint and the number of video streams requested using the channelLast setting.
+## 较差（POOR）
 
-## Target bitrates expected for the video streams
+* 当启用视频时，视频流的发送比特率至少达到目标比特率的10%。请参阅下方的目标比特率表。
+* 当禁用视频或进行屏幕共享时，下行数据包丢失率在8%到12%之间。
 
-CodecType   | 180p (in Kbps) | 360p (in Kbps) | 720p (in Kbps)
------------ | -------------- | -------------- | -------------------
-VP8         |      200       |     500        |      1500          
-VP9         |      100       |     300        |      1200          
+## 丢失（LOST）
+
+* 当用户停止接收来自远程端点的视频，即使该端点未被静音，并且在LastN中，正如桥接的LastNEndpointChangeEvent所指示的那样。
+* 当桥接发送EndpointConnectivityStatusChangeEvent，表明远程端点不再活动，即当桥接在3秒以上未收到来自远程端点的媒体。
+
+## 幽灵/忍者（GHOST/NINJA）
+
+* 当用户停止接收来自远程端点的视频，即使该端点未被静音，并且不在LastN中，如桥接的LastNEndpointChangeEvent所指示的那样。这意味着桥接决定暂停该用户的视频。桥接会考虑接收端点的可用下行带宽和使用channelLast设置请求的视频流数量。
+
+## 视频流的目标比特率
+
+| 编解码器类型 | 180p（Kbps） | 360p（Kbps） | 720p（Kbps） |
+| ------------ | ------------ | ------------ | ------------ |
+| VP8          | 200          | 500          | 1500         |
+| VP9          | 100          | 300          | 1200         |
+

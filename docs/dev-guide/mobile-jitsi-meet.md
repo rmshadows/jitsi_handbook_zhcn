@@ -1,50 +1,48 @@
 ---
 id: dev-guide-mobile-jitsi-meet
-title: Developer Guide for Jitsi Meet
-sidebar_label: Jitsi Meet development
+title: Developer Guide for Jitsi Meet - 开发者指南
+sidebar_label: Jitsi Meet development - Jitsi Meet开发
 ---
 
-This guide will help you setup a development environment to start working on the Jitsi Meet mobile app itself.
+本指南将帮助您设置一个开发环境，以便开始在 Jitsi Meet 移动应用程序本身上工作。
 
 :::caution
-Building the apps / SDKs is not supported on Windows.
+不支持在 Windows 上构建应用程序/SDK。
 :::
 
-## Overview
+## 概述
 
 :::note
-This guide is about building the Jitsi Meet apps themselves. If you want to integrate the Jitsi Meet SDK into your own application check the dedicated page on the sidebar.
+本指南是关于构建 Jitsi Meet 应用程序本身的。如果您想将 Jitsi Meet SDK 集成到自己的应用程序中，请查看侧边栏上的专用页面。
 :::
 
-Jitsi Meet can be built as a standalone app for Android or iOS. It uses the
-[React Native] framework.
+Jitsi Meet 可以构建为 Android 或 iOS 的独立应用程序。它使用 [React Native] 框架。
 
-First make sure the following dependencies are installed:
+首先，确保安装以下依赖项：
 
 * `watchman`
 * `nodejs`
 * `npm`
 
-:::warning Node version
-Node 20.x and npm 10.x are required. Any other version may result in runtime errors.
+:::warning Node 版本
+需要 Node 20.x 和 npm 10.x。任何其他版本可能会导致运行时错误。
 :::
 
 :::note Xcode
-Xcode 15 or higher is required.
+需要 Xcode 15 或更高版本。
 :::
 
 ## iOS
 
-1. Install dependencies
+1. 安装依赖项
 
-  - Install main dependencies:
+  - 安装主要依赖项：
 
     ```bash
     npm install
     ```
 
-  - Install the required pods (CocoaPods must be installed first, it can
-    be done with Homebrew: `brew install cocoapods`)
+  - 安装所需的 pods（必须先安装 CocoaPods，可以通过 Homebrew 完成：`brew install cocoapods`）
 
     ```bash
     cd ios
@@ -52,71 +50,63 @@ Xcode 15 or higher is required.
     cd ..
     ```
 
-2. Build the app using Xcode
+2. 使用 Xcode 构建应用程序
 
-    - Open `ios/jitsi-meet.xcworkspace` in Xcode. Make sure it's the workspace
-      file!
+   - 在 Xcode 中打开 `ios/jitsi-meet.xcworkspace`。确保它是工作区文件！
 
-    - Select your device from the top bar and hit the **Play ▶️** button.
+   - 从顶部栏选择您的设备，然后点击 **Play ▶️** 按钮。
 
-    When the app is launched from Xcode, the Debug Console will show the application output
-    logs.
+   当应用程序从 Xcode 启动时，调试控制台将显示应用程序输出日志。
 
-3. Other remarks
+3. 其他备注
 
-    It's likely you'll need to change the bundle ID for deploying to a device.
-    This can be changed in the **General** tab. Under **Identity** set
-    **Bundle Identifier** to a different value, and adjust the **Team** in the
-    **Signing** section to match your own.
+   您可能需要更改在设备上部署时的 bundle ID。
+   这可以在 **General** 选项卡中更改。在 **Identity** 下将 **Bundle Identifier** 设置为不同的值，并在 **Signing** 部分调整 **Team** 以匹配您自己的信息。
 
 
 ## Android
 
-Make sure [Android Studio] is installed.
+确保安装了 [Android Studio]。
 
-Set the JDK in Android Studio to at least Java 11: https://developer.android.com/studio/intro/studio-config#jdk
+将 Android Studio 中的 JDK 设置为至少 Java 11：https://developer.android.com/studio/intro/studio-config#jdk
 
-### Adding extra dependencies
+### 添加额外依赖项
 
-Due to how our project is structured, React Native's automatic linking won't work so Android dependencies need to be manually linked.
+由于我们的项目结构，React Native 的自动链接将无法工作，因此 Android 依赖项需要手动链接。
 
-First, add your project to `android/settings.gradle` like so:
+首先，将您的项目添加到 `android/settings.gradle`，如下所示：
 
 ```gradle title="android/settings.gradle"
 include ':react-native-mydependency'
 project(':react-native-mydependency').projectDir = new File(rootProject.projectDir, '../node_modules/@somenamespace/react-native-mydependency/android')
 ```
 
-Then add a dependency on `android/sdk/build.gradle` like so:
+然后在 `android/sdk/build.gradle` 中添加依赖项，如下所示：
 
 ```gradle title="android/sdk/build.gradle"
 implementation project(':react-native-mydependency')
 ```
 
-Last, link it in the `getReactNativePackages` method in `android/sdk/src/main/java/org/jitsi/meet/sdk/ReactInstanceManagerHolder.java` like so:
+最后，在 `android/sdk/src/main/java/org/jitsi/meet/sdk/ReactInstanceManagerHolder.java` 中的 `getReactNativePackages` 方法中链接它，如下所示：
 
 ```java title="android/sdk/src/main/java/org/jitsi/meet/sdk/ReactInstanceManagerHolder.java"
 new com.companyname.library.AwesomeLibraryPackage(),
 ```
 
-Make sure you adjust the fully qualified package name.
+确保您调整完全限定的包名。
 
-## Debugging
+## 调试
 
-The official documentation on [debugging] is quite extensive and specifies the
-preferred method for debugging.
+官方文档关于 [调试] 的内容相当详细，并指定了首选的调试方法。
 
 :::note
-When using Chrome Developer Tools for debugging the JavaScript source
-code is being interpreted by Chrome's V8 engine, instead of JSCore which React
-Native uses. It's important to keep this in mind due to potential differences in
-supported JavaScript features. Also note Jitsi Meet does not support Flipper.
+使用 Chrome 开发者工具调试时，JavaScript 源代码是由 Chrome 的 V8 引擎解释的，而不是 React Native 使用的 JSCore。由于可能存在支持的 JavaScript 特性差异，请务必牢记这一点。还要注意，Jitsi Meet 不支持 Flipper。
 :::
 
-## Enabling extra features
+## 启用额外功能
 
-- [Dropbox Integration](mobile-dropbox.md)
-- [Google Sign-In Integration (For YouTube Live Streaming)](mobile-google-auth.md)
+- [Dropbox 集成](mobile-dropbox.md)
+- [Google 登录集成（用于 YouTube 直播）](mobile-google-auth.md)
 
 [Android Studio]: https://developer.android.com/studio/index.html
 [debugging]: https://facebook.github.io/react-native/docs/debugging/

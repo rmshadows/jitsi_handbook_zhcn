@@ -3,31 +3,25 @@ id: dev-guide-android-sdk
 title: Android SDK
 ---
 
-The Jitsi Meet Android SDK provides the same user experience as the Jitsi Meet app,
-in a customizable way which you can embed in your apps.
+Jitsi Meet Android SDK 提供了与 Jitsi Meet 应用相同的用户体验，并且可以以可自定义的方式嵌入到您的应用中。
 
 :::important
-Android 7.0 (API level 24) or higher is required.
+需要 Android 7.0（API 级别 24）或更高版本。
 :::
 
-## Sample applications using the SDK
+## 使用 SDK 的示例应用
 
-If you want to see how easy integrating the Jitsi Meet SDK into a native application is, take a look at the
-[sample applications repository](https://github.com/jitsi/jitsi-meet-sdk-samples#android).
+如果您想了解将 Jitsi Meet SDK 集成到本地应用中有多简单，可以查看 [示例应用程序仓库](https://github.com/jitsi/jitsi-meet-sdk-samples#android)。
 
-## Build your own, or use a pre-build SDK artifacts/binaries
+## 构建您自己的 SDK，或使用预构建的 SDK 组件/二进制文件
 
-Jitsi conveniently provides a pre-build SDK artifacts/binaries in its Maven repository. When you do not require any
-modification to the SDK itself or any of its dependencies, it's suggested to use the pre-build SDK. This avoids the
-complexity of building and installing your own SDK artifacts/binaries.
+Jitsi 方便地在其 Maven 仓库中提供了预构建的 SDK 组件/二进制文件。当您不需要对 SDK 本身或其任何依赖项进行修改时，建议使用预构建的 SDK。这避免了构建和安装您自己的 SDK 组件/二进制文件的复杂性。
 
-### Use pre-build SDK artifacts/binaries
+### 使用预构建的 SDK 组件/二进制文件
 
-In your project, add the Maven repository
-`https://github.com/jitsi/jitsi-maven-repository/raw/master/releases` and the
-dependency `org.jitsi.react:jitsi-meet-sdk` into your `build.gradle` files.
+在您的项目中，添加 Maven 仓库 `https://github.com/jitsi/jitsi-maven-repository/raw/master/releases` 和依赖项 `org.jitsi.react:jitsi-meet-sdk` 到您的 `build.gradle` 文件中。
 
-The repository typically goes into the `build.gradle` file in the root of your project:
+仓库通常放在项目根目录的 `build.gradle` 文件中：
 
 ```gradle title="build.gradle"
 allprojects {
@@ -42,7 +36,7 @@ allprojects {
 }
 ```
 
-In recent versions of Android Studios, `allprojects{}` might not be found in `build.gradle`. In that case, the repository goes into the `settings.gradle` file in the root of your project:
+在较新版本的 Android Studio 中，可能在 `build.gradle` 中找不到 `allprojects{}`。在这种情况下，仓库应放入项目根目录的 `settings.gradle` 文件中：
 
 ```gradle title="settings.gradle"
 dependencyResolutionManagement {
@@ -60,7 +54,7 @@ dependencyResolutionManagement {
 }
 ```
 
-Dependency definitions belong in the individual module `build.gradle` files:
+依赖项定义应放在各个模块的 `build.gradle` 文件中：
 
 ```gradle
 dependencies {
@@ -70,42 +64,37 @@ dependencies {
 ```
 
 :::warning
-Make sure you pin your dependency by checking the [releases page](https://github.com/jitsi/jitsi-meet-release-notes/blob/master/CHANGELOG-MOBILE-SDKS.md).
+请确保通过查看 [发布页面](https://github.com/jitsi/jitsi-meet-release-notes/blob/master/CHANGELOG-MOBILE-SDKS.md) 来固定您的依赖项。
 :::
 
-### Build and use your own SDK artifacts/binaries
+### 构建并使用您自己的 SDK 组件/二进制文件
 
 <details>
-<summary>Show building instructions</summary>
+<summary>显示构建说明</summary>
 
-Start by making sure that your development environment [is set up correctly](/docs/category/mobile).
+首先，请确保您的开发环境 [已正确设置](/docs/category/mobile)。
 
-:::note A Note on Dependencies
-Apart from the SDK, Jitsi also publishes a binary Maven artifact for some of the SDK dependencies (that are not otherwise publicly available) to the Jitsi Maven repository. When you're planning to use a SDK that is built from source, you'll likely use a version of the source code that is newer (or at least _different_) than the version of the source that was used to create the binary SDK artifact. As a consequence, the dependencies that your project will need, might also be different from those that are published in the Jitsi Maven repository. This might lead to build problems, caused by dependencies that are unavailable.
+:::note 关于依赖项的说明
+除了 SDK，Jitsi 还向 Jitsi Maven 仓库发布了一些 SDK 依赖项的二进制 Maven 组件（这些依赖项在其他地方无法公开获得）。当您计划使用从源代码构建的 SDK 时，您很可能会使用一个比生成二进制 SDK 组件时所用的源代码版本更新（或至少是 _不同_）的源代码版本。因此，您的项目可能需要的依赖项也可能与在 Jitsi Maven 仓库中发布的不同。这可能会导致构建问题，因为依赖项不可用。
 :::
 
-If you want to use a SDK that is built from source, you will likely benefit from composing a local Maven repository that contains these dependencies. The text below describes how you create a repository that includes both the SDK as well as these dependencies. For illustration purposes, we'll define the location of this local Maven repository as `/tmp/repo`
+如果您希望使用从源代码构建的 SDK，您可能需要创建一个包含这些依赖项的本地 Maven 仓库。下面的文本描述了如何创建一个包含 SDK 以及这些依赖项的仓库。为了说明，我们将定义这个本地 Maven 仓库的位置为 `/tmp/repo`。
 
-In source code form, the Android SDK dependencies are locked/pinned by `package.json` and `package-lock.json` of the Jitsi Meet project. To obtain the data, execute NPM in the jitsi-meet project directory:
+在源代码形式中，Android SDK 依赖项由 Jitsi Meet 项目的 `package.json` 和 `package-lock.json` 锁定。要获取这些数据，请在 jitsi-meet 项目目录中执行 NPM：
 
 ```shell
     npm install
 ```
 
-This will pull in the dependencies in either binary format, or in source code format, somewhere under /node_modules/
-
-Third-party React Native _modules_, which Jitsi Meet SDK for Android depends on, are download by NPM in source code 
-or binary form. These need to be assembled into Maven artifacts, and then published to your local Maven repository.
-A script is provided to facilitate this. From the root of the jitsi-meet project repository, run:
+Jitsi Meet SDK for Android 依赖的第三方 React Native _模块_ 会通过 NPM 以源代码或二进制形式下载。这些需要被组装成 Maven 组件，并然后发布到您的本地 Maven 仓库。提供了一个脚本来简化这个过程。在 jitsi-meet 项目仓库的根目录中运行：
 
 ```shell
     ./android/scripts/release-sdk.sh /tmp/repo
 ```
 
-This will build and publish the SDK, and all of its dependencies to the specified Maven repository (`/tmp/repo`) in
-this example.
+这将构建并发布 SDK 及其所有依赖项到指定的 Maven 仓库（在本例中为 `/tmp/repo`）。
 
-You're now ready to use the artifacts. In _your_ project, add the Maven repository that you used above (`/tmp/repo`) into your top-level `build.gradle` file:
+您现在可以使用这些组件。在 _您的_ 项目中，将上面使用的 Maven 仓库 (`/tmp/repo`) 添加到您的顶层 `build.gradle` 文件中：
 
 ```gradle
     allprojects {
@@ -118,26 +107,23 @@ You're now ready to use the artifacts. In _your_ project, add the Maven reposito
     }
 ```
 
-You can use your local repository to replace the Jitsi repository (`maven { url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases" }`) when you published _all_ subprojects. If you didn't do that, you'll have to add both repositories. Make sure your local repository is listed first!
+您可以使用本地仓库替换 Jitsi 仓库（`maven { url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases" }`），前提是您已发布了 _所有_ 子项目。如果没有，您必须同时添加两个仓库。确保您的本地仓库列在首位！
 
-Then, define the dependency `org.jitsi.react:jitsi-meet-sdk` into the `build.gradle` file of your module:
+然后，将依赖项 `org.jitsi.react:jitsi-meet-sdk` 定义到模块的 `build.gradle` 文件中：
 
 ```java
     implementation ('org.jitsi.react:jitsi-meet-sdk:+') { transitive = true }
 ```
 
-Note that there should not be a need to explicitly add the other dependencies, as they will be pulled in as transitive
-dependencies of `jitsi-meet-sdk`.
+请注意，不需要显式添加其他依赖项，因为它们会作为 `jitsi-meet-sdk` 的传递依赖项被引入。
 
 </details>
 
-## Using the API
+## 使用 API
 
-Jitsi Meet SDK is an Android library which embodies the whole Jitsi Meet
-experience and makes it reusable by third-party apps.
+Jitsi Meet SDK 是一个 Android 库，体现了整个 Jitsi Meet 体验，并使其可被第三方应用重用。
 
-First, add Java 1.8 compatibility support to your project by adding the
-following lines into your `build.gradle` file:
+首先，通过在您的 `build.gradle` 文件中添加以下行，为您的项目添加 Java 1.8 兼容性支持：
 
 ```gradle
 compileOptions {
@@ -146,46 +132,40 @@ compileOptions {
 }
 ```
 
-To get started, just launch `JitsiMeetActivity` pointing to the room you want:
+要开始使用，只需启动 `JitsiMeetActivity` 指向您想要加入的房间：
 
 ```java
-// Somewhere early in your app.
+// 在您的应用中的某个早期位置。
 JitsiMeetConferenceOptions defaultOptions
         = new JitsiMeetConferenceOptions.Builder()
     .setServerURL(serverURL)
-    // When using JaaS, set the obtained JWT here
+    // 当使用 JaaS 时，在此处设置获得的 JWT
     //.setToken("MyJWT")
-    // Different features flags can be set
+    // 可以设置不同的功能标志
     // .setFeatureFlag("toolbox.enabled", false)
     // .setFeatureFlag("filmstrip.enabled", false)
     .setFeatureFlag("welcomepage.enabled", false)
     .build();
 JitsiMeet.setDefaultConferenceOptions(defaultOptions);
 // ...
-// Build options object for joining the conference. The SDK will merge the default
-// one we set earlier and this one when joining.
+// 构建用于加入会议的选项对象。SDK 将合并我们之前设置的默认选项和此次的选项。
 JitsiMeetConferenceOptions options
         = new JitsiMeetConferenceOptions.Builder()
     .setRoom(roomName)
-    // Settings for audio and video
+    // 音频和视频设置
     //.setAudioMuted(true)
     //.setVideoMuted(true)
     .build();
-// Launch the new activity with the given options. The launch() method takes care
-// of creating the required Intent and passing the options.
+// 使用给定的选项启动新的活动。launch() 方法负责创建所需的 Intent 并传递选项。
 JitsiMeetActivity.launch(this, options);
 ```
 
-Alternatively, you can use the `org.jitsi.meet.sdk.JitsiMeetView` class which
-extends `android.view.View`.
+或者，您可以使用扩展了 `android.view.View` 的 `org.jitsi.meet.sdk.JitsiMeetView` 类。
 
-Note that this should only be needed when `JitsiMeetActivity` cannot be used for
-some reason. Extending `JitsiMeetView` requires manual wiring of the view to
-the activity, using a lot of boilerplate code. Using the Activity instead of the
-View is strongly recommended.
+请注意，当由于某种原因无法使用 `JitsiMeetActivity` 时，才需要扩展 `JitsiMeetView`。扩展 `JitsiMeetView` 需要手动将视图连接到活动，并使用大量样板代码。强烈建议使用活动(Activity)而不是视图(View)。
 
 <details>
-<summary>Show example</summary>
+<summary>显示示例</summary>
 
 ```java
 package org.jitsi.example;
@@ -271,33 +251,25 @@ public class MainActivity extends FragmentActivity implements JitsiMeetActivityI
 
 ### JitsiMeetActivity
 
-This class encapsulates a high level API in the form of an Android `FragmentActivity`
-which displays a single `JitsiMeetView`. You can pass a URL as a `ACTION_VIEW`
-on the Intent when starting it and it will join the conference, and will be
-automatically terminated (finish() will be called on the activity) when the
-conference ends or fails.
+此类封装了一个高级 API，以 Android `FragmentActivity` 的形式显示单个 `JitsiMeetView`。您可以在启动它时将 URL 作为 `ACTION_VIEW` 传递到 Intent 中，它将加入会议，并在会议结束或失败时自动终止（会调用活动的 finish()）。
 
 ### JitsiMeetView
 
-The `JitsiMeetView` class is the core of Jitsi Meet SDK. It's designed to
-display a Jitsi Meet conference (or a welcome page).
+`JitsiMeetView` 类是 Jitsi Meet SDK 的核心。它旨在显示 Jitsi Meet 会议（或欢迎页面）。
 
 #### join(options)
 
-Joins the conference specified by the given `JitsiMeetConferenceOptions`.
+加入由给定的 `JitsiMeetConferenceOptions` 指定的会议。
 
 #### dispose()
 
-Releases all resources associated with this view. This method MUST be called
-when the Activity holding this view is going to be destroyed, usually in the
-`onDestroy()` method.
+释放与此视图相关的所有资源。此方法必须在持有此视图的 Activity 将要被销毁时调用，通常在 `onDestroy()` 方法中。
 
 ### JitsiMeetConferenceOptions
 
-This object encapsulates all the options that can be tweaked when joining
-a conference.
+此对象封装了加入会议时可以调整的所有选项。
 
-Example:
+示例：
 
 ```java
 ArrayList<Bundle> customToolbarButtons = new ArrayList<Bundle>();
@@ -328,238 +300,210 @@ JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
     .build();
 ```
 
-See the `JitsiMeetConferenceOptions` implementation for all available options.
+请查看 `JitsiMeetConferenceOptions` 实现以获取所有可用选项。
 
 ### JitsiMeetActivityDelegate
 
-This class handles the interaction between `JitsiMeetView` and its enclosing
-`Activity`. Generally this shouldn't be consumed by users, because they'd be
-using `JitsiMeetActivity` instead, which is already completely integrated.
+此类处理 `JitsiMeetView` 与其封闭 `Activity` 之间的交互。通常用户不应直接使用此类，因为他们将使用已经完全集成的 `JitsiMeetActivity`。
 
-All its methods are static.
+它的所有方法都是静态的。
 
 #### onActivityResult(...)
 
-Helper method to handle results of auxiliary activities launched by the SDK.
-Should be called from the activity method of the same name.
+处理 SDK 启动的辅助活动的结果的辅助方法。应从活动的同名方法中调用。
 
 #### onBackPressed()
 
-Helper method which should be called from the activity's `onBackPressed` method.
-If this function returns `true`, it means the action was handled and thus no
-extra processing is required; otherwise the app should call the parent's
-`onBackPressed` method.
+应从活动的 `onBackPressed` 方法中调用的辅助方法。如果此函数返回 `true`，则表示该操作已处理，无需额外处理；否则，应用应调用父类的 `onBackPressed` 方法。
 
 #### onHostDestroy(...)
 
-Helper method which should be called from the activity's `onDestroy` method.
+应从活动的 `onDestroy` 方法中调用的辅助方法。
 
 #### onHostResume(...)
 
-Helper method which should be called from the activity's `onResume` or `onStop`
-method.
+应从活动的 `onResume` 或 `onStop` 方法中调用的辅助方法。
 
 #### onHostStop(...)
 
-Helper method which should be called from the activity's `onSstop` method.
+应从活动的 `onStop` 方法中调用的辅助方法。
 
 #### onNewIntent(...)
 
-Helper method for integrating the *deep linking* functionality. If your app's
-activity is launched in "singleTask" mode this method should be called from the
-activity's `onNewIntent` method.
+用于集成深度链接功能的辅助方法。如果您的应用活动以 "singleTask" 模式启动，则应从活动的 `onNewIntent` 方法中调用此方法。
 
 #### onRequestPermissionsResult(...)
 
-Helper method to handle permission requests inside the SDK. It should be called
-from the activity method of the same name.
+处理 SDK 内部权限请求的辅助方法。应从活动的同名方法中调用。
 
 #### onUserLeaveHint()
 
-Helper method for integrating automatic Picture-in-Picture. It should be called
-from the activity's `onUserLeaveHint` method.
+用于集成自动画中画的辅助方法。应从活动的 `onUserLeaveHint` 方法中调用。
 
-This is a static method.
+这是一个静态方法。
 
-### Listening for broadcasted events
+### 监听广播事件
 
-The SDK broadcasts several events that the users can listen for.
+SDK 广播了几个事件，用户可以对此进行监听。
 
 ```java
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_JOINED.getAction());
     LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter);
- ```  
-        
-Please see `JitsiMeetActivity`, which registers for all the events and can serve as an example.
+```
 
-#### Supported events
+请参阅 `JitsiMeetActivity`，它注册了所有事件并可以作为示例。
+
+#### 支持的事件
 
 ##### CONFERENCE_JOINED
 
-Broadcasted when a conference was joined. `data` contains the following information:
+在加入会议时广播。`data` 包含以下信息：
 
-- `url`: the conference URL
+- `url`: 会议 URL
 
 ##### CONFERENCE_TERMINATED
 
-Broadcasted when the active conference ends, be it because of user choice or because of a failure. `data` contains the
-following information:
+在主动结束或因故障结束活动会议时广播。`data` 包含以下信息：
 
-- `url`: the conference URL
-- `error`: missing if the conference finished gracefully, otherwise contains the error message
+- `url`: 会议 URL
+- `error`: 如果会议正常结束则缺失，否则包含错误消息
 
 ##### CONFERENCE_WILL_JOIN
 
-Broadcasted before a conference is joined. `data` contains the following information:
+在加入会议之前广播。`data` 包含以下信息：
 
-- `url`: the conference URL
+- `url`: 会议 URL
 
 ##### AUDIO_MUTED_CHANGED
 
-Broadcasted when the local participant's audio is muted or unmuted. `data` contains the following information:
+在本地参与者的音频被静音或取消静音时广播。`data` 包含以下信息：
 
-- `muted`: a boolean indicating whether the audio is muted or not.
+- `muted`: 一个布尔值，指示音频是否被静音。
 
 ##### PARTICIPANT_JOINED
 
-Broadcasted when a participant has joined the conference. `data` contains the following information:
+在参与者加入会议时广播。`data` 包含以下信息：
 
-- `email`: the email of the participant. It may not be set if the remote participant didn't set one.
-- `name`: the name of the participant.
-- `role`: the role of the participant.
-- `participantId`: the id of the participant.
+- `email`: 参与者的电子邮件。如果远程参与者未设置，则可能不会设置。
+- `name`: 参与者的姓名。
+- `role`: 参与者的角色。
+- `participantId`: 参与者的 ID。
 
 ##### PARTICIPANT_LEFT
 
-Called when a participant has left the conference. `data` contains the following information:
+当参与者离开会议时调用。`data` 包含以下信息：
 
-- `participantId`: the id of the participant that left.
+- `participantId`: 离开的参与者的 ID。
 
 ##### ENDPOINT_TEXT_MESSAGE_RECEIVED
 
-Broadcasted when an endpoint text message is received. The `data` HashMap contains a `senderId` key with the
-participantId of the sender and a `message` key with the content.
+当接收到一个端点文本消息时广播。`data` HashMap 包含一个 `senderId` 键，值为发送者的 participantId 和一个 `message` 键，值为内容。
 
 #### SCREEN_SHARE_TOGGLED
 
-Broadcasted when a participant starts or stops sharing his screen. `data` contains the following information:
+当参与者开始或停止共享屏幕时广播。`data` 包含以下信息：
 
-- `participantId`: Id of the participant that started or stopped sharing his screen.
-- `sharing`: True if the participant is sharing his screen, false otherwise.
+- `participantId`: 开始或停止共享其屏幕的参与者的 ID。
+- `sharing`: 如果参与者正在共享其屏幕，则为 true，否则为 false。
 
 ##### PARTICIPANTS_INFO_RETRIEVED
 
-Broadcasted when a RETRIEVE_PARTICIPANTS_INFO action is called. The `data` HashMap contains a `participantsInfo` key
-with a list of participants information and a `requestId` key with the ID that was sent in the
-RETRIEVE_PARTICIPANTS_INFO action.
+当调用 RETRIEVE_PARTICIPANTS_INFO 操作时广播。`data` HashMap 包含一个 `participantsInfo` 键，值为参与者信息列表和一个 `requestId` 键，值为在 RETRIEVE_PARTICIPANTS_INFO 操作中发送的 ID。
 
 ##### CHAT_MESSAGE_RECEIVED
 
-Broadcasted when a chat text message is received. `data` contains the following information:
+当接收到聊天文本消息时广播。`data` 包含以下信息：
 
-- `senderId`: the id of the participant that sent the message.
-- `message`: the content of the message.
-- `isPrivate`: true if the message is private, false otherwise.
-- `timestamp`: the (optional) timestamp of the message.
+- `senderId`: 发送消息的参与者的 ID。
+- `message`: 消息的内容。
+- `isPrivate`: 如果消息是私有的，则为 true，否则为 false。
+- `timestamp`: 消息的（可选）时间戳。
 
 ##### CHAT_TOGGLED
 
-Broadcasted when the chat dialog is opened or closed. `data` contains the following information:
+当聊天对话框打开或关闭时广播。`data` 包含以下信息：
 
-- `isOpen`: true if the chat dialog is open, false otherwise.
+- `isOpen`: 如果聊天对话框打开，则为 true，否则为 false。
 
 ##### VIDEO_MUTED_CHANGED
 
-Broadcasted when the local participant's video is muted or unmuted. `data` contains the following information:
+当本地参与者的视频被静音或取消静音时广播。`data` 包含以下信息：
 
-- `muted`: an integer indicating whether the video is muted or not. 0 means unmuted, and 4 means muted.
+- `muted`: 一个整数，指示视频是否被静音。0 表示未静音，4 表示已静音。
 
 ##### READY_TO_CLOSE
 
-The SDK is ready to be closed / dismissed.
+SDK 已准备好关闭/解除。
 
 ##### CUSTOM_OVERFLOW_MENU_BUTTON_PRESSED
 
-Broadcasted when a custom button in the overflow menu is pressed. `data` contains the following information:
+当在溢出菜单中按下自定义按钮时广播。`data` 包含以下信息：
 
-- `id`: the id of the pressed custom button.
-- `text`: the label of the pressed custom button.
+- `id`: 按下的自定义按钮的 ID。
+- `text`: 按下的自定义按钮的标签。
 
-### Broadcasting Actions
+### 广播操作
 
-The SDK listens for broadcasted actions from the users and reacts accordingly.
+SDK 监听来自用户的广播操作并做出相应反应。
 
 ```java
     Intent muteBroadcastIntent = new Intent(BroadcastAction.Type.SET_AUDIO_MUTED.getAction());
     muteBroadcastIntent.putExtra("muted", muted);
     LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(muteBroadcastIntent);
- ```
+```
 
-The intents can be built manually (as shown above) or through the methods in `BroadcastIntentHelper`.
+意图可以手动构建（如上所示）或通过 `BroadcastIntentHelper` 中的方法构建。
 
-Please see `JitsiMeetOngoingConferenceService` for more examples of sending actions.
+请参阅 `JitsiMeetOngoingConferenceService` 以获取更多发送操作的示例。
 
-#### Supported actions
+#### 支持的操作
 
 ##### SET_AUDIO_MUTED
-Sets the state of the localParticipant audio muted according to the `muted` parameter.
-Expects a `muted` key on the intent extra with a boolean value.
+
+根据 `muted` 参数设置本地参与者音频静音状态。
+期望意图额外信息中包含一个布尔值的 `muted` 键。
 
 ##### SET_VIDEO_MUTED
-Sets the state of the localParticipant video muted according to the `muted` parameter.
-Expects a `muted` key on the intent extra with a boolean value.
+
+根据 `muted` 参数设置本地参与者视频静音状态。
+期望意图额外信息中包含一个布尔值的 `muted` 键。
 
 ##### HANG_UP
-The localParticipant leaves the current conference.
-Does not expect any extra value.
+
+本地参与者离开当前会议。
+不期望任何额外值。
 
 ##### SEND_ENDPOINT_TEXT_MESSAGE
-Sends a message via the data channel to one particular participant or all of them.
-Expects a `to` key on the intent extra with the ID of the participant to which the message 
-is meant and a `message` key with a string value, the actual content of the message. 
-If the `to` key is not present or its value is empty, the message will be sent 
-to all the participants in the conference.
 
-To get the participantId, the `PARTICIPANT_JOINED` event should be listened for,
-which `data` includes the id and this should be stored somehow.
+通过数据通道向特定参与者或所有参与者发送消息。
+期望意图额外信息中包含 `to` 键，值为要发送消息的参与者的 ID，以及 `message` 键，值为实际消息内容。
+如果 `to` 键不存在或其值为空，则消息将发送给会议中的所有参与者。
+
+要获取 participantId，应监听 `PARTICIPANT_JOINED` 事件，该事件的 `data` 包含 ID，并应以某种方式存储。
 
 ##### TOGGLE_SCREEN_SHARE
-Sets the state of the localParticipant screen share according to the `enabled` parameter.
-Expects an `enabled` key on the intent extra with a boolean value.
+
+根据 `enabled` 参数设置本地参与者的屏幕共享状态。
+期望意图额外信息中包含一个布尔值的 `enabled` 键。
 
 ##### RETRIEVE_PARTICIPANTS_INFO
-Signals the SDK to retrieve a list with the participant's information. The SDK will emit a PARTICIPANTS_INFO_RETRIEVED event.
-Expects a `requestId` key on the intent extra with a string value, this parameter will be present on the PARTICIPANTS_INFO_RETRIEVED event.
 
-##### OPEN_CHAT
-Opens the chat dialog. If a `to` key is present with a valid participantId, the private chat for that particular participant will be opened.
+通知 SDK 检索参与者信息列表。SDK 将发出 `PARTIC
 
-##### CLOSE_CHAT
-Closes the chat dialog.
-Does not expect any extra value.
+## ProGuard 规则
 
-##### SEND_CHAT_MESSAGE
-Sends a chat message, either a private one if a `to` key is present with a valid participantId and to everybody otherwise.
-Expect a `message` key with a string value.
+在项目中使用 SDK 时，必须添加一些 ProGuard 规则，以避免必要的代码被剥离。将以下内容添加到项目的规则文件中： [proguard-rules.pro](https://github.com/jitsi/jitsi-meet/blob/master/android/app/proguard-rules.pro)
 
-## ProGuard rules
+## 画中画(Picture-in-Picture)
 
-When using the SDK on a project some proguard rules have to be added to avoid necessary code being stripped. Add the following to your project's
-rules file: https://github.com/jitsi/jitsi-meet/blob/master/android/app/proguard-rules.pro
+`JitsiMeetView` 在画中画模式下会自动调整其用户界面，以适应一个太小以容纳其“完整”用户界面的矩形。
 
-## Picture-in-Picture
+## Dropbox 集成
 
-`JitsiMeetView` will automatically adjust its UI when presented in a
-Picture-in-Picture style scenario, in a rectangle too small to accommodate its
-"full" UI.
+要设置 Dropbox 集成，请按照以下步骤操作：
 
-## Dropbox integration
-
-To set up the Dropbox integration, follow these steps:
-
-1. Add the following to the app's AndroidManifest.xml and change `<APP_KEY>` to
-your Dropbox app key:
+1. 在应用的 AndroidManifest.xml 中添加以下内容，并将 `<APP_KEY>` 更改为您的 Dropbox 应用密钥：
 
 ```xml
 <activity
@@ -575,8 +519,7 @@ your Dropbox app key:
 </activity>
 ```
 
-2. Add the following to the app's strings.xml and change `<APP_KEY>` to your
-Dropbox app key:
+2. 在应用的 strings.xml 中添加以下内容，并将 `<APP_KEY>` 更改为您的 Dropbox 应用密钥：
 
 ```xml
 <string name="dropbox_app_key"><APP_KEY></string>

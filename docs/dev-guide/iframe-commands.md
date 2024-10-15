@@ -1,23 +1,23 @@
 ---
 id: dev-guide-iframe-commands
-title: Commands
+title: Commands - 指令
 ---
 
-You can control the embedded Jitsi Meet conference by calling **`executeCommand`** on the **`JitsiMeetExternalAPI`** object:
+您可以通过在 **`JitsiMeetExternalAPI`** 对象上调用 **`executeCommand`** 来控制嵌入的 Jitsi Meet 会议：
 
 ```javascript
 api.executeCommand(command, ...arguments);
 ```
 
-The command parameter is a string which contains the command name.
+命令参数是一个字符串，包含命令名称。
 
-You can also execute multiple commands using the **`executeCommands`** method:
+您还可以使用 **`executeCommands`** 方法执行多个命令：
 
 ```javascript
 api.executeCommands(commands);
 ```
 
-The **`commands`** parameter is an object with the names of the commands as keys and the arguments for the commands as values:
+**`commands`** 参数是一个对象，其中命令名称作为键，命令的参数作为值：
 
 ```javascript
 api.executeCommands({
@@ -26,41 +26,41 @@ api.executeCommands({
 });
 ```
 
-The following commands are supported:
+支持以下命令：
 
 ### displayName
 
-Sets the display name of the local participant.
+设置本地参与者的显示名称。
 
-  This command requires one argument to set the new display name.
+该命令需要一个参数来设置新的显示名称。
 
 ```javascript
-api.executeCommand('displayName', 'New Nickname');
+api.executeCommand('displayName', '新昵称');
 ```
 
 ### password
 
-Sets the password for the room.
+设置房间的密码。
 
 ```javascript
-// set new password for channel
+// 设置频道的新密码
 api.addEventListener('participantRoleChanged', function(event) {
     if (event.role === "moderator") {
-        api.executeCommand('password', 'The Password');
+        api.executeCommand('password', '密码');
     }
 });
-// join a protected channel
+// 加入受密码保护的频道
 api.on('passwordRequired', function ()
 {
-    api.executeCommand('password', 'The Password');
+    api.executeCommand('password', '密码');
 });
 ```
 
 ### toggleLobby
 
-Toggles the lobby mode on or off.
+切换大堂模式的开启或关闭。
 
-This command requires the desired lobby mode state as the argument.
+该命令需要所需的大堂模式状态作为参数。
 
 ```javascript
 api.addEventListener('participantRoleChanged', function (event) {
@@ -72,23 +72,23 @@ api.addEventListener('participantRoleChanged', function (event) {
 
 ### sendTones
 
-Touch tone playback.
+拨号音播放。
 
-This command requires the selected touch tone dial pads to play as well as the length of and time gap between tone play as the arguments.
+该命令需要所选的拨号音以及音调播放的长度和音调之间的时间间隔作为参数。
 
 ```javascript
 api.executeCommand('sendTones', {
-    tones: string, // The dial pad touch tones to play. For example, '12345#'.
-    duration: number, // Optional. The number of milliseconds each tone should play. The default is 200.
-    pause: number // Optional. The number of milliseconds between each tone. The default is 200.
+    tones: string, // 要播放的拨号音，例如 '12345#'。
+    duration: number, // 可选。每个音调播放的毫秒数。默认是 200。
+    pause: number // 可选。每个音调之间的毫秒数。默认是 200。
 });
 ```
 
 ### startShareVideo
 
-Starts sharing a video
+开始共享视频。
 
-This command requires the an url pointing to either a youtube video or a video to be streamed from web (e.g an mp4 file)
+该命令需要一个指向 YouTube 视频或从网络流式传输的视频（例如 mp4 文件）的 URL。
 
 ```javascript
 api.executeCommand('startShareVideo', url);
@@ -96,9 +96,9 @@ api.executeCommand('startShareVideo', url);
 
 ### stopShareVideo
 
-Stops sharing a video (if the user is the one who started the video)
+停止共享视频（如果用户是视频的启动者）。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('stopShareVideo');
@@ -106,29 +106,29 @@ api.executeCommand('stopShareVideo');
 
 ### subject
 
-Sets the subject of the conference.
+设置会议的主题。
 
-This command requires the new subject to be set as the argument and it will be applied only if the participant has the moderator role or after they receive that role later on.
+该命令需要作为参数的新主题，并且只有在参与者具有主持人角色时才能应用，或者在他们随后获得该角色后应用。
 
 ```javascript
-api.executeCommand('subject', 'New Conference Subject');
+api.executeCommand('subject', '新的会议主题');
 ```
 
 ### localSubject
 
-Sets the local subject of the conference.
+设置会议的本地主题。
 
-This command requires the new local subject to be set as the argument and it can be applied by all participants regardless of their role.
+该命令需要作为参数的新本地主题，所有参与者均可应用，无论其角色如何。
 
 ```javascript
-api.executeCommand('localSubject', 'New Conference Local Subject');
+api.executeCommand('localSubject', '新的会议本地主题');
 ```
 
 ### toggleAudio
 
-Mutes / unmutes the audio for the local participant.
+静音/取消静音本地参与者的音频。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleAudio');
@@ -136,9 +136,9 @@ api.executeCommand('toggleAudio');
 
 ### toggleVideo
 
-Mutes / unmutes the video for the local participant.
+静音/取消静音本地参与者的视频。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleVideo');
@@ -146,9 +146,9 @@ api.executeCommand('toggleVideo');
 
 ### toggleFilmStrip
 
-Hide or show the filmstrip.
+隐藏或显示缩略图。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleFilmStrip');
@@ -156,9 +156,9 @@ api.executeCommand('toggleFilmStrip');
 
 ### toggleChat
 
-Hide or show chat messaging.
+隐藏或显示聊天消息。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleChat');
@@ -166,19 +166,19 @@ api.executeCommand('toggleChat');
 
 ### toggleRaiseHand
 
-Hide or show the raised hand.
+隐藏或显示举手。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
-api.executeCommand('toggleRaiseHand')
+api.executeCommand('toggleRaiseHand');
 ```
 
 ### toggleShareScreen
 
-Start or stop screen sharing.
+开始或停止屏幕共享。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleShareScreen');
@@ -186,19 +186,19 @@ api.executeCommand('toggleShareScreen');
 
 ### setNoiseSuppressionEnabled
 
-Enable or disable noise suppression on the current audio track.
+启用或禁用当前音频轨道上的噪声抑制。
 
 ```javascript
 api.executeCommand('setNoiseSuppressionEnabled', {
-    enabled: boolean // Enable or disable noise suppression.
+    enabled: boolean // 启用或禁用噪声抑制。
 });
 ```
 
 ### toggleSubtitles
 
-Start or stop subtitles.
+开始或停止字幕。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleSubtitles');
@@ -206,9 +206,9 @@ api.executeCommand('toggleSubtitles');
 
 ### toggleTileView
 
-Enter or exit the tile view layout mode.
+进入或退出平铺视图布局模式。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('toggleTileView');
@@ -216,9 +216,9 @@ api.executeCommand('toggleTileView');
 
 ### hangup
 
-Ends the call.
+结束通话。
 
-No arguments are required.
+不需要参数。
 
 ```javascript
 api.executeCommand('hangup');
@@ -226,10 +226,9 @@ api.executeCommand('hangup');
 
 ### endConference
 
-Ends the current conference for everyone.
+结束当前会议（对所有人）。
 
-This command can only be executed by a meeting moderator, and requires End Conference support to be enabled
-for the deployment.
+该命令只能由会议主持人执行，并且需要为该部署启用结束会议支持。
 
 ```javascript
 api.executeCommand('endConference');
@@ -237,9 +236,9 @@ api.executeCommand('endConference');
 
 ### email
 
-Changes the local email address.
+更改本地电子邮件地址。
 
-This command requires the new email address as the single argument.
+该命令需要新的电子邮件地址作为单个参数。
 
 ```javascript
 api.executeCommand('email', 'example@example.com');
@@ -247,9 +246,9 @@ api.executeCommand('email', 'example@example.com');
 
 ### avatarUrl
 
-Changes the local avatar URL.
+更改本地头像 URL。
 
-This command requires the new avatar URL to be set as the single argument.
+该命令需要新的头像 URL 作为单个参数。
 
 ```javascript
 api.executeCommand('avatarUrl', 'https://avatars0.githubusercontent.com/u/3671647');
@@ -257,9 +256,9 @@ api.executeCommand('avatarUrl', 'https://avatars0.githubusercontent.com/u/367164
 
 ### sendCameraFacingMode
 
-Sends a request to a given participant to set camera facing mode as `user` or `environment`.
+向给定参与者发送请求，以设置相机朝向模式为 `user` 或 `environment`。
 
-The receiving participant is shown a confirmation dialog. If the `facingMode` param is not sent, the camera will toggle between the two options on subsequent calls.
+接收参与者会显示一个确认对话框。如果未发送 `facingMode` 参数，则相机将在后续调用中在两个选项之间切换。
 
 ```javascript
 api.executeCommand('sendCameraFacingMode', 'receiverParticipantId', 'facingMode');
@@ -267,7 +266,7 @@ api.executeCommand('sendCameraFacingMode', 'receiverParticipantId', 'facingMode'
 
 ### sendEndpointTextMessage
 
-Sends a text message to another participant through the data channels.
+通过数据通道向另一参与者发送文本消息。
 
 ```javascript
 api.executeCommand('sendEndpointTextMessage', 'receiverParticipantId', 'text');
@@ -275,11 +274,11 @@ api.executeCommand('sendEndpointTextMessage', 'receiverParticipantId', 'text');
 
 ### setLargeVideoParticipant
 
-Displays the participant on the large video display.
+在大视频显示中显示参与者。
 
-The participant ID, if specified, is displayed on the large video. If no argument is passed, the participant to be displayed on the large  video is automatically selected based on the dominant/pinned speaker settings.
+指定的参与者 ID（如果指定）将在大视频中显示。如果不传递参数，将根据主讲人/固定演讲者设置自动选择要显示在大视频上的参与者。
 
-The second parameter is optional and can be used to specify a `videoType`. When multistream support is enabled by passing this parameter you can specify whether the desktop or the camera video for the specified participant should be selected. The accepted values are `'camera'` and `'desktop'`. The default is `'camera'`. Any invalid values will be ignored and default will be used.
+第二个参数是可选的，可以用于指定 `videoType`。启用多流支持时，可以指定所选参与者的桌面或相机视频。接受的值是 `'camera'` 和 `'desktop'`。默认值为 `'camera'`。任何无效值将被忽略并使用默认值。
 
 ```javascript
 api.executeCommand('setLargeVideoParticipant', 'abcd1234', 'desktop');
@@ -287,9 +286,9 @@ api.executeCommand('setLargeVideoParticipant', 'abcd1234', 'desktop');
 
 ### setVideoQuality
 
-Sets the send and receive video resolution.
+设置发送和接收的视频分辨率。
 
-The resolution height setting is implemented using a single argument.
+分辨率高度设置使用单个参数。
 
 ```javascript
 api.executeCommand('setVideoQuality', 720);
@@ -297,11 +296,11 @@ api.executeCommand('setVideoQuality', 720);
 
 ### muteEveryone
 
-Mute all meeting participants.
+静音所有会议参与者。
 
-This command can only be executed by the meeting moderator and can take one argument: `mediaType` - for which media type to mute everyone.
+该命令只能由会议主持人执行，可以接受一个参数：`mediaType` - 要静音的媒体类型。
 
-`mediaType` can be either 'audio' (default) or 'video'.
+`mediaType` 可以是 'audio'（默认）或 'video'。
 
 ```javascript
 api.executeCommand('muteEveryone', 'video');
@@ -309,55 +308,55 @@ api.executeCommand('muteEveryone', 'video');
 
 ### startRecording
 
-Starts a local recording, file recording, streaming session or transcription using passed parameters:
+开始本地录制、文件录制、流式会话或转录，使用传递的参数：
 
-  - **RTMP streaming** - Recording mode set to **`stream`** with an **`rtmpStreamKey`**. The **`rtmpBroadcastID`** value is optional.
+- **RTMP 流** - 录制模式设置为 **`stream`**，并带有 **`rtmpStreamKey`**。**`rtmpBroadcastID`** 值是可选的。
 
-  - **YouTube streams** - Recording mode set to **`stream`** with an **`youtubeStreamKey`**. The **`youtubeBroadcastID`** value is optional.
+- **YouTube 流** - 录制模式设置为 **`stream`**，并带有 **`youtubeStreamKey`**。**`youtubeBroadcastID`** 值是可选的。
 
-  - **Local Recording** - Recording mode set to **`local`**. The **`onlySelf`** value is optional.
+- **本地录制** - 录制模式设置为 **`local`**。**`onlySelf`** 值是可选的。
 
-  - **Dropbox recording** - Recording mode set to **`file`** with a Dropbox OAuth2 token.
+- **Dropbox 录制** - 录制模式设置为 **`file`**，并带有 Dropbox OAuth2 令牌。
 
-  Additionally, Dropbox saving should be enabled on the Jitsi meet deploy config you are using.
+  此外，应该在您使用的 Jitsi Meet 部署配置中启用 Dropbox 保存。
 
-  - **File recording** - Recording mode set to **`file`**. The **`extraMetadata`** value is optional.
+- **文件录制** - 录制模式设置为 **`file`**。**`extraMetadata`** 值是可选的。
 
-  Optionally, **`shouldShare`** should be passed on. No other params are required.
+  可选择性地传递 **`shouldShare`**。不需要其他参数。
 
-  - **Transcription** - Set the `transcription` option to `true`.
+- **转录** - 设置 `transcription` 选项为 `true`。
 
 ```javascript
 api.executeCommand('startRecording', {
-    mode: string, //recording mode, either `local`, `file` or `stream`.
-    dropboxToken: string, //dropbox oauth2 token.
-    onlySelf: boolean,  //Whether to only record the local streams. Only applies to `local` recording mode.
-    shouldShare: boolean, //whether the recording should be shared with the participants or not. Only applies to certain jitsi meet deploys.
-    rtmpStreamKey: string, //the RTMP stream key.
-    rtmpBroadcastID: string, //the RTMP broadcast ID.
-    youtubeStreamKey: string, //the youtube stream key.
-    youtubeBroadcastID: string, //the youtube broacast ID.
-    extraMetada: Object, // any extra metada for file recording.
-    transcription: boolean, // Whether a transcription should be started. 
+    mode: string, // 录制模式，可以是 `local`、`file` 或 `stream`。
+    dropboxToken: string, // Dropbox oauth2 令牌。
+    onlySelf: boolean,  // 是否仅录制本地流。仅适用于 `local` 录制模式。
+    shouldShare: boolean, // 录制是否应该与参与者共享。仅适用于某些 Jitsi Meet 部署。
+    rtmpStreamKey: string, // RTMP 流密钥。
+    rtmpBroadcastID: string, // RTMP 广播 ID。
+    youtubeStreamKey: string, // YouTube 流密钥。
+    youtubeBroadcastID: string, // YouTube 广播 ID。
+    extraMetadata: Object, // 文件录制的任何额外元数据。
+    transcription: boolean, // 是否应开始转录。 
 });
 ```
 
 ### stopRecording
 
-Stops an ongoing  **`local`**, **`stream`**, **`file`** recording or transcription.
+停止进行中的 **`local`**、**`stream`**、**`file`** 录制或转录。
 
-The mode in which the recording was started must be specified.
+必须指定开始录制时使用的模式。
 
 ```javascript
 api.executeCommand('stopRecording',
-    mode: string, //recording mode to stop, `local`, `stream` or `file`
-    transcription: boolean // whether the transcription should be stopped
+    mode: string, // 要停止的录制模式，`local`、`stream` 或 `file`
+    transcription: boolean // 是否停止转录
 );
 ```
 
 ### initiatePrivateChat
 
-Opens the chat window and sets the participant with the given participant ID as the messages recipient.
+打开聊天窗口，并将具有给定参与者 ID 的参与者设置为消息接收者。
 
 ```javascript
 api.executeCommand('initiatePrivateChat',
@@ -367,7 +366,7 @@ api.executeCommand('initiatePrivateChat',
 
 ### cancelPrivateChat
 
-Removes the private chat participant thus it resets the chat window to group chat.
+移除私聊参与者，从而将聊天窗口重置为群聊。
 
 ```javascript
 api.executeCommand('cancelPrivateChat');
@@ -375,7 +374,7 @@ api.executeCommand('cancelPrivateChat');
 
 ### kickParticipant
 
-Kicks the participant with the given participant ID from the meeting.
+将具有给定参与者 ID 的参与者踢出会议。
 
 ```javascript
 api.executeCommand('kickParticipant',
@@ -385,7 +384,7 @@ api.executeCommand('kickParticipant',
 
 ### grantModerator
 
-Grants moderator rights to the participant with the given ID.
+授予具有给定 ID 的参与者主持人权限。
 
 ```javascript
 api.executeCommand('grantModerator',
@@ -395,14 +394,16 @@ api.executeCommand('grantModerator',
 
 ### overwriteConfig
 
-Overwrite config.js props with values from the config object passed on to the command.
+使用传递给命令的 config 对象中的值覆盖 config.js 属性。
 
 ```javascript
 api.executeCommand('overwriteConfig',
     config: Object
 );
 ```
-For example:
+
+例如：
+
 ```javascript
 api.executeCommand('overwriteConfig',
     {
@@ -410,34 +411,35 @@ api.executeCommand('overwriteConfig',
     }
 );
 ```
-will overwrite the `toolbarButtons` config value with `[chat]`, resulting in UI only showing the `chat` button.
+
+将把 `toolbarButtons` 配置值覆盖为 `[chat]`，结果 UI 仅显示 `chat` 按钮。
 
 ### sendChatMessage
 
-Sends a chat message either to a specific participant or as a group chat message.
+向特定参与者发送聊天消息或作为群聊消息发送。
 
 ```javascript
 api.executeCommand('sendChatMessage',
-    message: string, //the text message
-    to: string, // the receiving participant ID or empty string/undefined for group chat.
-    ignorePrivacy: boolean // true if the privacy notification should be ignored. Defaulted to false.
+    message: string, // 文本消息
+    to: string, // 接收的参与者 ID 或空字符串/未定义表示群聊。
+    ignorePrivacy: boolean // 如果应忽略隐私通知，则为 true。默认为 false。
 );
 ```
 
 ### setFollowMe
 
-Allows moderators to toggle the follow me functionality
+允许主持人切换跟随我 功能。
 
 ```javascript
 api.executeCommand('setFollowMe',
-    value: boolean, // set to true if participants should be following you, false otherwise
-    recorderOnly: boolean // Whether the recorder will be the only one following you. The default is false.
+    value: boolean, // 如果参与者应该跟随您，则设置为 true，否则为 false
+    recorderOnly: boolean // 记录者是否将是唯一跟随您的人。默认值为 false。
 );
 ```
 
 ### setSubtitles
 
-Enables or disables the subtitles.
+启用或禁用字幕。
 
 ```javascript
 api.executeCommand('setSubtitles',
@@ -449,7 +451,7 @@ api.executeCommand('setSubtitles',
 
 ### setTileView
 
-Enables or disables the tileview mode.
+启用或禁用平铺视图模式。
 
 ```javascript
 api.executeCommand('setTileView',
@@ -459,18 +461,18 @@ api.executeCommand('setTileView',
 
 ### answerKnockingParticipant
 
-Approves or rejects the knocking participant in the lobby.
+批准或拒绝大堂中的敲门参与者。
 
 ```javascript
 api.executeCommand('answerKnockingParticipant',
-    id: string, // the participant id
+    id: string, // 参与者 ID
     approved: boolean
 );
 ```
 
 ### toggleCamera
 
-Sets the camera facing mode as `user` or `environment` on mobile web. If the `facingMode` param is not sent, a toggle between back and front camera happens on subsequent calls.
+在移动网页上设置相机朝向模式为 `user` 或 `environment`。如果未发送 `facingMode` 参数，则在后续调用中在前后相机之间切换。
 
 ```javascript
 api.executeCommand('toggleCamera', 'facingMode');
@@ -478,7 +480,7 @@ api.executeCommand('toggleCamera', 'facingMode');
 
 ### toggleCameraMirror
 
-Toggles the mirroring of the local video.
+切换本地视频的镜像。
 
 ```javascript
 api.executeCommand('toggleCameraMirror');
@@ -486,7 +488,7 @@ api.executeCommand('toggleCameraMirror');
 
 ### toggleVirtualBackgroundDialog
 
-Toggles the virtual background selection dialog.
+切换虚拟背景选择对话框。
 
 ```javascript
 api.executeCommand('toggleVirtualBackgroundDialog');
@@ -494,52 +496,52 @@ api.executeCommand('toggleVirtualBackgroundDialog');
 
 ### pinParticipant
 
-Pins a conference participant.
+固定会议参与者。
 
 ```javascript
 api.executeCommand('pinParticipant',
-    id?: string // The ID of the conference participant to pin or null to unpin all
+    id?: string // 要固定的会议参与者的 ID，或 null 以取消固定所有
 );
 ```
 
 ### setParticipantVolume
 
-Change volume of the participant with the given participant ID.
+更改具有给定参与者 ID 的参与者的音量。
 
 ```javascript
 api.executeCommand('setParticipantVolume',
     participantID: string,
-    volume: number // number between 0 and 1
+    volume: number // 介于 0 和 1 之间的数字
 );
 ```
 
 ### toggleParticipantsPane
 
-Changes the visibility status of the participants pane.
+更改参与者窗格的可见性状态。
 
 ```javascript
 api.executeCommand('toggleParticipantsPane',
-    enabled: boolean // The visibility status of the participants pane.
+    enabled: boolean // 参与者窗格的可见性状态。
 );
 ```
 
 ### toggleModeration
 
-Changes moderation status of the given media type.
+更改给定媒体类型的管理状态。
 
-This command requires two arguments: `enable` - whether to enable it or not, and `mediaType` - the media type for which to change moderation.
+该命令需要两个参数：`enable` - 是否启用，以及 `mediaType` - 要更改管理的媒体类型。
 
 ```javascript
 api.executeCommand('toggleModeration',
     enable: Boolean,
-    mediaType: String // can be 'audio' (default) or 'video'
+    mediaType: String // 可以是 'audio'（默认）或 'video'
 );
 ```
 
 ### askToUnmute
 
-Asks the participant with the given ID to unmute.
-If audio moderation is on it also approves the participant for audio.
+请求具有给定 ID 的参与者取消静音。
+如果启用了音频管理，还会批准该参与者的音频。
 
 ```javascript
 api.executeCommand('askToUnmute',
@@ -549,7 +551,7 @@ api.executeCommand('askToUnmute',
 
 ### approveVideo
 
-If video moderation is on it approves the participant with the given ID for video.
+如果启用了视频管理，则批准具有给定 ID 的参与者的视频。
 
 ```javascript
 api.executeCommand('approveVideo',
@@ -559,32 +561,32 @@ api.executeCommand('approveVideo',
 
 ### rejectParticipant
 
-Rejects the participant with the given ID from moderation of the given media type.
+拒绝具有给定 ID 的参与者对给定媒体类型的管理权限。
 
 ```javascript
 api.executeCommand('rejectParticipant',
     participantId: String,
-    mediaType: String // can be 'audio' (default) or 'video'
+    mediaType: String // 可以是 'audio'（默认）或 'video'
 );
 ```
 
 ### addBreakoutRoom
 
-Creates a breakout room.
+创建一个小组讨论室。
 
-This command can only be executed by the meeting moderator.
+该命令只能由会议主持人执行。
 
 ```javascript
 api.executeCommand('addBreakoutRoom',
-    name: String // Optional. The name or subject of the new room.
+    name: String // 可选。新房间的名称或主题。
 );
 ```
 
 ### autoAssignToBreakoutRooms
 
-Auto-assigns the participants to breakout rooms.
+自动分配参与者到小组讨论室。
 
-This command can only be executed by the meeting moderator.
+该命令只能由会议主持人执行。
 
 ```javascript
 api.executeCommand('autoAssignToBreakoutRooms');
@@ -592,114 +594,113 @@ api.executeCommand('autoAssignToBreakoutRooms');
 
 ### closeBreakoutRoom
 
-Closes the breakout room and sends participants to the main room.
+关闭小组讨论室并将参与者送回主房间。
 
-This command can only be executed by the meeting moderator.
+该命令只能由会议主持人执行。
 
 ```javascript
 api.executeCommand('closeBreakoutRoom',
-    roomId: String // The id of the room to close.
+    roomId: String // 要关闭的房间 ID。
 );
 ```
 
 ### joinBreakoutRoom
 
-Joins a breakout room. If the argument is omitted, joins the main room.
+加入小组讨论室。如果省略参数，则加入主房间。
 
 ```javascript
 api.executeCommand('joinBreakoutRoom',
-    roomId: String // Optional. The id of the room to join.
+    roomId: String // 可选。要加入的房间 ID。
 );
 ```
 
 ### removeBreakoutRoom
 
-Removes the breakout room.
+移除小组讨论室。
 
-This command can only be executed by the meeting moderator.
+该命令只能由会议主持人执行。
 
 ```javascript
 api.executeCommand('removeBreakoutRoom',
-    breakoutRoomJid: String // The jid of the breakout room to remove.
+    breakoutRoomJid: String // 要移除的小组讨论室的 JID。
 );
 ```
 
 ### resizeFilmStrip
 
-Resizes the filmstrip.
+调整影片条的大小。
 
 ```javascript
 api.executeCommand('resizeFilmStrip', {
-    width: number // The desired filmstrip width
+    width: number // 所需的影片条宽度
 });
 ```
 
 ### resizeLargeVideo
 
-Resizes the large video container based on the dimensions provided.
+根据提供的尺寸调整大视频容器的大小。
 
 ```javascript
 api.executeCommand('resizeLargeVideo',
-    width: number, // The desired width
-    height: number // The desired height
+    width: number, // 所需宽度
+    height: number // 所需高度
 );
 ```
 
 ### sendParticipantToRoom
 
-Sends a participant to a room.
+将参与者发送到房间。
 
-This command can only be executed by the meeting moderator.
+该命令只能由会议主持人执行。
 
 ```javascript
 api.executeCommand('sendParticipantToRoom',
-    participantId: String, // The id of the participant.
-    roomId: String // The id of the room.
+    participantId: String, // 参与者的 ID。
+    roomId: String // 房间的 ID。
 );
 ```
 
 ### overwriteNames
 
-Overwrites the names of the given participants to the given names. (locally for the participant that send the command)
+将给定参与者的名字覆盖为给定的新名字。（仅对发送该命令的参与者本地有效）
 
 ```javascript
 api.executeCommand('overwriteNames', [{
-        id: String, // The id of the participant.
-        name: String // The new name.
+        id: String, // 参与者的 ID。
+        name: String // 新名字。
     }]
 );
 ```
 
 ### showNotification
 
-Shows a custom notification. This affects only the local user.
+显示自定义通知。这仅影响本地用户。
 
-If `uid` is provided, the notification will replace existing notification with the same `uid`. The `uid` can also be
-passed to the `hideNotification` command to programmatically hide the notification.
+如果提供了 `uid`，则该通知将替换具有相同 `uid` 的现有通知。`uid` 也可以传递给 `hideNotification` 命令，以程序化地隐藏通知。
 
 ```javascript
 api.executeCommand('showNotification', {
-  title: String, // Title of the notification.
-  description: String, // Content of the notification.
-  uid: String, // Optional. Unique identifier for the notification.
-  type: String, // Optional. Can be 'info', 'normal', 'success', 'warning' or 'error'. Defaults to 'normal'.
-  timeout: String // optional. Can be 'short', 'medium', 'long', or 'sticky'. Defaults to 'short'.
+  title: String, // 通知的标题。
+  description: String, // 通知的内容。
+  uid: String, // 可选。通知的唯一标识符。
+  type: String, // 可选。可以是 'info'、'normal'、'success'、'warning' 或 'error'。默认为 'normal'。
+  timeout: String // 可选。可以是 'short'、'medium'、'long' 或 'sticky'。默认为 'short'。
 });
 ```
 
 ### hideNotification
 
-Hides the notification which has the given `uid`.
+隐藏具有给定 `uid` 的通知。
 
 ```javascript
 api.executeCommand('hideNotification',
-    uid: String // Unique identifier for the notification to be removed.
+    uid: String // 要移除的通知的唯一标识符。
 );
 ```
 
 ### toggleWhiteboard
 
-Toggles the whiteboard to open, repeated toggling hidden the whiteboard
+切换白板的开启状态，重复切换将隐藏白板。
 
 ```javascript
 api.executeCommand('toggleWhiteboard');
@@ -707,20 +708,20 @@ api.executeCommand('toggleWhiteboard');
 
 ### setAssumedBandwidthBps
 
-Sets the assumed bandwidth bps.
+设置假定带宽（bps）。
 
 ```javascript
 api.executeCommand('setAssumedBandwidthBps',
-    assumedBandwidthBps: number // Required. The value to set as assumed bandwidth expressed in bps.
+    assumedBandwidthBps: number // 必需。要设置的假定带宽值，以 bps 表示。
 );
 ```
 
 ### setBlurredBackground
 
-Sets or removes the blurred virtual background to the user camera.
+设置或移除用户摄像头的模糊虚拟背景。
 
 ```javascript
 api.executeCommand('setBlurredBackground',
-		blurType: String // Required. Blur type to apply. Accepted values are 'slight-blur', 'blur' or 'none'.
+		blurType: String // 必需。要应用的模糊类型。接受的值为 'slight-blur'、'blur' 或 'none'。
 );
 ```

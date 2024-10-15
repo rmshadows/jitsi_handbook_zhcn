@@ -1,33 +1,28 @@
 ---
 id: intro
-title: Introduction
+title: Introduction - 介绍
 ---
 
-## What is Jitsi?
+## 什么是Jitsi?
 
-Jitsi is a [collection of Open Source projects](architecture.md) which provide state-of-the-art video conferencing
-capabilities that are secure, easy to use, and easy to self-host.
+Jitsi 是一组提供安全易用、支持自主托管的先进视频会议功能的 [开源项目集合](architecture.md) 。
 
-## About this handbook
+## 关于本手册
 
-This handbook aims to be the one-stop shop for all Jitsi documentation.
+本手册旨在成为所有 Jitsi 文档的一站式资源。
 
-:::note It's work in progress.
-If you want to help, please create a **Pull Request** in our [GitHub repository](https://github.com/jitsi/handbook)!
+:::note 手册仍在完善中。
+如果你想贡献力量，请在我们的 [Github仓库](https://github.com/jitsi/handbook) 中创建一个 **Pull Request**！
 :::
 
-The content is divided into 3 main areas:
+内容分为三个主要部分：
 
-* [User guide](/docs/category/user-guide): Designed to help users of the service, to better
-understand all the available features and how to use them.
+* [用户指南](/docs/category/user-guide)：为服务用户而设计，帮助他们更好地理解所有可用功能以及如何使用这些功能。
 
-* [Developer guide](/docs/category/developer-guide): Designed to help developers who want to either
-integrate the Jitsi Meet API / SDK in their products or want to improve Jitsi Meet
-itself by developing new features or fixing bugs.
+* [开发者指南](/docs/category/developer-guide)：为希望将 Jitsi Meet API / SDK 集成到其产品中或通过开发新功能或修复错误来改进 Jitsi Meet 的开发者设计。
 
-* [Self-Hosting guide](devops-guide/devops-guide.md): Designed for folks wanting to self-host, system administrators
-or anyone who wishes to deploy and operate their own Jitsi Meet instance.
+* [自托管指南](devops-guide/devops-guide.md)：为那些想要自主托管、系统管理员或任何希望部署和操作自己的 Jitsi Meet 实例的人设计。
 
-## JaaS customers
+## JaaS 客户
 
-Are you a JaaS customer? If so, please start [here](https://developer.8x8.com/jaas/docs/jaas-onboarding).
+您是 JaaS 客户吗？如果是，请从 [这里](https://developer.8x8.com/jaas/docs/jaas-onboarding) 开始。

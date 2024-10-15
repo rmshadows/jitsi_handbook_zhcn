@@ -1,24 +1,24 @@
 ---
 id: dev-guide-iframe-functions
-title: Functions
+title: Functions - 功能
 ---
 
-Use the following API functions to control your embedded Jitsi Meet Conference.
+使用以下 API 函数控制您嵌入的 Jitsi Meet 会议。
 
 ### captureLargeVideoScreenshot
 
-Captures a screenshot for the participant in the large video view (on stage).
+捕获大视频视图（在舞台上）中参与者的屏幕截图。
 
 ```javascript
 api.captureLargeVideoScreenshot().then(data => {
-    // data is an Object with only one param, dataURL
+    // data 是一个只有一个参数的对象，dataURL
     // data.dataURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAA..."
 });
 ```
 
 ### getAvailableDevices
 
-Retrieves a list of available devices.
+检索可用设备列表。
 
 ```javascript
 api.getAvailableDevices().then(devices => {
@@ -48,17 +48,17 @@ api.getAvailableDevices().then(devices => {
 
 ### getContentSharingParticipants
 
-Returns a promise which resolves with an array of currently sharing participants ID's.
+返回一个 Promise，解析为当前正在分享的参与者 ID 数组。
 
 ```javascript
 api.getContentSharingParticipants().then(res => {
-    //res.sharingParticipantIds = [particId1, particId2, ...]
+    // res.sharingParticipantIds = [particId1, particId2, ...]
 });
 ```
 
 ### getCurrentDevices
 
-Retrieves a list of currently selected devices.
+检索当前选择的设备列表。
 
 ```javascript
 api.getCurrentDevices().then(devices => {
@@ -88,7 +88,7 @@ api.getCurrentDevices().then(devices => {
 
 ### getDeploymentInfo
 
-Retrieves an object containing information about the deployment.
+检索包含有关部署的信息的对象。
 
 ```javascript
 api.getDeploymentInfo().then(deploymentInfo => {
@@ -103,7 +103,7 @@ api.getDeploymentInfo().then(deploymentInfo => {
 
 ### getLivestreamUrl
 
-Retrieves an object containing information about livestreamUrl of the current live stream.
+检索当前直播流的直播 URL 的信息对象。
 
 ```javascript
 api.getLivestreamUrl().then(livestreamData => {
@@ -116,9 +116,9 @@ api.getLivestreamUrl().then(livestreamData => {
 
 ### getParticipantsInfo
 
-__DEPRECATED__ Use `getRoomsInfo` instead.
+__已弃用__ 使用 `getRoomsInfo` 代替。
 
-Returns an array containing participant information such as ID, display name, avatar URL, and email.
+返回包含参与者信息的数组，如 ID、显示名称、头像 URL 和电子邮件。
 
 ```javascript
 api.getParticipantsInfo();
@@ -126,23 +126,22 @@ api.getParticipantsInfo();
 
 ### getRoomsInfo
 
-Returns an array of available rooms and details of it:
-- `isMainRoom` (true,false), `id`, `jid`
+返回可用房间及其详细信息的数组：
+
+- `isMainRoom`（true，false）、`id`、`jid`
 - participants: `Participant[]`
-    - `id`
-    - `jid`
-    - `role`
-    - `displayName`
-
-
+  - `id`
+  - `jid`
+  - `role`
+  - `displayName`
 
 ```javascript
 api.getRoomsInfo().then(rooms => {
-    ... // see response example structure
+    ... // 见响应示例结构
 })
 ```
 
-Response example structure:
+响应示例结构：
 
 ```json
 {
@@ -184,19 +183,18 @@ Response example structure:
 
 ### getSessionId
 
-Returns the meting's unique Id (`sessionId`). 
-Please note that the `sessionId` is not available when in prejoin screen and it's not guaranteed to be available immediately after joining - in which cases it will be empty.
+返回会议的唯一 ID (`sessionId`)。请注意，当处于预加入屏幕时 `sessionId` 不可用，并且在加入后不保证立即可用——在这种情况下，它将为空。
 
 ```javascript
 api.getSessionId().then(sessionId => {
-    //sessionId: string
+    // sessionId: string
     ...
 });
 ```
 
 ### getVideoQuality
 
-Returns the current video quality setting.
+返回当前视频质量设置。
 
 ```javascript
 api.getVideoQuality();
@@ -204,7 +202,7 @@ api.getVideoQuality();
 
 ### getSupportedCommands
 
-Returns array of commands supported by `api.executeCommand(command, ...arguments)`;
+返回由 `api.executeCommand(command, ...arguments)` 支持的命令数组。
 
 ```javascript
 api.getSupportedCommands();
@@ -212,7 +210,7 @@ api.getSupportedCommands();
 
 ### getSupportedEvents
 
-Returns array of events supported by `api.addListener(event, listener)`;
+返回由 `api.addListener(event, listener)` 支持的事件数组。
 
 ```javascript
 api.getSupportedEvents();
@@ -220,10 +218,10 @@ api.getSupportedEvents();
 
 ### isDeviceChangeAvailable
 
-Resolves to true if the device change is available and to false if not.
+如果设备更改可用，则解析为 true；如果不可用，则解析为 false。
 
 ```javascript
-// The accepted deviceType values are - 'output', 'input' or undefined.
+// 接受的 deviceType 值为 - 'output'、'input' 或未定义。
 api.isDeviceChangeAvailable(deviceType).then(isDeviceChangeAvailable => {
     ...
 });
@@ -231,7 +229,7 @@ api.isDeviceChangeAvailable(deviceType).then(isDeviceChangeAvailable => {
 
 ### isDeviceListAvailable
 
-Resolves to true if the device list is available and to false if not.
+如果设备列表可用，则解析为 true；如果不可用，则解析为 false。
 
 ```javascript
 api.isDeviceListAvailable().then(isDeviceListAvailable => {
@@ -241,7 +239,7 @@ api.isDeviceListAvailable().then(isDeviceListAvailable => {
 
 ### isMultipleAudioInputSupported
 
-Resolves to true if multiple audio input is supported and to false if not.
+如果支持多个音频输入，则解析为 true；如果不支持，则解析为 false。
 
 ```javascript
 api.isMultipleAudioInputSupported().then(isMultipleAudioInputSupported => {
@@ -251,9 +249,7 @@ api.isMultipleAudioInputSupported().then(isMultipleAudioInputSupported => {
 
 ### pinParticipant
 
-Selects the participant ID to be the pinned participant in order to always receive video for this participant.
-
-The second parameter is optional and can be used to specify a `videoType`. When multistream support is enabled by passing this parameter you can specify whether the desktop or the camera video for the specified participant should be pinned. The accepted values are `'camera'` and `'desktop'`. The default is `'camera'`. Any invalid values will be ignored and default will be used.
+选择参与者 ID 作为固定参与者，以便始终接收该参与者的视频。第二个参数是可选的，可以用于指定 `videoType`。启用多流支持时，通过传递此参数可以指定应固定桌面视频或相机视频。接受的值为 `'camera'` 和 `'desktop'`，默认为 `'camera'`。任何无效值将被忽略，并使用默认值。
 
 ```javascript
 api.pinParticipant(participantId, videoType);
@@ -261,7 +257,7 @@ api.pinParticipant(participantId, videoType);
 
 ### resizeLargeVideo
 
-Resizes the large video container per the provided dimensions.
+根据提供的尺寸调整大视频容器的大小。
 
 ```javascript
 api.resizeLargeVideo(width, height);
@@ -269,7 +265,7 @@ api.resizeLargeVideo(width, height);
 
 ### setAudioInputDevice
 
-Sets the audio input device to the one with the passed label or ID.
+将音频输入设备设置为带有传递标签或 ID 的设备。
 
 ```javascript
 api.setAudioInputDevice(deviceLabel, deviceId);
@@ -277,7 +273,7 @@ api.setAudioInputDevice(deviceLabel, deviceId);
 
 ### setAudioOutputDevice
 
-Sets the audio output device to the one with the passed label or ID.
+将音频输出设备设置为带有传递标签或 ID 的设备。
 
 ```javascript
 api.setAudioOutputDevice(deviceLabel, deviceId);
@@ -285,9 +281,9 @@ api.setAudioOutputDevice(deviceLabel, deviceId);
 
 ### setLargeVideoParticipant
 
-Displays the participant with the given participant ID on the large video.
+在大视频中显示具有给定参与者 ID 的参与者。
 
-If no participant ID is given, a participant is picked based on the dominant, pinned speaker settings.
+如果没有给定参与者 ID，将根据主导的固定发言者设置选择参与者。
 
 ```javascript
 api.setLargeVideoParticipant(participantId);
@@ -295,7 +291,7 @@ api.setLargeVideoParticipant(participantId);
 
 ### setVideoInputDevice
 
-Sets the video input device to the one with the passed label or ID.
+将视频输入设备设置为带有传递标签或 ID 的设备。
 
 ```javascript
 api.setVideoInputDevice(deviceLabel, deviceId);
@@ -303,7 +299,7 @@ api.setVideoInputDevice(deviceLabel, deviceId);
 
 ### startRecording
 
-Starts a file recording or streaming session. See the `startRecording` command for more details.
+开始文件录制或流媒体会话。有关更多详细信息，请参见 `startRecording` 命令。
 
 ```javascript
 api.startRecording(options);
@@ -311,7 +307,7 @@ api.startRecording(options);
 
 ### stopRecording
 
-Stops an ongoing file recording, streaming session or transcription. See the `stopRecording` command for more details.
+停止正在进行的文件录制、流媒体会话或转录。有关更多详细信息，请参见 `stopRecording` 命令。
 
 ```javascript
 api.stopRecording(mode, transcription);
@@ -319,7 +315,7 @@ api.stopRecording(mode, transcription);
 
 ### getNumberOfParticipants
 
-Returns the number of conference participants:
+返回会议参与者的数量：
 
 ```javascript
 const numberOfParticipants = api.getNumberOfParticipants();
@@ -327,9 +323,9 @@ const numberOfParticipants = api.getNumberOfParticipants();
 
 ### getAvatarURL
 
-__DEPRECATED__ Use `getRoomsInfo` instead.
+__已弃用__ 使用 `getRoomsInfo` 代替。
 
-Returns a participant's avatar URL:
+返回参与者的头像 URL：
 
 ```javascript
 const avatarURL = api.getAvatarURL(participantId);
@@ -337,7 +333,7 @@ const avatarURL = api.getAvatarURL(participantId);
 
 ### getDisplayName
 
-Returns a participant's display name:
+返回参与者的显示名称：
 
 ```javascript
 const displayName = api.getDisplayName(participantId);
@@ -345,7 +341,7 @@ const displayName = api.getDisplayName(participantId);
 
 ### getEmail
 
-Returns a participant's email:
+返回参与者的电子邮件：
 
 ```javascript
 const email = api.getEmail(participantId);
@@ -353,7 +349,7 @@ const email = api.getEmail(participantId);
 
 ### getIFrame
 
-Returns the IFrame HTML element which is used to load the Jitsi Meet conference:
+返回用于加载 Jitsi Meet 会议的 IFrame HTML 元素：
 
 ```javascript
 const iframe = api.getIFrame();
@@ -361,7 +357,7 @@ const iframe = api.getIFrame();
 
 ### isAudioDisabled
 
-Returns a Promise which resolves to the current audio disabled state:
+返回一个 Promise，解析为当前音频禁用状态：
 
 ```javascript
 api.isAudioDisabled().then(disabled => {
@@ -371,7 +367,7 @@ api.isAudioDisabled().then(disabled => {
 
 ### isAudioMuted
 
-Returns a Promise which resolves to the current audio muted state:
+返回一个 Promise，解析为当前音频静音状态：
 
 ```javascript
 api.isAudioMuted().then(muted => {
@@ -381,7 +377,7 @@ api.isAudioMuted().then(muted => {
 
 ### isVideoMuted
 
-Returns a Promise which resolves to the current video muted state:
+返回一个 Promise，解析为当前视频静音状态：
 
 ```javascript
 api.isVideoMuted().then(muted => {
@@ -391,7 +387,7 @@ api.isVideoMuted().then(muted => {
 
 ### isAudioAvailable
 
-Returns a Promise which resolves to the current audio availability state:
+返回一个 Promise，解析为当前音频可用状态：
 
 ```javascript
 api.isAudioAvailable().then(available => {
@@ -401,7 +397,7 @@ api.isAudioAvailable().then(available => {
 
 ### isVideoAvailable
 
-Returns a Promise which resolves to the current video availability state:
+返回一个 Promise，解析为当前视频可用状态：
 
 ```javascript
 api.isVideoAvailable().then(available => {
@@ -411,9 +407,9 @@ api.isVideoAvailable().then(available => {
 
 ### isModerationOn
 
-Returns a Promise which resolves to the current moderation state of the given media type.
+返回一个 Promise，解析为给定媒体类型的当前管理状态。
 
-`mediaType` can be either `audio` (default) or `video`.
+`mediaType` 可以是 `audio`（默认）或 `video`。
 
 ```javascript
 api.isModerationOn(mediaType).then(isModerationOn => {
@@ -423,7 +419,7 @@ api.isModerationOn(mediaType).then(isModerationOn => {
 
 ### isP2pActive
 
-Returns a Promise which resolves to a Boolean or null, when there is no conference.
+返回一个 Promise，解析为布尔值或 null，当没有会议时。
 
 ```javascript
 api.isP2pActive().then(isP2p => {
@@ -433,11 +429,11 @@ api.isP2pActive().then(isP2p => {
 
 ### isParticipantForceMuted
 
-Returns a Promise which resolves to the current force mute state of the given participant for the given media type.
+返回一个 Promise，解析为给定参与者在给定媒体类型上的当前强制静音状态。
 
-`mediaType` can be either `audio` (default) or `video`.
+`mediaType` 可以是 `audio`（默认）或 `video`。
 
-Force muted - moderation is on and participant is not allowed to unmute the given media type.
+强制静音 - 管理已开启，参与者不允许解除静音给定媒体类型。
 
 ```javascript
 api.isParticipantForceMuted(participantId, mediaType).then(isForceMuted => {
@@ -447,7 +443,7 @@ api.isParticipantForceMuted(participantId, mediaType).then(isForceMuted => {
 
 ### isParticipantsPaneOpen
 
-Returns a Promise which resolves with the current participants pane state.
+返回一个 Promise，解析为当前参与者面板状态。
 
 ```javascript
 api.isParticipantsPaneOpen().then(state => {
@@ -457,7 +453,7 @@ api.isParticipantsPaneOpen().then(state => {
 
 ### isStartSilent
 
-Returns a Promise which resolves with whether meeting was started in view only.
+返回一个 Promise，解析为会议是否以仅查看模式开始。
 
 ```javascript
 api.isStartSilent().then(startSilent => {
@@ -467,7 +463,7 @@ api.isStartSilent().then(startSilent => {
 
 ### listBreakoutRooms
 
-Returns a Promise which resolves with the map of breakout rooms.
+返回一个 Promise，解析为突发房间的映射。
 
 ```javascript
 api.listBreakoutRooms().then(breakoutRooms => {
@@ -477,41 +473,42 @@ api.listBreakoutRooms().then(breakoutRooms => {
 
 ### invite
 
-Invite the given array of participants to the meeting:
+邀请给定数组中的参与者参加会议：
 
 ```javascript
 api.invite([ {...}, {...}, {...} ]).then(() => {
-    // success
+    // 成功
 }).catch(() => {
-    // failure
+    // 失败
 });
 ```
-**NOTE:** The invitee format in the array depends on the invite service used in the deployment.
 
-PSTN invite objects have the following structure:
+**注意：** 数组中被邀请者的格式取决于部署中使用的邀请服务。
+
+PSTN 邀请对象具有以下结构：
 
 ```javascript
 {
     type: 'phone',
-    number: <string> // the phone number in E.164 format  (ex. +31201234567)
+    number: <string> // 以 E.164 格式的电话号码（例如 +31201234567）
 }
 ```
 
-SIP invite objects have the following structure:
+SIP 邀请对象具有以下结构：
 
 ```javascript
 {
     type: 'sip',
-    address: <string> // the sip address
+    address: <string> // sip 地址
 }
 ```
 
 ### dispose
 
-Removes the embedded Jitsi Meet conference:
+移除嵌入的 Jitsi Meet 会议：
 
 ```javascript
 api.dispose();
 ```
 
-**NOTE:** Jitsi recommends removing the conference before the page is unloaded.
+**注意：** Jitsi 建议在页面卸载之前移除会议。

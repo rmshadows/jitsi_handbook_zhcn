@@ -1,7 +1,7 @@
 module.exports = {
   title: "Jitsi Meet",
   tagline: "State-of-the-art video conferencing you can self-host.",
-  url: "https://jitsi.github.io",
+  url: "https://civiccccc.ltd/",
   baseUrl: "/handbook/",
   organizationName: "jitsi",
   projectName: "handbook",
@@ -66,7 +66,7 @@ module.exports = {
       items: [
         {
           to: "docs/intro",
-          label: "Docs",
+          label: "Docs - 文档",
           position: "left",
         },
         {
@@ -76,12 +76,12 @@ module.exports = {
         },
         {
           to: "docs/releases",
-          label: "Releases",
+          label: "Releases - 发布",
           position: "left",
         },
         {
           href: "https://community.jitsi.org",
-          label: "Community",
+          label: "Community - 社区",
           position: "left",
         },
         {
@@ -105,28 +105,28 @@ module.exports = {
           title: "Docs",
           items: [
             {
-              label: "Introduction",
+              label: "Introduction - 概述",
               to: "docs/intro",
             },
             {
-              label: "User Guide",
+              label: "User Guide - 用户指南",
               to: "docs/category/user-guide",
             },
             {
-              label: "Developer Guide",
+              label: "Developer Guide - 开发者指南",
               to: "docs/category/developer-guide",
             },
             {
-              label: "Self-Hosting Guide",
+              label: "Self-Hosting Guide - 自托管指南",
               to: "docs/devops-guide",
             },
           ],
         },
         {
-          title: "Community",
+          title: "Community - 社区",
           items: [
             {
-              label: "Forum",
+              label: "Forum - 论坛",
               href: "https://community.jitsi.org",
             },
             {
@@ -136,10 +136,10 @@ module.exports = {
           ],
         },
         {
-          title: "More",
+          title: "More - 更多",
           items: [
             {
-              label: "Blog",
+              label: "Blog - 博客",
               href: "https://jitsi.org",
             },
             {

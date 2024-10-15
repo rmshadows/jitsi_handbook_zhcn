@@ -3,49 +3,51 @@ id: dev-guide-flutter-sdk
 title: Flutter SDK
 ---
 
-The Jitsi Meet Flutter SDK provides the same user experience as the Jitsi Meet app, in the form of a Flutter plugin so that you can embed and customize Jitsi Meet in your own Flutter app.
+Jitsi Meet Flutter SDK 提供了与 Jitsi Meet 应用相同的用户体验，以 Flutter 插件的形式，让您可以在自己的 Flutter 应用中嵌入和自定义 Jitsi Meet。
 
-## Sample application using the Flutter
+## 使用 Flutter 的示例应用程序
 
-If you want to see how easy integrating the Jitsi Meet Flutter SDK into a Flutter application is, take a look at the<br/>
-[sample applications repository](https://github.com/jitsi/jitsi-meet-sdk-samples#flutter).
+如果您想了解如何轻松将 Jitsi Meet Flutter SDK 集成到 Flutter 应用程序中，请查看<br/>
+[示例应用程序库](https://github.com/jitsi/jitsi-meet-sdk-samples#flutter)。
 
-## Installation
+## 安装
 
-### Add dependency
+### 添加依赖
 
-Add the dependency from command-line
+从命令行添加依赖：
+
 ```bash
 $ flutter pub add jitsi_meet_flutter_sdk
 ```
 
-The command above will add this to the `pubspec.yaml` file in your project (you can do this manually):
+上述命令会将其添加到项目的 `pubspec.yaml` 文件中（您也可以手动完成）：
+
 ```yaml
 dependencies:
     jitsi_meet_flutter_sdk: ^0.1.7
 ```
 
-### Install 
+### 安装 
 
-Install the packages from the terminal:
+从终端安装软件包：
 
 ```bash
 $ flutter pub get
 ```
 
-### Import files
+### 导入文件
 
-Import the following files into your dart code:
+在您的 Dart 代码中导入以下文件：
 
 ```dart
 import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 ```
 
-### Usage
+### 使用
 
-#### Join meeting
+#### 加入会议
 
-Firstly, create a `JitsiMeet` object, then call the method `join` from it with a `JitsiMeetConferenceOptions` object
+首先，创建一个 `JitsiMeet` 对象，然后调用其 `join` 方法，并传入一个 `JitsiMeetConferenceOptions` 对象：
 
 ```dart
 var jitsiMeet = JitsiMeet();
@@ -53,28 +55,28 @@ var options = JitsiMeetConferenceOptions(room: 'jitsiIsAwesome');
 jitsiMeet.join(options);
 ```
 
-## Configuration
+## 配置
 
 ### iOS
 
-Make sure in `Podfile` from the `ios` directory you set the ios version `15.1 or higher` 
+确保在 `ios` 目录的 `Podfile` 中将 iOS 版本设置为 `15.1 或更高`：
 
 ```
 platform :ios, '15.1'
 ```
 
-The plugin requests camera and microphone access, make sure to include the required entries for `NSCameraUsageDescription` and `NSMicrophoneUsageDescription` in your `Info.plist` file from the `ios/Runner` directory.
+该插件请求相机和麦克风访问权限，请确保在 `ios/Runner` 目录的 `Info.plist` 文件中包含所需条目：
 
 ```xml
 <key>NSCameraUsageDescription</key>
-<string>The app needs access to your camera for meetings.</string>
+<string>应用需要访问您的相机以进行会议。</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>The app needs access to your microphone for meetings.</string>
+<string>应用需要访问您的麦克风以进行会议。</string>
 ```
 
 ### Android
 
-Go to `android/app/build.gradle` and make sure that the `minSdkVersion` is set to at least 24`
+前往 `android/app/build.gradle`，确保将 `minSdkVersion` 设置为至少 `24`：
 
 ```gradle
 android {
@@ -86,8 +88,7 @@ android {
 }
 ```
 
-
-The `application:label` field from the Jitsi Meet Android SDK will conflict with your application's one . Go to `android/app/src/main/AndroidManifest.xml` and add the tools library and `tools:replace="android:label"` to the application tag.
+Jitsi Meet Android SDK 的 `application:label` 字段将与您的应用程序冲突。请前往 `android/app/src/main/AndroidManifest.xml`，添加工具库并在应用程序标签中添加 `tools:replace="android:label"`。
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
@@ -101,65 +102,70 @@ The `application:label` field from the Jitsi Meet Android SDK will conflict with
     </application>
 </manifest>
 ```
-## Using the API
+
+## 使用 API
 
 ### JitsiMeet
 
-The `JitsiMeet` class is the entry point for the SDK. It is used to launch the meeting screen and to send and receive all the events.
+`JitsiMeet` 类是 SDK 的入口点。它用于启动会议屏幕，并发送和接收所有事件。
 
 1. ####  JitsiMeet()
-    The constructor for the class.
 
+   该类的构造函数。
 
 2. ####  join(JitsiMeetConferenceOptions options, [JitsiMeetEventListener? listener])
-    Joins a meeting with the given options and optionally a listener is given
 
-    - `options` : meeting options
-    - `listener` : event listener for events triggered by the native SDKs
+   使用给定选项加入会议，选项上可以选择性传入监听器。
+
+   - `options`：会议选项
+   - `listener`：用于监听原生 SDK 触发的事件的事件监听器
 
 3. #### hangUp()
 
-    The localParticipant leaves the current meeting.
+   本地参与者离开当前会议。
 
 4. #### setAudioMuted(bool muted)
 
-    Sets the state of the localParticipant audio muted according to the `muted` parameter.
+   根据 `muted` 参数设置本地参与者音频的静音状态。
 
 5. #### setVideoMuted(bool muted)
-    Sets the state of the localParticipant video muted according to the `muted` parameter.
+
+   根据 `muted` 参数设置本地参与者视频的静音状态。
 
 6. #### sendEndpointTextMessage(`{String? to, required String message}`)
-    Sends a message via the data channel to one particular participant or all of them. If the `to` param is empty, the message will be sent to all the participants in the conference.
 
-    To get the participantId, the `participantsJoined` event should be listened for, which has as a parameter the `participantId` and this should be stored somehow.
+   通过数据通道向特定参与者或所有参与者发送消息。如果 `to` 参数为空，消息将发送给会议中的所有参与者。
+
+   要获取参与者 ID，应该监听 `participantsJoined` 事件，该事件的参数是 `participantId`，并且应该以某种方式存储。
 
 7. #### toggleScreenShare(bool enabled)
-    Sets the state of the localParticipant screen sharing according to the `enabled` parameter.
+
+   根据 `enabled` 参数设置本地参与者屏幕共享的状态。
 
 8. #### openChat([String? to])
 
-    Opens the chat dialog. If `to` contains a valid participantId, the private chat with that particular participant will be opened.
+   打开聊天对话框。如果 `to` 包含有效的参与者 ID，将打开与该特定参与者的私聊。
 
 9. #### sendChatMessage(`{String? to, required String message}`)
 
-    Sends a chat message to one particular participant or all of them. If the `to` param is empty, the message will be sent to all the participants in the conference.
+   向特定参与者或所有参与者发送聊天消息。如果 `to` 参数为空，消息将发送给会议中的所有参与者。
 
-    To get the participantId, the `participantsJoined` event should be listened for, which has as a parameter the `participantId` and this should be stored somehow.
+   要获取参与者 ID，应该监听 `participantsJoined` 事件，该事件的参数是 `participantId`，并且应该以某种方式存储。
 
 10. #### closeChat()
 
-    Closes the chat dialog.
+    关闭聊天对话框。
 
 11. #### retrieveParticipantsInfo()
 
-    Sends an event that will trigger the `participantsInfoRetrieved` event which will contain participants' information
+    发送事件以触发 `participantsInfoRetrieved` 事件，该事件将包含参与者的信息。
 
 
 ### JitsiMeetConferenceOptions
 
-This object encapsulates all the options that can be tweaked when joining a conference.
+该对象封装了加入会议时可以调整的所有选项。
 
-Example:
+示例：
 
 ```dart
 var options = JitsiMeetConferenceOptions(
@@ -180,103 +186,105 @@ var options = JitsiMeetConferenceOptions(
     );
 ```
 
-- All the values that can be added to the `configOverrides` can be found [here](https://github.com/jitsi/jitsi-meet/blob/master/config.js).
+- 可以添加到 `configOverrides` 的所有值可以在 [这里](https://github.com/jitsi/jitsi-meet/blob/master/config.js) 找到。
 
-- All the values that can be added to the `featureFlags` can be found [here](https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.ts).
+- 可以添加到 `featureFlags` 的所有值可以在 [这里](https://github.com/jitsi/jitsi-meet/blob/master/react/features/base/flags/constants.ts) 找到。
 
 #### JitsiMeetUserInfo(`{String displayName, String email, String avatar}`)
 
-The constructor for the JitsiMeetUserInfo.
+JitsiMeetUserInfo 的构造函数。
 
-P.S. the avatar should be an url.
+P.S. 头像应为 URL。
 
 ### JitsiMeetEventListener
 
-This class intends to be used as a listener for events that come from the native sdks. It will receive as arguments the event handlers
+此类旨在用作来自原生 SDK 的事件监听器。它将接收事件处理程序作为参数。
 
 #### conferenceJoined(String url)
 
-    Called when a conference was joined.
-    - `url` : the conference URL
+    当加入会议时调用。
+    - `url`：会议的 URL
 
 #### conferenceTerminated(String url, Object? error)
 
-    Called when the active conference ends, be it because of user choice or because of a failure.
-
-    - `url` : the conference URL
-    - `error` : missing if the conference finished gracefully, otherwise contains the error message
+    当活动会议结束时调用，无论是因为用户选择还是由于故障。
+    
+    - `url`：会议的 URL
+    - `error`：如果会议正常结束则缺失，否则包含错误信息
 
 #### conferenceWillJoin(String url)
 
-    Called before a conference is joined.
-
-    - url: the conference URL
+    在加入会议之前调用。
+    
+    - `url`：会议的 URL
 
 #### participantJoined(String? email, String? name, String? role, String? participantId) 
 
-    Called when a participant has joined the conference.
-
-    - `email` : the email of the participant. It may not be set if the remote participant didn't set one.
-    - `name` : the name of the participant.
-    - `role` : the role of the participant.
-    - `participantId` : the id of the participant.
+    当有参与者加入会议时调用。
+    
+    - `email`：参与者的电子邮件。如果远程参与者没有设置，则可能未设置。
+    - `name`：参与者的名称。
+    - `role`：参与者的角色。
+    - `participantId`：参与者的 ID。
 
 #### participantLeft(String? participantId)
 
-    Called when a participant has left the conference.
-
-    - `participantId` : the id of the participant that left.
+    当参与者离开会议时调用。
+    
+    - `participantId`：离开的参与者的 ID。
 
 #### audioMutedChanged(bool muted)
 
-    Called when the local participant's audio is muted or unmuted. 
-
-    - `muted` : a boolean indicating whether the audio is muted or not.
+    当本地参与者的音频被静音或取消静音时调用。
+    
+    - `muted`：一个布尔值，指示音频是否被静音。
 
 #### videoMutedChanged(bool muted)
 
-    Called when the local participant's video is muted or unmuted. 
-
-    - `muted` : a boolean indicating whether the video is muted or not.
+    当本地参与者的视频被静音或取消静音时调用。
+    
+    - `muted`：一个布尔值，指示视频是否被静音。
 
 #### endpointTextMessageReceived(String senderId, String message)
 
-    Called when an endpoint text message is received.
-
-    - `senderId` : the participantId of the sender
-    - `message` : the content.
+    当接收到一个端点文本消息时调用。
+    
+    - `senderId`：发送者的参与者 ID
+    - `message`：内容。
 
 #### screenShareToggled(String participantId, bool sharing)
 
-    Called when a participant starts or stops sharing his screen.
-
-    - `participantId` : the id of the participant
-    - `sharing` : the state of screen share
+    当参与者开始或停止共享其屏幕时调用。
+    
+    - `participantId`：参与者的 ID
+    - `sharing`：屏幕共享的状态
 
 #### chatMessageReceived(String senderId, String message, bool isPrivate, String? timestamp)
 
-    Called when a chat text message is received.
-
-    - `senderId` : the ID of the participant that sent the message.
-    - `message` : the content of the message.
-    - `isPrivate` : true if the message is private, false otherwise.
-    - `timestamp` : the (optional) timestamp of the message.
+    当接收到聊天文本消息时调用。
+    
+    - `senderId`：发送该消息的参与者的 ID。
+    - `message`：消息的内容。
+    - `isPrivate`：如果消息是私密的，则为 true，否则为 false。
+    - `timestamp`：消息的（可选）时间戳。
 
 #### chatToggled(bool isOpen)
 
-    Called when the chat dialog is opened or closed.
-
-    - `isOpen` : true if the chat dialog is open, false otherwise.
+    当聊天对话框打开或关闭时调用。
+    
+    - `isOpen`：如果聊天对话框打开，则为 true，否则为 false。
 
 #### participantsInfoRetrieved(String participantsInfo)
-    Called when the `retrieveParticipantsInfo` action is called
 
-    - `participantsInfo` : a list of participants' information as a string.
+    当调用 `retrieveParticipantsInfo` 操作时调用。
+    
+    - `participantsInfo`：参与者信息的字符串列表。
 
 #### readyToClose()
-    Called when the SDK is ready to be closed. No meeting is happening at this point.
 
-#### Example of listener:
+    当 SDK 准备关闭时调用。此时没有会议正在进行。
+
+#### 监听器示例：
 
 ```dart
 var listener = JitsiMeetEventListener(
