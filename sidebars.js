@@ -2,7 +2,7 @@ module.exports = {
   docs: [
     {
       type: "category",
-      label: "Getting Started - 开始",
+      label: "Getting Started",
       items: [
         "intro",
         "architecture",
@@ -12,7 +12,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Community - 社区",
+      label: "Community",
       link: {
         type: "doc",
         id: "community/community-intro",
@@ -23,7 +23,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "User Guide - 用户指南",
+      label: "User Guide",
       link: {
         type: "generated-index",
       },
@@ -41,7 +41,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Developer Guide - 开发者指南",
+      label: "Developer Guide",
       link: {
         type: "generated-index",
       },
@@ -93,7 +93,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Mobile - 移动端",
+          label: "Mobile",
           link: {
             type: "generated-index",
           },
@@ -111,7 +111,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Self-Hosting Guide - 自托管指南",
+      label: "Self-Hosting Guide",
       link: {
         type: "doc",
         id: "devops-guide/devops-guide-start",
@@ -119,7 +119,7 @@ module.exports = {
       items: [
         {
           type: "category",
-          label: "Deployment - 部署",
+          label: "Deployment",
           link: {
             type: "generated-index",
           },
@@ -138,7 +138,7 @@ module.exports = {
                 {
                   type: "doc",
                   id: "devops-guide/devops-guide-log-analyser",
-                  label: "Log Analyser - 日志分析器",
+                  label: "Log Analyser",
                 },
               ],
             },
@@ -146,7 +146,7 @@ module.exports = {
         },
         {
           type: "category",
-          label: "Configuration - 配置",
+          label: "Configuration",
           link: {
             type: "generated-index",
           },
@@ -169,7 +169,7 @@ module.exports = {
   "releases-sidebar": [
     {
       type: "doc",
-      label: "Releases - 发布",
+      label: "Releases",
       id: "releases",
     },
   ],
