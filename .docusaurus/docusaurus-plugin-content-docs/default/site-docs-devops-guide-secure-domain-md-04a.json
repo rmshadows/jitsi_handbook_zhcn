@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/secure-domain",
+  "title": "Secure Domain setup - 安全域配置",
+  "description": "可以设置为仅允许经过身份验证的用户创建新的会议室。当一个新的房间即将被创建时，Jitsi Meet 会提示输入用户名和密码。房间创建后，其他用户可以通过匿名域名加入会议。以下是需要配置的内容：",
+  "source": "@site/docs/devops-guide/secure-domain.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/secure-domain",
+  "permalink": "/handbook/docs/devops-guide/secure-domain",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/secure-domain.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "secure-domain",
+    "title": "Secure Domain setup - 安全域配置",
+    "sidebar_label": "Authentication (Secure Domain) - 认证（安全域）"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Configuration",
+    "permalink": "/handbook/docs/category/configuration"
+  },
+  "next": {
+    "title": "LDAP 认证",
+    "permalink": "/handbook/docs/devops-guide/ldap-authentication"
+  }
+}

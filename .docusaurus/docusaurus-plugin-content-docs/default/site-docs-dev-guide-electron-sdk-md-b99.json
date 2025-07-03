@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-electron-sdk",
+  "title": "Electron SDK",
+  "description": "Jitsi Meet Electron SDK 提供了一个工具包，用于将 Jitsi Meet 集成到 Electron 应用程序中，并为桌面体验提供额外的功能。",
+  "source": "@site/docs/dev-guide/electron-sdk.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-electron-sdk",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-electron-sdk",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/electron-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-electron-sdk",
+    "title": "Electron SDK"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "lib-jitsi-meet API (low level) - lib-jitsi-meet API（低级 API）",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-ljm-api"
+  },
+  "next": {
+    "title": "React SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-react-sdk"
+  }
+}

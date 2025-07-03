@@ -1,0 +1,29 @@
+{
+  "id": "user-guide/user-guide-jitsi-meet-on-mobile",
+  "title": "Use Jitsi Meet on Mobile - 在移动设备上使用Jitsi Meet",
+  "description": "当您使用手机加入 Jitsi 会议时，始终会有选项通过 Jitsi Meet 应用程序加入会议或继续在网页上进行。最便捷的选项是使用 Jitsi Meet 应用程序 加入。",
+  "source": "@site/docs/user-guide/use-jitsi-meet-on-mobile.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/user-guide-jitsi-meet-on-mobile",
+  "permalink": "/handbook/docs/user-guide/user-guide-jitsi-meet-on-mobile",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/use-jitsi-meet-on-mobile.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "user-guide-jitsi-meet-on-mobile",
+    "title": "Use Jitsi Meet on Mobile - 在移动设备上使用Jitsi Meet",
+    "sidebar_label": "Use Jitsi Meet on Mobile - 在移动设备上使用Jitsi Meet"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Share a Jitsi Meeting - 共享会议",
+    "permalink": "/handbook/docs/user-guide/user-guide-share-a-jitsi-meeting"
+  },
+  "next": {
+    "title": "Jitsi Meet for Google Calendar",
+    "permalink": "/handbook/docs/user-guide/user-guide-jitsi-meet-for-google-calendar"
+  }
+}

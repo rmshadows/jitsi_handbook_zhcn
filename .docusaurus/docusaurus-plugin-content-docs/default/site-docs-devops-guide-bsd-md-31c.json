@@ -1,0 +1,20 @@
+{
+  "id": "devops-guide/devops-guide-bsd",
+  "title": "自托管指南 - FreeBSD/NetBSD/OpenBSD",
+  "description": "本文档意在作为 FreeBSD、NetBSD 和 OpenBSD 发行版中上游软件包的参考点。Jitsi 官方仅支持 Linux，关于 BSD 软件包的任何问题，请联系相应的邮件列表。",
+  "source": "@site/docs/devops-guide/bsd.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-bsd",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-bsd",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/bsd.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-bsd",
+    "title": "自托管指南 - FreeBSD/NetBSD/OpenBSD",
+    "sidebar_label": "BSD"
+  }
+}

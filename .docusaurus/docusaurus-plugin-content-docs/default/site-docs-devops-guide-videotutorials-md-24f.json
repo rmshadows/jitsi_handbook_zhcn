@@ -1,0 +1,28 @@
+{
+  "id": "devops-guide/devops-guide-videotutorials",
+  "title": "Video Tutorials - 视频教学",
+  "description": "Installing Jitsi Meet on your own Linux Server - 在你的Linux服务器安装Jitsi Meet",
+  "source": "@site/docs/devops-guide/videotutorials.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-videotutorials",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-videotutorials",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/videotutorials.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-videotutorials",
+    "title": "Video Tutorials - 视频教学"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Cloud API",
+    "permalink": "/handbook/docs/devops-guide/cloud-api"
+  },
+  "next": {
+    "title": "FAQ - 常见问题解答",
+    "permalink": "/handbook/docs/devops-guide/faq"
+  }
+}

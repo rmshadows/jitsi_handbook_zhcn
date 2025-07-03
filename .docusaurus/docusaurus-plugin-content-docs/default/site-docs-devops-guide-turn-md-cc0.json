@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/turn",
+  "title": "Setting up TURN - 设置 TURN 服务器",
+  "description": "一对一通话应该避免通过 JVB（Jitsi Videobridge）进行，以获得最佳性能和资源利用率。这就是我们添加点对点模式的原因，两个参与者可以直接连接到彼此。不幸的是，参与者之间并不总是可以建立直接连接。在这种情况下，您可以使用 TURN 服务器来中继流量（注意，JVB 的功能远不止于简单地中继流量，因此这与使用 JVB \"中继\" 流量并不相同）。",
+  "source": "@site/docs/devops-guide/turn.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/turn",
+  "permalink": "/handbook/docs/devops-guide/turn",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/turn.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "turn",
+    "title": "Setting up TURN - 设置 TURN 服务器",
+    "sidebar_label": "TURN setup - 设置 TURN 服务器"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Reservation System - 会议预订系统",
+    "permalink": "/handbook/docs/devops-guide/reservation"
+  },
+  "next": {
+    "title": "Speaker Stats - 启用发言者统计",
+    "permalink": "/handbook/docs/devops-guide/speakerstats"
+  }
+}

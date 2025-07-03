@@ -1,0 +1,28 @@
+{
+  "id": "user-guide/user-guide-join-jitsi-meeting",
+  "title": "Join a Jitsi Meeting - 加入Jitsi会议",
+  "description": "人们可以通过简单地发送链接来邀请彼此参加 Jitsi 会议。",
+  "source": "@site/docs/user-guide/join-a-jitsi-meeting.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/user-guide-join-jitsi-meeting",
+  "permalink": "/handbook/docs/user-guide/user-guide-join-jitsi-meeting",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/join-a-jitsi-meeting.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "user-guide-join-jitsi-meeting",
+    "title": "Join a Jitsi Meeting - 加入Jitsi会议"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Supported Browsers - 支持的浏览器",
+    "permalink": "/handbook/docs/user-guide/supported-browsers"
+  },
+  "next": {
+    "title": "Start a Jitsi Meeting - 开始会议",
+    "permalink": "/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting"
+  }
+}

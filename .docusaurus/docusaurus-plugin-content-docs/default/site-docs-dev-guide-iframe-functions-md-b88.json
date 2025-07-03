@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-iframe-functions",
+  "title": "Functions - 功能",
+  "description": "使用以下 API 函数控制您嵌入的 Jitsi Meet 会议。",
+  "source": "@site/docs/dev-guide/iframe-functions.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-iframe-functions",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-functions",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/iframe-functions.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-iframe-functions",
+    "title": "Functions - 功能"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "IFrame API",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe"
+  },
+  "next": {
+    "title": "Commands - 指令",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-commands"
+  }
+}

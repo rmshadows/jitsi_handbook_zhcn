@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/devops-guide-quickstart",
+  "title": "自托管指南 - Debian/Ubuntu服务器",
+  "description": "在 Debian 系统上快速安装 Jitsi-Meet，请按照以下步骤操作。以下发行版开箱即用地得到支持：",
+  "source": "@site/docs/devops-guide/quickstart.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-quickstart",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-quickstart",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/quickstart.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-quickstart",
+    "title": "自托管指南 - Debian/Ubuntu服务器",
+    "sidebar_label": "Debian/Ubuntu server"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Requirements - 配置要求",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-requirements"
+  },
+  "next": {
+    "title": "openSUSE",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-opensuse"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "user-guide/supported-browsers",
+  "title": "Supported Browsers - 支持的浏览器",
+  "description": "桌面端浏览器",
+  "source": "@site/docs/user-guide/browsers.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/supported-browsers",
+  "permalink": "/handbook/docs/user-guide/supported-browsers",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/browsers.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "supported-browsers",
+    "title": "Supported Browsers - 支持的浏览器"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "User Guide",
+    "permalink": "/handbook/docs/category/user-guide"
+  },
+  "next": {
+    "title": "Join a Jitsi Meeting - 加入Jitsi会议",
+    "permalink": "/handbook/docs/user-guide/user-guide-join-jitsi-meeting"
+  }
+}

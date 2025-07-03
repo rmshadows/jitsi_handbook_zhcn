@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-ios-sdk",
+  "title": "iOS SDK",
+  "description": "Jitsi Meet iOS SDK 提供与 Jitsi Meet 应用相同的用户体验，并以可定制的方式嵌入到您的应用中。",
+  "source": "@site/docs/dev-guide/ios-sdk.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-ios-sdk",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-ios-sdk",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/ios-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-ios-sdk",
+    "title": "iOS SDK"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Android SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-android-sdk"
+  },
+  "next": {
+    "title": "React Native SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-react-native-sdk"
+  }
+}

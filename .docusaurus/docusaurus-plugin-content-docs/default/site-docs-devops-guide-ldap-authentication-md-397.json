@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/ldap-authentication",
+  "title": "LDAP authentication - LDAP 认证",
+  "description": "本文只是初稿，可能在您的系统上无法正常工作。它已在安装了 Prosody 0.11 的 Debian 11 系统上进行了测试，并对 OpenLDAP 目录进行身份验证。",
+  "source": "@site/docs/devops-guide/ldap-authentication.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/ldap-authentication",
+  "permalink": "/handbook/docs/devops-guide/ldap-authentication",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/ldap-authentication.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "ldap-authentication",
+    "title": "LDAP authentication - LDAP 认证",
+    "sidebar_label": "LDAP 认证"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Authentication (Secure Domain) - 认证（安全域）",
+    "permalink": "/handbook/docs/devops-guide/secure-domain"
+  },
+  "next": {
+    "title": "Scalable setup - 可扩展性配置",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-scalable"
+  }
+}

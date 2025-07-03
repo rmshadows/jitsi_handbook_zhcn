@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-flutter-sdk",
+  "title": "Flutter SDK",
+  "description": "Jitsi Meet Flutter SDK 提供了与 Jitsi Meet 应用相同的用户体验，以 Flutter 插件的形式，让您可以在自己的 Flutter 应用中嵌入和自定义 Jitsi Meet。",
+  "source": "@site/docs/dev-guide/flutter-sdk.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-flutter-sdk",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-flutter-sdk",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/flutter-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-flutter-sdk",
+    "title": "Flutter SDK"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "React Native SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-react-native-sdk"
+  },
+  "next": {
+    "title": "Web",
+    "permalink": "/handbook/docs/category/web"
+  }
+}

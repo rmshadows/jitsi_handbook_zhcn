@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/devops-guide-opensuse",
+  "title": "Self-Hosting Guide - openSUSE",
+  "description": "本文描述了在 openSUSE Leap 15.2 上快速安装 Jitsi-Meet 的步骤，包括单个 Videobridge 和单个 Jicofo。",
+  "source": "@site/docs/devops-guide/opensuse.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-opensuse",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-opensuse",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/opensuse.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-opensuse",
+    "title": "Self-Hosting Guide - openSUSE",
+    "sidebar_label": "openSUSE"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Debian/Ubuntu server",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-quickstart"
+  },
+  "next": {
+    "title": "Docker",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-docker"
+  }
+}

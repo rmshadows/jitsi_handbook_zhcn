@@ -1,0 +1,28 @@
+{
+  "id": "faq",
+  "title": "FAQ - 常见问题回答",
+  "description": "如何判断我的服务器实例是否在 NAT 后面？",
+  "source": "@site/docs/faq.md",
+  "sourceDirName": ".",
+  "slug": "/faq",
+  "permalink": "/handbook/docs/faq",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/faq.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "faq",
+    "title": "FAQ - 常见问题回答"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Security - 安全",
+    "permalink": "/handbook/docs/security"
+  },
+  "next": {
+    "title": "Our community - 我们的社区",
+    "permalink": "/handbook/docs/community/community-intro"
+  }
+}

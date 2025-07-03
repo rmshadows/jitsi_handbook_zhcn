@@ -1,0 +1,28 @@
+{
+  "id": "architecture",
+  "title": "Architecture - 架构",
+  "description": "本节提供了 Jitsi 基础设施的全局概览。如果你刚开始为该项目做贡献，我们强烈建议你仔细阅读本节内容。",
+  "source": "@site/docs/architecture.md",
+  "sourceDirName": ".",
+  "slug": "/architecture",
+  "permalink": "/handbook/docs/architecture",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/architecture.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "architecture",
+    "title": "Architecture - 架构"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Introduction - 介绍",
+    "permalink": "/handbook/docs/intro"
+  },
+  "next": {
+    "title": "Security - 安全",
+    "permalink": "/handbook/docs/security"
+  }
+}

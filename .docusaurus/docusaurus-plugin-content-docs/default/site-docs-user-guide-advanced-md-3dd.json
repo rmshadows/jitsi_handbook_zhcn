@@ -1,0 +1,29 @@
+{
+  "id": "user-guide/user-guide-advanced",
+  "title": "User Guide (advanced) - 用户指南（高级）",
+  "description": "有一些选项可以调整邀请链接，以解锁 Jitsi 中更多功能。以下参数适用于网页、iframe 和移动版本。",
+  "source": "@site/docs/user-guide/advanced.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/user-guide-advanced",
+  "permalink": "/handbook/docs/user-guide/user-guide-advanced",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/advanced.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "user-guide-advanced",
+    "title": "User Guide (advanced) - 用户指南（高级）",
+    "sidebar_label": "Advanced options - 高级选项"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Basic options - 基础选项",
+    "permalink": "/handbook/docs/user-guide/user-guide-basic"
+  },
+  "next": {
+    "title": "Developer Guide",
+    "permalink": "/handbook/docs/category/developer-guide"
+  }
+}

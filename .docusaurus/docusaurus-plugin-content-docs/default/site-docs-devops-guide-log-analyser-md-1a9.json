@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/devops-guide-log-analyser",
+  "title": "Self-Hosting Guide - Log Analyser",
+  "description": "概述",
+  "source": "@site/docs/devops-guide/log-analyser.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-log-analyser",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-log-analyser",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/log-analyser.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-log-analyser",
+    "title": "Self-Hosting Guide - Log Analyser",
+    "sidebar_label": "Log Analyser - 日志分析器"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Docker",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-docker"
+  },
+  "next": {
+    "title": "Configuration",
+    "permalink": "/handbook/docs/category/configuration"
+  }
+}

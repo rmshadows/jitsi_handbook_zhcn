@@ -1,0 +1,28 @@
+{
+  "id": "security",
+  "title": "Security - 安全",
+  "description": "这个话题相对复杂，因此我们创建了一篇更广泛涵盖该主题的文章，详情请查看：https://jitsi.org/security",
+  "source": "@site/docs/security.md",
+  "sourceDirName": ".",
+  "slug": "/security",
+  "permalink": "/handbook/docs/security",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/security.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "security",
+    "title": "Security - 安全"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Architecture - 架构",
+    "permalink": "/handbook/docs/architecture"
+  },
+  "next": {
+    "title": "FAQ - 常见问题回答",
+    "permalink": "/handbook/docs/faq"
+  }
+}

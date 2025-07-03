@@ -1,0 +1,24 @@
+{
+  "id": "devops-guide/faq",
+  "title": "FAQ - 常见问题解答",
+  "description": "如何迁移出复用(multiplexing)并启用桥接 WebSockets (bridge websockets)",
+  "source": "@site/docs/devops-guide/faq.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/faq",
+  "permalink": "/handbook/docs/devops-guide/faq",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/faq.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "faq",
+    "title": "FAQ - 常见问题解答"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Video Tutorials - 视频教学",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-videotutorials"
+  }
+}

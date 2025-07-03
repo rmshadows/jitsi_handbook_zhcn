@@ -1,0 +1,29 @@
+{
+  "id": "user-guide/user-guide-basic",
+  "title": "User Guide (basic) - 用户指南（基础）",
+  "description": "欢迎使用用户指南！",
+  "source": "@site/docs/user-guide/basic.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/user-guide-basic",
+  "permalink": "/handbook/docs/user-guide/user-guide-basic",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/basic.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "user-guide-basic",
+    "title": "User Guide (basic) - 用户指南（基础）",
+    "sidebar_label": "Basic options - 基础选项"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Keyboard shortcuts - 快捷键",
+    "permalink": "/handbook/docs/user-guide/keyboard-shortcuts"
+  },
+  "next": {
+    "title": "Advanced options - 高级选项",
+    "permalink": "/handbook/docs/user-guide/user-guide-advanced"
+  }
+}

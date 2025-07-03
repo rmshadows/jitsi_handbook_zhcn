@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-iframe-events",
+  "title": "Events - 事件",
+  "description": "JitsiMeetExternalAPI 对象实现了 [EventEmitter] API，用于发出和监听事件。",
+  "source": "@site/docs/dev-guide/iframe-events.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-iframe-events",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-events",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/iframe-events.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-iframe-events",
+    "title": "Events - 事件"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Commands - 指令",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-commands"
+  },
+  "next": {
+    "title": "React SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-react-sdk"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-android-sdk",
+  "title": "Android SDK",
+  "description": "Jitsi Meet Android SDK 提供了与 Jitsi Meet 应用相同的用户体验，并且可以以可自定义的方式嵌入到您的应用中。",
+  "source": "@site/docs/dev-guide/android-sdk.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-android-sdk",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-android-sdk",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/android-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-android-sdk",
+    "title": "Android SDK"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "React SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-react-sdk"
+  },
+  "next": {
+    "title": "iOS SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-ios-sdk"
+  }
+}

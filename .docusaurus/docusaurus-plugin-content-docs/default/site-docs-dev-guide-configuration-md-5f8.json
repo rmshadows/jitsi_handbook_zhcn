@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-configuration",
+  "title": "Configuration - 配置",
+  "description": "此页面描述了 Jitsi Meet 可用的配置选项。这些选项可以在服务器端的 config.js 文件中设置，或在应用程序中被覆盖。",
+  "source": "@site/docs/dev-guide/configuration.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-configuration",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-configuration",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/configuration.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-configuration",
+    "title": "Configuration - 配置"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Flutter SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-flutter-sdk"
+  },
+  "next": {
+    "title": "Overview",
+    "permalink": "/handbook/docs/devops-guide/"
+  }
+}

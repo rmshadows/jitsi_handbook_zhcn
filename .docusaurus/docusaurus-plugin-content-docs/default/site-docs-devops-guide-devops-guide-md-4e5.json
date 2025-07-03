@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/devops-guide-start",
+  "title": "自托管指南 - 概述",
+  "description": "这些指南帮助您托管(部署)自己的 Jitsi-Meet 服务器。",
+  "source": "@site/docs/devops-guide/devops-guide.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/",
+  "permalink": "/handbook/docs/devops-guide/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/devops-guide.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-start",
+    "title": "自托管指南 - 概述",
+    "sidebar_label": "Overview"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Configuration - 配置",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-configuration"
+  },
+  "next": {
+    "title": "Deployment",
+    "permalink": "/handbook/docs/category/deployment"
+  }
+}

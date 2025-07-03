@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/mobile-feature-flags",
+  "title": "Feature flags - 功能标志",
+  "description": "移动 SDK 支持多种功能标志，允许自定义某些 UI 方面和行为。",
+  "source": "@site/docs/dev-guide/mobile-feature-flags.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/mobile-feature-flags",
+  "permalink": "/handbook/docs/dev-guide/mobile-feature-flags",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/mobile-feature-flags.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "mobile-feature-flags",
+    "title": "Feature flags - 功能标志"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Jitsi Meet development - Jitsi Meet开发",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-mobile-jitsi-meet"
+  },
+  "next": {
+    "title": "Android SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-android-sdk"
+  }
+}

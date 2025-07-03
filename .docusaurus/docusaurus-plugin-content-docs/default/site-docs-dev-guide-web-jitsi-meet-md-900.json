@@ -1,0 +1,29 @@
+{
+  "id": "dev-guide/dev-guide-web-jitsi-meet",
+  "title": "Developer Guide for Jitsi Meet - Jitsi Meet开发指南",
+  "description": "本指南将帮助您设置开发环境，以开始在 Jitsi Meet 网络应用程序上进行工作。",
+  "source": "@site/docs/dev-guide/web-jitsi-meet.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-web-jitsi-meet",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-web-jitsi-meet",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/web-jitsi-meet.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-web-jitsi-meet",
+    "title": "Developer Guide for Jitsi Meet - Jitsi Meet开发指南",
+    "sidebar_label": "Jitsi Meet development - Jitsi Meet开发"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Web",
+    "permalink": "/handbook/docs/category/web"
+  },
+  "next": {
+    "title": "Modifying lib-jitsi-meet - 修改lib-jitsi-meet",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-ljm"
+  }
+}

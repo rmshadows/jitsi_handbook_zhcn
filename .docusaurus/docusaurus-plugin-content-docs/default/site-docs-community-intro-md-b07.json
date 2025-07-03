@@ -1,0 +1,28 @@
+{
+  "id": "community/community-intro",
+  "title": "Our community - 我们的社区",
+  "description": "Jitsi Meet及所有相关的Jitsi项目由一群充满热情的个人和公司维护。",
+  "source": "@site/docs/community/intro.md",
+  "sourceDirName": "community",
+  "slug": "/community/community-intro",
+  "permalink": "/handbook/docs/community/community-intro",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/community/intro.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "community-intro",
+    "title": "Our community - 我们的社区"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "FAQ - 常见问题回答",
+    "permalink": "/handbook/docs/faq"
+  },
+  "next": {
+    "title": "Third-Party Software - 第三方软件",
+    "permalink": "/handbook/docs/community/third-party-software"
+  }
+}

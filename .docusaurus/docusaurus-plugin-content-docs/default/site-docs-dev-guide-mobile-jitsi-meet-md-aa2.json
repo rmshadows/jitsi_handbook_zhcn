@@ -1,0 +1,29 @@
+{
+  "id": "dev-guide/dev-guide-mobile-jitsi-meet",
+  "title": "Developer Guide for Jitsi Meet - 开发者指南",
+  "description": "本指南将帮助您设置一个开发环境，以便开始在 Jitsi Meet 移动应用程序本身上工作。",
+  "source": "@site/docs/dev-guide/mobile-jitsi-meet.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-mobile-jitsi-meet",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-mobile-jitsi-meet",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/mobile-jitsi-meet.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-mobile-jitsi-meet",
+    "title": "Developer Guide for Jitsi Meet - 开发者指南",
+    "sidebar_label": "Jitsi Meet development - Jitsi Meet开发"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Mobile",
+    "permalink": "/handbook/docs/category/mobile"
+  },
+  "next": {
+    "title": "Feature flags - 功能标志",
+    "permalink": "/handbook/docs/dev-guide/mobile-feature-flags"
+  }
+}

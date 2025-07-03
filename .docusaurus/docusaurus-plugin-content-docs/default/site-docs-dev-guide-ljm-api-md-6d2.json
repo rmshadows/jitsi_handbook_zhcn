@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-ljm-api",
+  "title": "lib-jitsi-meet API (low level) - lib-jitsi-meet API（低级 API）",
+  "description": "You can use Jitsi Meet API to create Jitsi Meet video conferences with a custom GUI.",
+  "source": "@site/docs/dev-guide/ljm-api.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-ljm-api",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-ljm-api",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/ljm-api.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-ljm-api",
+    "title": "lib-jitsi-meet API (low level) - lib-jitsi-meet API（低级 API）"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "IFrame API",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe"
+  },
+  "next": {
+    "title": "Electron SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-electron-sdk"
+  }
+}

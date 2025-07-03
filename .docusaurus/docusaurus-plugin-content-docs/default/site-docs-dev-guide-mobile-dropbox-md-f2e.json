@@ -1,0 +1,19 @@
+{
+  "id": "dev-guide/mobile-dropbox",
+  "title": "Setting up Dropbox integration - 设置 Dropbox 集成",
+  "description": "1. 创建一个 Dropbox 应用。",
+  "source": "@site/docs/dev-guide/mobile-dropbox.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/mobile-dropbox",
+  "permalink": "/handbook/docs/dev-guide/mobile-dropbox",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/mobile-dropbox.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "mobile-dropbox",
+    "title": "Setting up Dropbox integration - 设置 Dropbox 集成"
+  }
+}

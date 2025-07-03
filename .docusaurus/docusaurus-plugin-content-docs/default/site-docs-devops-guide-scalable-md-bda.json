@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/devops-guide-scalable",
+  "title": "DevOps Guide - Scalable setup - 可扩展性配置",
+  "description": "对于Jitsi的单服务器安装，适用于有限数量的并发会议。首个限制因素是videobridge组件，它负责处理实际的视频和音频流量。你可以通过水平扩展视频桥（videobridges）来应对更大的流量需求。在云环境中，还可以根据需求动态地增加或减少视频桥的数量。",
+  "source": "@site/docs/devops-guide/scalable.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-scalable",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-scalable",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/scalable.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-scalable",
+    "title": "DevOps Guide - Scalable setup - 可扩展性配置",
+    "sidebar_label": "Scalable setup - 可扩展性配置"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "LDAP 认证",
+    "permalink": "/handbook/docs/devops-guide/ldap-authentication"
+  },
+  "next": {
+    "title": "Reservation System - 会议预订系统",
+    "permalink": "/handbook/docs/devops-guide/reservation"
+  }
+}

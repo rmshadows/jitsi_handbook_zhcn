@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/reservation",
+  "title": "Reservation System setup - 配置会议预订系统",
+  "description": "Support for a reservation system over REST API",
+  "source": "@site/docs/devops-guide/reservation.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/reservation",
+  "permalink": "/handbook/docs/devops-guide/reservation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/reservation.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "reservation",
+    "title": "Reservation System setup - 配置会议预订系统",
+    "sidebar_label": "Reservation System - 会议预订系统"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Scalable setup - 可扩展性配置",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-scalable"
+  },
+  "next": {
+    "title": "TURN setup - 设置 TURN 服务器",
+    "permalink": "/handbook/docs/devops-guide/turn"
+  }
+}

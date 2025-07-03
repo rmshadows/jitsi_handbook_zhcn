@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/speakerstats",
+  "title": "Enabling Speaker Stats - 启用发言者统计",
+  "description": "要启用发言者统计功能，我们需要在主虚拟主机下启用 speakerstats 模块，这将启用发言者统计组件的广告。组件的地址需要在 speakerstats_component 选项中指定。",
+  "source": "@site/docs/devops-guide/speakerstats.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/speakerstats",
+  "permalink": "/handbook/docs/devops-guide/speakerstats",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/speakerstats.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "speakerstats",
+    "title": "Enabling Speaker Stats - 启用发言者统计",
+    "sidebar_label": "Speaker Stats - 启用发言者统计"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "TURN setup - 设置 TURN 服务器",
+    "permalink": "/handbook/docs/devops-guide/turn"
+  },
+  "next": {
+    "title": "Video SIP gateway - 视频SIP网关",
+    "permalink": "/handbook/docs/devops-guide/videosipgw"
+  }
+}

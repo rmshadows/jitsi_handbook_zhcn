@@ -1,0 +1,28 @@
+{
+  "id": "community/third-party-software",
+  "title": "Third-Party Software - 第三方软件",
+  "description": "此页面包含与Jitsi Meet相关的项目链接，但这些项目并不是由Jitsi团队维护的。",
+  "source": "@site/docs/community/third-party-software.md",
+  "sourceDirName": "community",
+  "slug": "/community/third-party-software",
+  "permalink": "/handbook/docs/community/third-party-software",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/community/third-party-software.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "third-party-software",
+    "title": "Third-Party Software - 第三方软件"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Our community - 我们的社区",
+    "permalink": "/handbook/docs/community/community-intro"
+  },
+  "next": {
+    "title": "User Guide",
+    "permalink": "/handbook/docs/category/user-guide"
+  }
+}

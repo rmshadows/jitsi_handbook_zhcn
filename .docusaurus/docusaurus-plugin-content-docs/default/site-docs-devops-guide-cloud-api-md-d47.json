@@ -1,0 +1,28 @@
+{
+  "id": "devops-guide/cloud-api",
+  "title": "Cloud API",
+  "description": "Jitsi Meet Cloud API 是一个用于支持 Jitsi Meet 集成到其他应用程序中的服务规范，提供对拨号支持会议的映射，以及支持目录搜索和邀请用户加入会议的功能。",
+  "source": "@site/docs/devops-guide/cloud-api.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/cloud-api",
+  "permalink": "/handbook/docs/devops-guide/cloud-api",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/cloud-api.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "cloud-api",
+    "title": "Cloud API"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Video SIP gateway - 视频SIP网关",
+    "permalink": "/handbook/docs/devops-guide/videosipgw"
+  },
+  "next": {
+    "title": "Video Tutorials - 视频教学",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-videotutorials"
+  }
+}

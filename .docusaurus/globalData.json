@@ -1,0 +1,335 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/handbook/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/handbook/docs",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "architecture",
+              "path": "/handbook/docs/architecture",
+              "sidebar": "docs"
+            },
+            {
+              "id": "community/community-intro",
+              "path": "/handbook/docs/community/community-intro",
+              "sidebar": "docs"
+            },
+            {
+              "id": "community/third-party-software",
+              "path": "/handbook/docs/community/third-party-software",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-android-sdk",
+              "path": "/handbook/docs/dev-guide/dev-guide-android-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-configuration",
+              "path": "/handbook/docs/dev-guide/dev-guide-configuration",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-contributing",
+              "path": "/handbook/docs/dev-guide/dev-guide-contributing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-electron-sdk",
+              "path": "/handbook/docs/dev-guide/dev-guide-electron-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-flutter-sdk",
+              "path": "/handbook/docs/dev-guide/dev-guide-flutter-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-iframe",
+              "path": "/handbook/docs/dev-guide/dev-guide-iframe",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-iframe-commands",
+              "path": "/handbook/docs/dev-guide/dev-guide-iframe-commands",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-iframe-events",
+              "path": "/handbook/docs/dev-guide/dev-guide-iframe-events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-iframe-functions",
+              "path": "/handbook/docs/dev-guide/dev-guide-iframe-functions",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-ios-sdk",
+              "path": "/handbook/docs/dev-guide/dev-guide-ios-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-ljm",
+              "path": "/handbook/docs/dev-guide/dev-guide-ljm",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-ljm-api",
+              "path": "/handbook/docs/dev-guide/dev-guide-ljm-api",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-mobile-jitsi-meet",
+              "path": "/handbook/docs/dev-guide/dev-guide-mobile-jitsi-meet",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-react-native-sdk",
+              "path": "/handbook/docs/dev-guide/dev-guide-react-native-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-react-sdk",
+              "path": "/handbook/docs/dev-guide/dev-guide-react-sdk",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-web-integrations",
+              "path": "/handbook/docs/dev-guide/dev-guide-web-integrations",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/dev-guide-web-jitsi-meet",
+              "path": "/handbook/docs/dev-guide/dev-guide-web-jitsi-meet",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/mobile-dropbox",
+              "path": "/handbook/docs/dev-guide/mobile-dropbox"
+            },
+            {
+              "id": "dev-guide/mobile-feature-flags",
+              "path": "/handbook/docs/dev-guide/mobile-feature-flags",
+              "sidebar": "docs"
+            },
+            {
+              "id": "dev-guide/mobile-google-auth",
+              "path": "/handbook/docs/dev-guide/mobile-google-auth"
+            },
+            {
+              "id": "devops-guide/cloud-api",
+              "path": "/handbook/docs/devops-guide/cloud-api",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-bsd",
+              "path": "/handbook/docs/devops-guide/devops-guide-bsd"
+            },
+            {
+              "id": "devops-guide/devops-guide-docker",
+              "path": "/handbook/docs/devops-guide/devops-guide-docker",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-log-analyser",
+              "path": "/handbook/docs/devops-guide/devops-guide-log-analyser",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-opensuse",
+              "path": "/handbook/docs/devops-guide/devops-guide-opensuse",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-quickstart",
+              "path": "/handbook/docs/devops-guide/devops-guide-quickstart",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-requirements",
+              "path": "/handbook/docs/devops-guide/devops-guide-requirements",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-scalable",
+              "path": "/handbook/docs/devops-guide/devops-guide-scalable",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-start",
+              "path": "/handbook/docs/devops-guide/",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/devops-guide-videotutorials",
+              "path": "/handbook/docs/devops-guide/devops-guide-videotutorials",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/faq",
+              "path": "/handbook/docs/devops-guide/faq",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/ldap-authentication",
+              "path": "/handbook/docs/devops-guide/ldap-authentication",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/reservation",
+              "path": "/handbook/docs/devops-guide/reservation",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/secure-domain",
+              "path": "/handbook/docs/devops-guide/secure-domain",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/speakerstats",
+              "path": "/handbook/docs/devops-guide/speakerstats",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/turn",
+              "path": "/handbook/docs/devops-guide/turn",
+              "sidebar": "docs"
+            },
+            {
+              "id": "devops-guide/videosipgw",
+              "path": "/handbook/docs/devops-guide/videosipgw",
+              "sidebar": "docs"
+            },
+            {
+              "id": "faq",
+              "path": "/handbook/docs/faq",
+              "sidebar": "docs"
+            },
+            {
+              "id": "intro",
+              "path": "/handbook/docs/intro",
+              "sidebar": "docs"
+            },
+            {
+              "id": "releases",
+              "path": "/handbook/docs/releases",
+              "sidebar": "releases-sidebar"
+            },
+            {
+              "id": "security",
+              "path": "/handbook/docs/security",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/client connection status indicators",
+              "path": "/handbook/docs/user-guide/client connection status indicators"
+            },
+            {
+              "id": "user-guide/keyboard-shortcuts",
+              "path": "/handbook/docs/user-guide/keyboard-shortcuts",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/supported-browsers",
+              "path": "/handbook/docs/user-guide/supported-browsers",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-advanced",
+              "path": "/handbook/docs/user-guide/user-guide-advanced",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-basic",
+              "path": "/handbook/docs/user-guide/user-guide-basic",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-jitsi-meet-for-google-calendar",
+              "path": "/handbook/docs/user-guide/user-guide-jitsi-meet-for-google-calendar",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-jitsi-meet-on-mobile",
+              "path": "/handbook/docs/user-guide/user-guide-jitsi-meet-on-mobile",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-join-jitsi-meeting",
+              "path": "/handbook/docs/user-guide/user-guide-join-jitsi-meeting",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-share-a-jitsi-meeting",
+              "path": "/handbook/docs/user-guide/user-guide-share-a-jitsi-meeting",
+              "sidebar": "docs"
+            },
+            {
+              "id": "user-guide/user-guide-start-a-jitsi-meeting",
+              "path": "/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/user-guide",
+              "path": "/handbook/docs/category/user-guide",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/developer-guide",
+              "path": "/handbook/docs/category/developer-guide",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/sdks",
+              "path": "/handbook/docs/category/sdks",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/web",
+              "path": "/handbook/docs/category/web",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/mobile",
+              "path": "/handbook/docs/category/mobile",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/deployment",
+              "path": "/handbook/docs/category/deployment",
+              "sidebar": "docs"
+            },
+            {
+              "id": "/category/configuration",
+              "path": "/handbook/docs/category/configuration",
+              "sidebar": "docs"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "docs": {
+              "link": {
+                "path": "/handbook/docs/intro",
+                "label": "intro"
+              }
+            },
+            "releases-sidebar": {
+              "link": {
+                "path": "/handbook/docs/releases",
+                "label": "Releases"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

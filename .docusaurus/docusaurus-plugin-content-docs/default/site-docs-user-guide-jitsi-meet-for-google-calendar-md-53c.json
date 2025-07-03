@@ -1,0 +1,29 @@
+{
+  "id": "user-guide/user-guide-jitsi-meet-for-google-calendar",
+  "title": "Jitsi Meet for Google Calendar - Jitsi Meet添加到Google日历",
+  "description": "欢迎使用用户指南！",
+  "source": "@site/docs/user-guide/jitsi-meet-for-google-calendar.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/user-guide-jitsi-meet-for-google-calendar",
+  "permalink": "/handbook/docs/user-guide/user-guide-jitsi-meet-for-google-calendar",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/jitsi-meet-for-google-calendar.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "user-guide-jitsi-meet-for-google-calendar",
+    "title": "Jitsi Meet for Google Calendar - Jitsi Meet添加到Google日历",
+    "sidebar_label": "Jitsi Meet for Google Calendar"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Use Jitsi Meet on Mobile - 在移动设备上使用Jitsi Meet",
+    "permalink": "/handbook/docs/user-guide/user-guide-jitsi-meet-on-mobile"
+  },
+  "next": {
+    "title": "Keyboard shortcuts - 快捷键",
+    "permalink": "/handbook/docs/user-guide/keyboard-shortcuts"
+  }
+}

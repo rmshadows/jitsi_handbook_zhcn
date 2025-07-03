@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-ljm",
+  "title": "Modifying lib-jitsi-meet - 修改lib-jitsi-meet",
+  "description": "默认情况下，该库作为GitHub发布中的预构建工件进行引用。包并未发布到npm。package.json中的默认依赖路径为：",
+  "source": "@site/docs/dev-guide/ljm.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-ljm",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-ljm",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/ljm.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-ljm",
+    "title": "Modifying lib-jitsi-meet - 修改lib-jitsi-meet"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Jitsi Meet development - Jitsi Meet开发",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-web-jitsi-meet"
+  },
+  "next": {
+    "title": "Integrations - 集成",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-web-integrations"
+  }
+}

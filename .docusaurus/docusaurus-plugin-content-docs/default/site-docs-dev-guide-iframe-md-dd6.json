@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-iframe",
+  "title": "IFrame API",
+  "description": "将 Jitsi Meet API 嵌入到您的网站或应用程序中，使您能够与同事、团队和利益相关者举办并提供安全的视频会议。Meet API 提供了一整套全面的会议功能。",
+  "source": "@site/docs/dev-guide/iframe.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-iframe",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-iframe",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/iframe.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-iframe",
+    "title": "IFrame API"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "SDKs",
+    "permalink": "/handbook/docs/category/sdks"
+  },
+  "next": {
+    "title": "lib-jitsi-meet API (low level) - lib-jitsi-meet API（低级 API）",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-ljm-api"
+  }
+}

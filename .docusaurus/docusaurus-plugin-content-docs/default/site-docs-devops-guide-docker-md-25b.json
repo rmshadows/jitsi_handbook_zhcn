@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/devops-guide-docker",
+  "title": "自托管指南 - Docker",
+  "description": "Quick start - 快速上手",
+  "source": "@site/docs/devops-guide/docker.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-docker",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-docker",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/docker.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-docker",
+    "title": "自托管指南 - Docker",
+    "sidebar_label": "Docker"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "openSUSE",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-opensuse"
+  },
+  "next": {
+    "title": "Log Analyser - 日志分析器",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-log-analyser"
+  }
+}

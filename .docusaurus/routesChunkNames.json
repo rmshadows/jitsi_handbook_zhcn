@@ -1,0 +1,279 @@
+{
+  "/handbook/help-1ee": {
+    "__comp": "1f391b9e",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "content": "7d87cf11"
+  },
+  "/handbook/search-bba": {
+    "__comp": "1a4e3797",
+    "__context": {
+      "plugin": "c141421f"
+    }
+  },
+  "/handbook/docs-7ed": {
+    "__comp": "5e95c892",
+    "__context": {
+      "plugin": "aba21aa0"
+    }
+  },
+  "/handbook/docs-d94": {
+    "__comp": "a7bd4aaa",
+    "__props": "179582cf"
+  },
+  "/handbook/docs-cf8": {
+    "__comp": "a94703ab"
+  },
+  "/handbook/docs/architecture-f5f": {
+    "__comp": "17896441",
+    "content": "5281b7a2"
+  },
+  "/handbook/docs/category/configuration-d1c": {
+    "__comp": "14eb3368",
+    "__props": "581bd2fb"
+  },
+  "/handbook/docs/category/deployment-de9": {
+    "__comp": "14eb3368",
+    "__props": "af1ac9dd"
+  },
+  "/handbook/docs/category/developer-guide-ceb": {
+    "__comp": "14eb3368",
+    "__props": "8449d6f1"
+  },
+  "/handbook/docs/category/mobile-a5a": {
+    "__comp": "14eb3368",
+    "__props": "ea80b84b"
+  },
+  "/handbook/docs/category/sdks-824": {
+    "__comp": "14eb3368",
+    "__props": "c1f52f94"
+  },
+  "/handbook/docs/category/user-guide-689": {
+    "__comp": "14eb3368",
+    "__props": "002c1c26"
+  },
+  "/handbook/docs/category/web-0c1": {
+    "__comp": "14eb3368",
+    "__props": "6a5175b8"
+  },
+  "/handbook/docs/community/community-intro-937": {
+    "__comp": "17896441",
+    "content": "b07ce0c0"
+  },
+  "/handbook/docs/community/third-party-software-7b4": {
+    "__comp": "17896441",
+    "content": "c733cf82"
+  },
+  "/handbook/docs/dev-guide/dev-guide-android-sdk-374": {
+    "__comp": "17896441",
+    "content": "619256ff"
+  },
+  "/handbook/docs/dev-guide/dev-guide-configuration-8d9": {
+    "__comp": "17896441",
+    "content": "5f85ed72"
+  },
+  "/handbook/docs/dev-guide/dev-guide-contributing-91d": {
+    "__comp": "17896441",
+    "content": "a16816f5"
+  },
+  "/handbook/docs/dev-guide/dev-guide-electron-sdk-6d6": {
+    "__comp": "17896441",
+    "content": "b99777ef"
+  },
+  "/handbook/docs/dev-guide/dev-guide-flutter-sdk-2c6": {
+    "__comp": "17896441",
+    "content": "bc977be9"
+  },
+  "/handbook/docs/dev-guide/dev-guide-iframe-cd2": {
+    "__comp": "17896441",
+    "content": "dd606a67"
+  },
+  "/handbook/docs/dev-guide/dev-guide-iframe-commands-868": {
+    "__comp": "17896441",
+    "content": "d97211e7"
+  },
+  "/handbook/docs/dev-guide/dev-guide-iframe-events-b27": {
+    "__comp": "17896441",
+    "content": "53d3d234"
+  },
+  "/handbook/docs/dev-guide/dev-guide-iframe-functions-300": {
+    "__comp": "17896441",
+    "content": "b8866d24"
+  },
+  "/handbook/docs/dev-guide/dev-guide-ios-sdk-111": {
+    "__comp": "17896441",
+    "content": "6506de4b"
+  },
+  "/handbook/docs/dev-guide/dev-guide-ljm-a30": {
+    "__comp": "17896441",
+    "content": "9f1ad87c"
+  },
+  "/handbook/docs/dev-guide/dev-guide-ljm-api-4c6": {
+    "__comp": "17896441",
+    "content": "6d2ef372"
+  },
+  "/handbook/docs/dev-guide/dev-guide-mobile-jitsi-meet-11e": {
+    "__comp": "17896441",
+    "content": "aa230e5c"
+  },
+  "/handbook/docs/dev-guide/dev-guide-react-native-sdk-392": {
+    "__comp": "17896441",
+    "content": "b1208cd8"
+  },
+  "/handbook/docs/dev-guide/dev-guide-react-sdk-ad1": {
+    "__comp": "17896441",
+    "content": "4835d996"
+  },
+  "/handbook/docs/dev-guide/dev-guide-web-integrations-af0": {
+    "__comp": "17896441",
+    "content": "00635824"
+  },
+  "/handbook/docs/dev-guide/dev-guide-web-jitsi-meet-45c": {
+    "__comp": "17896441",
+    "content": "900e3a8c"
+  },
+  "/handbook/docs/dev-guide/mobile-dropbox-573": {
+    "__comp": "17896441",
+    "content": "f2e77115"
+  },
+  "/handbook/docs/dev-guide/mobile-feature-flags-40d": {
+    "__comp": "17896441",
+    "content": "4a0a1b35"
+  },
+  "/handbook/docs/dev-guide/mobile-google-auth-031": {
+    "__comp": "17896441",
+    "content": "c658896b"
+  },
+  "/handbook/docs/devops-guide/-d32": {
+    "__comp": "17896441",
+    "content": "4e572726"
+  },
+  "/handbook/docs/devops-guide/cloud-api-173": {
+    "__comp": "17896441",
+    "content": "d476ba19"
+  },
+  "/handbook/docs/devops-guide/devops-guide-bsd-bd8": {
+    "__comp": "17896441",
+    "content": "31c6f806"
+  },
+  "/handbook/docs/devops-guide/devops-guide-docker-a93": {
+    "__comp": "17896441",
+    "content": "25b664f5"
+  },
+  "/handbook/docs/devops-guide/devops-guide-log-analyser-ab9": {
+    "__comp": "17896441",
+    "content": "1a9b395f"
+  },
+  "/handbook/docs/devops-guide/devops-guide-opensuse-eba": {
+    "__comp": "17896441",
+    "content": "3280bb49"
+  },
+  "/handbook/docs/devops-guide/devops-guide-quickstart-2b3": {
+    "__comp": "17896441",
+    "content": "831f5463"
+  },
+  "/handbook/docs/devops-guide/devops-guide-requirements-395": {
+    "__comp": "17896441",
+    "content": "53784768"
+  },
+  "/handbook/docs/devops-guide/devops-guide-scalable-390": {
+    "__comp": "17896441",
+    "content": "bdacfae7"
+  },
+  "/handbook/docs/devops-guide/devops-guide-videotutorials-adb": {
+    "__comp": "17896441",
+    "content": "24f4a563"
+  },
+  "/handbook/docs/devops-guide/faq-dcd": {
+    "__comp": "17896441",
+    "content": "1107b5bf"
+  },
+  "/handbook/docs/devops-guide/ldap-authentication-c85": {
+    "__comp": "17896441",
+    "content": "39715811"
+  },
+  "/handbook/docs/devops-guide/reservation-c60": {
+    "__comp": "17896441",
+    "content": "5055ed84"
+  },
+  "/handbook/docs/devops-guide/secure-domain-1cb": {
+    "__comp": "17896441",
+    "content": "04af5f46"
+  },
+  "/handbook/docs/devops-guide/speakerstats-25f": {
+    "__comp": "17896441",
+    "content": "87dfe1b4"
+  },
+  "/handbook/docs/devops-guide/turn-b4c": {
+    "__comp": "17896441",
+    "content": "cc035d56"
+  },
+  "/handbook/docs/devops-guide/videosipgw-a29": {
+    "__comp": "17896441",
+    "content": "095cc5b8"
+  },
+  "/handbook/docs/faq-d2c": {
+    "__comp": "17896441",
+    "content": "0480b142"
+  },
+  "/handbook/docs/intro-250": {
+    "__comp": "17896441",
+    "content": "0e384e19"
+  },
+  "/handbook/docs/releases-df5": {
+    "__comp": "17896441",
+    "content": "4d66996a"
+  },
+  "/handbook/docs/security-8ae": {
+    "__comp": "17896441",
+    "content": "db32d859"
+  },
+  "/handbook/docs/user-guide/client connection status indicators-7e1": {
+    "__comp": "17896441",
+    "content": "5ca9a3fa"
+  },
+  "/handbook/docs/user-guide/keyboard-shortcuts-914": {
+    "__comp": "17896441",
+    "content": "129210bc"
+  },
+  "/handbook/docs/user-guide/supported-browsers-59d": {
+    "__comp": "17896441",
+    "content": "58508fec"
+  },
+  "/handbook/docs/user-guide/user-guide-advanced-127": {
+    "__comp": "17896441",
+    "content": "3dddb2f7"
+  },
+  "/handbook/docs/user-guide/user-guide-basic-ed8": {
+    "__comp": "17896441",
+    "content": "4e8cc489"
+  },
+  "/handbook/docs/user-guide/user-guide-jitsi-meet-for-google-calendar-c15": {
+    "__comp": "17896441",
+    "content": "53c36cd9"
+  },
+  "/handbook/docs/user-guide/user-guide-jitsi-meet-on-mobile-7c5": {
+    "__comp": "17896441",
+    "content": "c4be6ef6"
+  },
+  "/handbook/docs/user-guide/user-guide-join-jitsi-meeting-7a5": {
+    "__comp": "17896441",
+    "content": "ffa604ce"
+  },
+  "/handbook/docs/user-guide/user-guide-share-a-jitsi-meeting-5ed": {
+    "__comp": "17896441",
+    "content": "aa017752"
+  },
+  "/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting-89e": {
+    "__comp": "17896441",
+    "content": "a220506b"
+  },
+  "/handbook/-c10": {
+    "__comp": "c4f5d8e4",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  }
+}

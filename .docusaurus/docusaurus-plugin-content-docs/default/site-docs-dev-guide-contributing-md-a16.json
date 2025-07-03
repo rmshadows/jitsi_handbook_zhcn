@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-contributing",
+  "title": "Contributing Guidelines - 贡献指南",
+  "description": "我们非常感谢您愿意贡献 ❤️ 在开始工作之前，请花一点时间阅读并遵循以下简要指南。",
+  "source": "@site/docs/dev-guide/contributing.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-contributing",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-contributing",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/contributing.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-contributing",
+    "title": "Contributing Guidelines - 贡献指南"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Developer Guide",
+    "permalink": "/handbook/docs/category/developer-guide"
+  },
+  "next": {
+    "title": "SDKs",
+    "permalink": "/handbook/docs/category/sdks"
+  }
+}

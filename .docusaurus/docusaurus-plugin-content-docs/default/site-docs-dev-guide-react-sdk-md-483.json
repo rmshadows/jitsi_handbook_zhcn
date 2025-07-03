@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-react-sdk",
+  "title": "React SDK",
+  "description": "Jitsi Meet React SDK 提供与 Jitsi Meet 应用相同的用户体验，以可自定义的方式嵌入到您的应用中。",
+  "source": "@site/docs/dev-guide/react-sdk.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-react-sdk",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-react-sdk",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/react-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-react-sdk",
+    "title": "React SDK"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Electron SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-electron-sdk"
+  },
+  "next": {
+    "title": "Android SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-android-sdk"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "user-guide/user-guide-start-a-jitsi-meeting",
+  "title": "Start a Jitsi Meeting - 开始会议",
+  "description": "桌面或移动浏览器",
+  "source": "@site/docs/user-guide/start-a-jitsi-meeting.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/user-guide-start-a-jitsi-meeting",
+  "permalink": "/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/start-a-jitsi-meeting.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "user-guide-start-a-jitsi-meeting",
+    "title": "Start a Jitsi Meeting - 开始会议",
+    "sidebar_label": "Start a Jitsi Meeting - 开始会议"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Join a Jitsi Meeting - 加入Jitsi会议",
+    "permalink": "/handbook/docs/user-guide/user-guide-join-jitsi-meeting"
+  },
+  "next": {
+    "title": "Share a Jitsi Meeting - 共享会议",
+    "permalink": "/handbook/docs/user-guide/user-guide-share-a-jitsi-meeting"
+  }
+}

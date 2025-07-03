@@ -1,0 +1,19 @@
+{
+  "id": "dev-guide/mobile-google-auth",
+  "title": "Setting up Google sign-in integration - 设置 Google 登录集成",
+  "description": "- 在此处创建 Firebase 项目：https://firebase.google.com/。您需要一个已签名的 Android 构建，您也可以使用调试自签名构建，只需获取签名哈希即可。已签名应用的密钥哈希可以通过以下方式获取（在 macOS 上）：",
+  "source": "@site/docs/dev-guide/mobile-google-auth.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/mobile-google-auth",
+  "permalink": "/handbook/docs/dev-guide/mobile-google-auth",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/mobile-google-auth.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "mobile-google-auth",
+    "title": "Setting up Google sign-in integration - 设置 Google 登录集成"
+  }
+}

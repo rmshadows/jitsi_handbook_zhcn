@@ -1,0 +1,29 @@
+{
+  "id": "dev-guide/dev-guide-web-integrations",
+  "title": "Web integrations - Web集成",
+  "description": "创建 Google API 客户端以集成 Google 日历和 YouTube",
+  "source": "@site/docs/dev-guide/web-integrations.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-web-integrations",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-web-integrations",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/web-integrations.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-web-integrations",
+    "title": "Web integrations - Web集成",
+    "sidebar_label": "Integrations - 集成"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Modifying lib-jitsi-meet - 修改lib-jitsi-meet",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-ljm"
+  },
+  "next": {
+    "title": "IFrame API",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe"
+  }
+}

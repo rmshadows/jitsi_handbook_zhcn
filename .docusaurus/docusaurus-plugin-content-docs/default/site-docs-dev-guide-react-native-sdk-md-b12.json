@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-react-native-sdk",
+  "title": "React Native SDK",
+  "description": "Jitsi React Native SDK 提供与 Jitsi Meet 应用相同的用户体验，以可自定义的方式嵌入到您的 React Native 应用中。",
+  "source": "@site/docs/dev-guide/react-native-sdk.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-react-native-sdk",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-react-native-sdk",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/react-native-sdk.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-react-native-sdk",
+    "title": "React Native SDK"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "iOS SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-ios-sdk"
+  },
+  "next": {
+    "title": "Flutter SDK",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-flutter-sdk"
+  }
+}

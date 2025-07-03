@@ -1,0 +1,28 @@
+{
+  "id": "user-guide/keyboard-shortcuts",
+  "title": "Keyboard shortcuts - 快捷键",
+  "description": "* F - 显示或隐藏视频缩略图",
+  "source": "@site/docs/user-guide/keyboard-shortcuts.md",
+  "sourceDirName": "user-guide",
+  "slug": "/user-guide/keyboard-shortcuts",
+  "permalink": "/handbook/docs/user-guide/keyboard-shortcuts",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/user-guide/keyboard-shortcuts.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "keyboard-shortcuts",
+    "title": "Keyboard shortcuts - 快捷键"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Jitsi Meet for Google Calendar",
+    "permalink": "/handbook/docs/user-guide/user-guide-jitsi-meet-for-google-calendar"
+  },
+  "next": {
+    "title": "Basic options - 基础选项",
+    "permalink": "/handbook/docs/user-guide/user-guide-basic"
+  }
+}

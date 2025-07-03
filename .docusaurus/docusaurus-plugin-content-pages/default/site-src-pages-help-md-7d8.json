@@ -1,0 +1,9 @@
+{
+  "type": "mdx",
+  "permalink": "/handbook/help",
+  "source": "@site/src/pages/help.md",
+  "title": "Getting help - 获得帮助",
+  "description": "Jitsi 由一群热情的爱好者维护。",
+  "frontMatter": {},
+  "unlisted": false
+}

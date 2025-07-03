@@ -1,0 +1,29 @@
+{
+  "id": "devops-guide/videosipgw",
+  "title": "Configuring a video SIP gateway - 配置一个视频SIP网关",
+  "description": "本文档描述了如何配置 jitsi-meet 以使用 sipgw jibri 并启用“添加人员对话框”中的房间。您需要有一个已配置为使用常规 SIP 视频设备的工作 Jibri 部署，更多信息请查看 jibri 文档。",
+  "source": "@site/docs/devops-guide/video-sipgw.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/videosipgw",
+  "permalink": "/handbook/docs/devops-guide/videosipgw",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/video-sipgw.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "videosipgw",
+    "title": "Configuring a video SIP gateway - 配置一个视频SIP网关",
+    "sidebar_label": "Video SIP gateway - 视频SIP网关"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Speaker Stats - 启用发言者统计",
+    "permalink": "/handbook/docs/devops-guide/speakerstats"
+  },
+  "next": {
+    "title": "Cloud API",
+    "permalink": "/handbook/docs/devops-guide/cloud-api"
+  }
+}

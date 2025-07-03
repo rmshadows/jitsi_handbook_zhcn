@@ -1,0 +1,20 @@
+{
+  "id": "releases",
+  "title": "Releases - 发布",
+  "description": "Jitsi Meet 的版本发布说明可以在此处查看。",
+  "source": "@site/docs/releases.md",
+  "sourceDirName": ".",
+  "slug": "/releases",
+  "permalink": "/handbook/docs/releases",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/releases.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "releases",
+    "title": "Releases - 发布"
+  },
+  "sidebar": "releases-sidebar"
+}

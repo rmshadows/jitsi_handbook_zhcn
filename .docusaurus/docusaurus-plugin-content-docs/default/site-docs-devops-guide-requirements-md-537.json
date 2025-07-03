@@ -1,0 +1,28 @@
+{
+  "id": "devops-guide/devops-guide-requirements",
+  "title": "Requirements - 配置要求",
+  "description": "Jitsi Meet 是一个实时系统。",
+  "source": "@site/docs/devops-guide/requirements.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/devops-guide-requirements",
+  "permalink": "/handbook/docs/devops-guide/devops-guide-requirements",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/requirements.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "devops-guide-requirements",
+    "title": "Requirements - 配置要求"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Deployment",
+    "permalink": "/handbook/docs/category/deployment"
+  },
+  "next": {
+    "title": "Debian/Ubuntu server",
+    "permalink": "/handbook/docs/devops-guide/devops-guide-quickstart"
+  }
+}

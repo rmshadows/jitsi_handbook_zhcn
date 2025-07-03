@@ -1,0 +1,28 @@
+{
+  "id": "dev-guide/dev-guide-iframe-commands",
+  "title": "Commands - 指令",
+  "description": "您可以通过在 JitsiMeetExternalAPI 对象上调用 executeCommand 来控制嵌入的 Jitsi Meet 会议：",
+  "source": "@site/docs/dev-guide/iframe-commands.md",
+  "sourceDirName": "dev-guide",
+  "slug": "/dev-guide/dev-guide-iframe-commands",
+  "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-commands",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/dev-guide/iframe-commands.md",
+  "tags": [],
+  "version": "current",
+  "lastUpdatedAt": 1751509822000,
+  "frontMatter": {
+    "id": "dev-guide-iframe-commands",
+    "title": "Commands - 指令"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Functions - 功能",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-functions"
+  },
+  "next": {
+    "title": "Events - 事件",
+    "permalink": "/handbook/docs/dev-guide/dev-guide-iframe-events"
+  }
+}
