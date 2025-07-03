@@ -7,7 +7,7 @@ title: Third-Party Software - 第三方软件
 
 请保持此列表按字母顺序排列。
 
-:::警告
+:::warning
 由于这些软件包不是由Jitsi团队维护，如果您发现问题，请在其相应的论坛或问题跟踪系统中寻求帮助。
 :::
 
@@ -16,6 +16,15 @@ title: Third-Party Software - 第三方软件
 一些使用注入脚本的额外功能。
 
 https://jitsi-hacks.cketti.eu/
+
+## Eparto Virtual Phone
+
+这是一个 Chrome 扩展程序，允许用户将浏览器用作虚拟电话，并且无需打开任何网站即可发起基于 Jitsi 的通话。
+
+Chrome 网上应用店:
+[Eparto virtual phone extension](https://chromewebstore.google.com/detail/eparto-virtual-phone/njihflnogjnjnmflicfongbnehhpkhmj)
+
+GitHub: https://github.com/emrahcom/eparto-virtual-phone
 
 ## Flutter plugin
 
@@ -42,6 +51,12 @@ https://github.com/emrahcom/galaxy-kc
 将 Jitsi Meet 会议与 GStreamer 管道集成。
 
 https://github.com/avstack/gst-meet
+
+## GStreamer plugin in C++
+
+Jitsi Meet GStreamer 插件
+
+https://github.com/mojyack/gstjitsimeet
 
 ## Jitok: Jitsi Token generator
 
@@ -128,13 +143,15 @@ https://github.com/jitsi-contrib/prosody-plugins
 - **token_lobby_ondemand**: 根据令牌 (JWT) 中的标志按需激活大厅。
 - **token_owner_party**: 防止未经授权的用户创建房间，并在房间所有者离开时终止会议。
 
-## SAML 到 Jitsi JWT 认证
+## SAML to Jitsi JWT Authentification
+
+SAML 到 Jitsi JWT 认证
 
 通过 Shibboleth 将 SAML 认证集成到 Jitsi Meet JWT 生成器中。
 
 Github: https://github.com/Renater/Jitsi-SAML2JWT
 
-## Unity 插件
+## Unity plugin
 
 在 Unity 环境（WebGL）中使用 lib-jitsi-meet 的插件。
 
@@ -144,7 +161,9 @@ https://github.com/avstack/jitsi-meet-unity-demo
 
 https://github.com/SariskaIO/Sariska-Media-Unity-Demo
 
-## 通用 OIDC 和 SAML 适配器
+## Generic OIDC and SAML adapter
+
+通用 OIDC 和 SAML 适配器
 
 为 Jitsi 添加 OIDC 和 SAML 支持，激活 JWT 和匿名域。认证会议主持人，允许访客无需身份验证即可加入。
 

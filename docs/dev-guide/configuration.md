@@ -654,13 +654,14 @@ enableEncodedTransformSupport: false
 enableForcedReload: true
 ```
 
-### enableIceRestart
+### ~~enableIceRestart~~
 
-类型: `Boolean`
+~~类型: `Boolean`~~
 
-启用LJM中的ICE重启逻辑，并在ICE失败时显示页面重新加载的覆盖层。目前默认禁用，因为当Octo启用时，它会导致信令问题。另外，当执行“ICE重启”（实际上不是一个真正的ICE重启）时，客户端保持TCC序列号计数器，而桥则重置它。桥发送的媒体包从0开始的TCC序列号。
+~~启用LJM中的ICE重启逻辑，并在ICE失败时显示页面重新加载的覆盖层。目前默认禁用，因为当Octo启用时，它会导致信令问题。另外，当执行“ICE重启”（实际上不是一个真正的ICE重启）时，客户端保持TCC序列号计数器，而桥则重置它。桥发送的媒体包从0开始的TCC序列号。~~
 
 ```javascript
+(不再支持)
 enableIceRestart: true
 ```
 

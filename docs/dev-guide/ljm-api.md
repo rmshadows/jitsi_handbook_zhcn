@@ -267,7 +267,7 @@ JitsiMeetJS.setLogLevel(JitsiMeetJS.logLevels.ERROR);
      - `e2eping`
        - `pingInterval`
      - `enableForcedReload`
-     - `enableIceRestart`
+     - ~~`enableIceRestart`~~
      - `enableNoAudioDetection` - 布尔属性。
      - `enableOpusRed`
      - `enableTalkWhileMuted` - 布尔属性。

@@ -88,6 +88,18 @@ docker compose -f docker-compose.yml -f jibri.yml up -d
 docker compose -f docker-compose.yml -f jigasi.yml -f jibri.yml up -d
 ```
 
+要启用转录组件，请按以下方式运行 Docker Compose：
+
+```bash
+docker compose -f docker-compose.yml -f transcriber.yml up -d
+```
+
+或者要同时启用所有组件：
+
+```bash
+docker compose -f docker-compose.yml -f transcriber.yml -f jigasi.yml -f jibri.yml up -d
+```
+
 对于日志分析项目，您需要 `log-analyser.yml` 和 `grafana.yml` 文件。该项目允许您在 grafana 中分析 Docker 日志。如果您想运行日志分析器，请按以下命令运行 Docker 文件：
 
 ```bash
@@ -580,20 +592,38 @@ find /config/data/meet%2ejitsi/accounts -type f -exec basename {} .dat \;
 
 ### 转录功能配置
 
-如果您想启用转录功能，需要以下选项：
+如果你想启用转录功能，请设置以下配置选项，并使用额外的配置文件 `transcriber.yml` 运行 Docker Compose。
 
-| 变量                               | 描述                                            | 示例 |
-| ---------------------------------- | ----------------------------------------------- | ---- |
-| `ENABLE_TRANSCRIPTIONS`            | 启用会议中的 Jigasi 转录功能                    | 1    |
-| `GC_PROJECT_ID`                    | 来自 Google Cloud 凭据的 `project_id`           |      |
-| `GC_PRIVATE_KEY_ID`                | 来自 Google Cloud 凭据的 `private_key_id`       |      |
-| `GC_PRIVATE_KEY`                   | 来自 Google Cloud 凭据的 `private_key`          |      |
-| `GC_CLIENT_EMAIL`                  | 来自 Google Cloud 凭据的 `client_email`         |      |
-| `GC_CLIENT_ID`                     | 来自 Google Cloud 凭据的 `client_id`            |      |
-| `GC_CLIENT_CERT_URL`               | 来自 Google Cloud 凭据的 `client_x509_cert_url` |      |
-| `JIGASI_TRANSCRIBER_RECORD_AUDIO`  | 当转录器开启时，Jigasi 会录制音频               | true |
-| `JIGASI_TRANSCRIBER_SEND_TXT`      | 当转录器开启时，Jigasi 会将转录文本发送到聊天   | true |
-| `JIGASI_TRANSCRIBER_ADVERTISE_URL` | Jigasi 会将转录文件的链接发布到聊天             | true |
+| Variable                | Description                                 | Example |
+| ----------------------- | ------------------------------------------- | ------- |
+| `ENABLE_TRANSCRIPTIONS` | Enable Jigasi transcription in a conference | 1       |
+
+此外，以下选项用于配置不同的转录后端和相关功能：
+
+| 变量名                                          | 描述                                                      | 默认值 |
+| ----------------------------------------------- | --------------------------------------------------------- | ------ |
+| `GC_PROJECT_ID`                                 | 来自 Google Cloud 凭证的 `project_id`                     |        |
+| `GC_PRIVATE_KEY_ID`                             | 来自 Google Cloud 凭证的 `private_key_id`                 |        |
+| `GC_PRIVATE_KEY`                                | 来自 Google Cloud 凭证的 `private_key`                    |        |
+| `GC_CLIENT_EMAIL`                               | 来自 Google Cloud 凭证的 `client_email`                   |        |
+| `GC_CLIENT_ID`                                  | 来自 Google Cloud 凭证的 `client_id`                      |        |
+| `GC_CLIENT_CERT_URL`                            | 来自 Google Cloud 凭证的 `client_x509_cert_url`           |        |
+| `JIGASI_TRANSCRIBER_ADVERTISE_URL`              | Jigasi 会将转录文件的链接发送到聊天中                     | true   |
+| `JIGASI_TRANSCRIBER_CUSTOM_SERVICE`             | Jigasi 使用自定义转录服务类，而不是使用 Google Cloud      |        |
+| `JIGASI_TRANSCRIBER_CUSTOM_TRANSLATION_SERVICE` | Jigasi 使用自定义翻译服务类，而不是使用 Google Cloud      |        |
+| `JIGASI_TRANSCRIBER_ENABLE_SAVING`              | Jigasi 会将转录结果保存为文件                             | true   |
+| `JIGASI_TRANSCRIBER_FILTER_SILENCE`             | Jigasi 会过滤静音音频，不转发给后端服务                   |        |
+| `JIGASI_TRANSCRIBER_LIBRETRANSLATE_URL`         | LibreTranslate 服务的 URL 地址                            |        |
+| `JIGASI_TRANSCRIBER_OCI_COMPARTMENT`            | Oracle Cloud Speech AI 服务使用的 OCI 区隔（compartment） |        |
+| `JIGASI_TRANSCRIBER_OCI_REGION`                 | Oracle Cloud Speech AI 服务使用的 OCI 区域名称            |        |
+| `JIGASI_TRANSCRIBER_RECORD_AUDIO`               | 启用转录时，Jigasi 会录制音频                             | true   |
+| `JIGASI_TRANSCRIBER_REMOTE_CONFIG_URL`          | 基于会议详情控制自定义转录服务的远程配置 URL              |        |
+| `JIGASI_TRANSCRIBER_SEND_TXT`                   | 启用转录时，Jigasi 会将转录文字发送至聊天中               | true   |
+| `JIGASI_TRANSCRIBER_USER`                       | Jigasi 的 XMPP 用户名                                     |        |
+| `JIGASI_TRANSCRIBER_VOSK_URL`                   | 使用 Vosk 转录后端的服务地址                              |        |
+| `JIGASI_TRANSCRIBER_WHISPER_URL`                | 使用 Whisper 转录后端的服务地址                           |        |
+| `JIGASI_TRANSCRIBER_WHISPER_PRIVATE_KEY_NAME`   | Whisper 使用的私钥标识                                    |        |
+| `JIGASI_TRANSCRIBER_WHISPER_PRIVATE_KEY`        | Whisper 使用的私钥内容（去除换行符与 START/END 标记）     |        |
 
 有关设置 Google Cloud 凭据的详细信息，请参阅 https://cloud.google.com/text-to-speech/docs/quickstart-protocol> 中的 "Before you begin" 部分的第 1 到 5 段。
 
@@ -775,6 +805,42 @@ sudo cat /var/log/jitsi/jvb.log | jq -r '.msg' | jq -r '.message'
 
 ## 在反向代理后运行
 
+当在同一主机上通过反向代理运行时，代理与 Jitsi Meet 之间的通信通常使用 HTTP 而非 HTTPS，因为我们通常没有为 `localhost` 配置有效的证书。
+
+:::note
+
+Jitsi Meet 目前在部署于子路径（子目录）下时运行效果不佳。
+
+:::
+
+### 禁用HTTPS
+
+可以在 Docker Compose 配置中禁用 HTTPS（因为在 localhost 上 HTTPS 很可能无法正常工作）：
+
+```bash
+DISABLE_HTTPS=1
+ENABLE_HTTP_REDIRECT=0
+ENABLE_LETSENCRYPT=0
+```
+
+### 不要将 Jitsi Meet 的端口暴露到公网
+
+默认情况下，`HTTP_PORT` 和 `HTTPS_PORT` 会绑定到所有 IP 地址（`0.0.0.0`），因此在没有防火墙限制的情况下将对公网开放。当使用反向代理时，这种端口暴露是不必要的。你可以通过修改 Web 容器的端口配置来限制仅本机访问：
+
+```yaml
+            - '127.0.0.1:${HTTP_PORT}:80'
+            - '127.0.0.1:${HTTPS_PORT}:443'
+```
+
+而不是：
+
+```yaml
+            - '${HTTP_PORT}:80'
+            - '${HTTPS_PORT}:443'
+```
+
+### 反向代理配置
+
 默认情况下，此设置使用 WebSocket 连接来处理两个核心组件：
 
 - 信令 - Signalling（XMPP）
@@ -785,26 +851,39 @@ sudo cat /var/log/jitsi/jvb.log | jq -r '.msg' | jq -r '.message'
 - /xmpp-websocket
 - /colibri-ws
 
-使用 nginx，可以通过以下配置片段转发这些路径：
+其他的 HTTP 请求必须由 web 容器处理。
+
+在以下配置示例中，`http://localhost:8000/` 是 Web 服务的入口地址（其中 `8000` 对应于 `HTTP_PORT`）。
+
+#### Nginx
+
+使用 nginx 时，可以通过以下配置片段将这些路由转发：
 
 ```nginx
 location /xmpp-websocket {
-    proxy_pass https://localhost:8443;
+    proxy_pass http://localhost:8000/xmpp-websocket;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
 }
+
 location /colibri-ws {
-    proxy_pass https://localhost:8443;
+    proxy_pass http://localhost:8000/colibri-ws;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
+}
+
+location / {
+    proxy_pass http://localhost:8000/;
+    proxy_http_version 1.1;
 }
 ```
 
-此外，还需要为 `/http-bind` 配置一个路径，因为移动客户端仍然使用基于 BOSH 的 XMPP：
+~~此外，还需要为 `/http-bind` 配置一个路径，因为移动客户端仍然使用基于 BOSH 的 XMPP：~~
 
 ```nginx
+(新文档已删除)
 location /http-bind {
     proxy_pass https://localhost:8443;
     proxy_http_version 1.1;
@@ -813,28 +892,26 @@ location /http-bind {
 }
 ```
 
-使用 Apache，需启用 `mod_proxy` 和 `mod_proxy_wstunnel`，并使用以下配置片段转发这些路径：
+#### Apache
+
+在使用 Apache 时，需要启用 `mod_proxy`、`mod_proxy_http` 和 `mod_proxy_wstunnel` 模块。
+
+
+可以使用以下配置片段来设置反向代理：
 
 ```apache
 <IfModule mod_proxy.c>
     <IfModule mod_proxy_wstunnel.c>
         ProxyTimeout 900
-        <Location "/xmpp-websocket">
-            ProxyPass "wss://localhost:8443/xmpp-websocket"
-        </Location>
-        <Location "/colibri-ws/">
-            ProxyPass "wss://localhost:8443/colibri-ws/"
-        </Location>
-        <Location "/http-bind">
-            ProxyPass "http://localhost:8443/http-bind"
-        </Location>
+        ProxyPass /xmpp-websocket ws://localhost:8000/xmpp-websocket
+        ProxyPass /colibri-ws/ ws://localhost:8000/colibri-ws/
+        ProxyPass / http://localhost:8000/
+        ProxyPassReverse / http://localhost:8000/
     </IfModule>
 </IfModule>
 ```
 
-其中 `https://localhost:8443/` 是 Web 服务的入口 URL。
-
-### 禁用 WebSocket 连接
+## 禁用 WebSocket 连接
 
 :::note
 这不是推荐的设置。
