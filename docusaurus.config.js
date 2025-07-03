@@ -1,8 +1,8 @@
 module.exports = {
   title: "Jitsi Meet",
   tagline: "State-of-the-art video conferencing you can self-host.",
-  url: "https://civiccccc.ltd/",
-  baseUrl: "/handbook/",
+  url: "https://rmshadows.github.io/",
+  baseUrl: "/jitsi_handbook_zhcn/",
   organizationName: "jitsi",
   projectName: "handbook",
   favicon: "img/favicon.svg",
