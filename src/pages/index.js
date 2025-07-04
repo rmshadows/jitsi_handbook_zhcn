@@ -101,7 +101,7 @@ function Home() {
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div>
             先进的视频会议系统，支持自主托管<br/><br/>
-            <p>『翻译』日期：2024-10-11 来源：Jitsi-Meet中文交流群（246483851） —— Ryan Yim</p>
+            <p>『翻译』日期：2025-07-04 来源：Jitsi-Meet中文交流群（246483851） —— Ryan Yim</p>
           </div>
           <div className={styles.buttons}>
             <Link
