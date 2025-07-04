@@ -297,6 +297,18 @@ api.setLargeVideoParticipant(participantId);
 api.setVideoInputDevice(deviceLabel, deviceId);
 ```
 
+### setVirtualBackground
+
+使用 Base64 编码的图像设置虚拟背景。
+
+```javascript
+/**
+ * @param {boolean} enabled - 启用或禁用虚拟背景。
+ * @param {string} backgroundImage - Base64 编码的图像字符串，例如："data:image/png;base64, iVBOR..."。
+ */
+api.setVirtualBackground(enabled, backgroundImage);
+```
+
 ### startRecording
 
 开始文件录制或流媒体会话。有关更多详细信息，请参见 `startRecording` 命令。
@@ -403,6 +415,14 @@ api.isAudioAvailable().then(available => {
 api.isVideoAvailable().then(available => {
     ...
 });
+```
+
+### isVisitor
+
+返回当前用户是不是访客。
+
+```javascript
+const isVisitor = api.isVisitor();
 ```
 
 ### isModerationOn

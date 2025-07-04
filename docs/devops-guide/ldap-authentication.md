@@ -5,7 +5,7 @@ sidebar_label: LDAP 认证
 ---
 
 :::note
-本文只是初稿，可能在您的系统上无法正常工作。它已在安装了 Prosody 0.11 的 Debian 11 系统上进行了测试，并对 OpenLDAP 目录进行身份验证。
+这是一个初稿，可能无法在你的系统上正常运行。它已在 Debian 11（使用 prosody 0.11 并通过 OpenLDAP 目录进行身份验证）和 Ubuntu 24.04（使用 Prosody 0.12 并通过 Active Directory 进行身份验证）上测试过。
 :::
 
 如果您希望将用户身份验证与 LDAP 目录进行，而不是使用本地 Prosody 用户数据库，可以使用 Cyrus SASL 包。使用此包，您可能能够验证用户提供的凭据与其他来源（如 PAM、SQL 等）进行匹配，但这超出了本文的范围。
@@ -19,7 +19,7 @@ sidebar_label: LDAP 认证
 在 Debian 系统上，您需要安装一些必需的包：
 
 ```
-sudo apt-get install sasl2-bin libsasl2-modules-ldap lua-cyrussasl
+sudo apt-get install sasl2-bin libsasl2-modules-ldap lua-cyrussasl prosody-modules
 sudo prosodyctl install --server=https://modules.prosody.im/rocks/ mod_auth_cyrus
 ```
 

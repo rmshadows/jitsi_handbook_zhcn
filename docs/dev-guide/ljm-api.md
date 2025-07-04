@@ -3,28 +3,28 @@ id: dev-guide-ljm-api
 title: lib-jitsi-meet API (low level) - lib-jitsi-meet API（低级 API）
 ---
 
-You can use Jitsi Meet API to create Jitsi Meet video conferences with a custom GUI.
+你可以使用 Jitsi Meet API 创建带有自定义图形界面的 Jitsi Meet 视频会议。
 
-## Installation
+## 安装
 
-To embed Jitsi Meet API in your application you need to add Jitsi Meet API library
+要在你的应用中嵌入 Jitsi Meet API，你需要引入 Jitsi Meet API 的库文件。
+ **该库应从你自己的部署中加载。**
 
 ```html
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://meet.jit.si/libs/lib-jitsi-meet.min.js"></script>
 ```
 
-Now you can access Jitsi Meet API through the `JitsiMeetJS` global object.
+现在，你可以通过全局对象 `JitsiMeetJS` 访问 Jitsi Meet API。
 
-## Getting Started
+## 入门指南
 
-1. The first thing you must do in order to use Jitsi Meet API is to initialize `JitsiMeetJS` object:
+1. 首先，你需要初始化 `JitsiMeetJS` 对象：
 
 ```javascript
 JitsiMeetJS.init();
 ```
 
-2. Then you must create the connection object:
+2. 然后你需要创建连接对象：
 
 
 ```javascript
@@ -32,7 +32,7 @@ var connection = new JitsiMeetJS.JitsiConnection(null, null, options);
 ```
 
 
-3. Now we can attach some listeners to the connection object and establish the server connection:
+3. 接下来，我们可以为连接对象添加一些监听器，并建立与服务器的连接：
 
 ```javascript
 connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_ESTABLISHED, onConnectionSuccess);
@@ -42,8 +42,8 @@ connection.addEventListener(JitsiMeetJS.events.connection.CONNECTION_DISCONNECTE
 connection.connect();
 ```
 
-4. After you receive the `CONNECTION_ESTABLISHED` event you are to create the `JitsiConference` object and
-also you may want to attach listeners for conference events (we are going to add handlers for remote track, conference joined, etc. ):
+4. 当你收到 `CONNECTION_ESTABLISHED`（连接建立）事件后，你需要创建 `JitsiConference` 对象，
+    同时你可能还需要为会议相关事件添加监听器（例如我们将添加远程轨道、加入会议等事件的处理函数）：
 
 
 ```javascript
@@ -52,40 +52,34 @@ room.on(JitsiMeetJS.events.conference.TRACK_ADDED, onRemoteTrack);
 room.on(JitsiMeetJS.events.conference.CONFERENCE_JOINED, onConferenceJoined);
 ```
 
-5. You also may want to get your local tracks from the camera and microphone:
+5. 你可能还需要从摄像头和麦克风获取本地轨道：
+
 ```javascript
 JitsiMeetJS.createLocalTracks().then(onLocalTracks);
 ```
 
-NOTE: Adding listeners and creating local streams are not mandatory steps.
+注意：添加监听器和创建本地音视频流并不是必需的步骤。
 
-6. Then you are ready to create / join a conference :
+6. 然后，你就可以创建或加入一个会议了：
 
 ```javascript
 room.join();
 ```
 
-After that step you are in the conference. Now you can continue with adding some code that will handle the events and manage the conference.
+完成上述步骤后，你就已经进入会议了。
+ 接下来，你可以继续添加代码来处理各种事件，并管理会议的流程。
 
-## Components
+## 组件
 
-Jitsi Meet API has the following components:
+See [the full API docs](https://jitsi.github.io/lib-jitsi-meet/).
 
-* JitsiMeetJS
-
-* JitsiConnection
-
-* JitsiConference
-
-* JitsiTrack
-
-* JitsiTrackError
-
-## Usage
+## 使用
 
 :::note NOTE
-JaaS customers, please follow [this example](https://github.com/jitsi/ljm-jaas-example) or check out the [live demo](https://jitsi.github.io/ljm-jaas-example).
+JaaS 用户请参阅 [这个示例](https://github.com/jitsi/ljm-jaas-example)，或查看 [在线演示](https://jitsi.github.io/ljm-jaas-example)。
 :::
+
+## 注意：新文档已删除以下内容(2025-07-04)。
 
 ### JitsiMeetJS
 

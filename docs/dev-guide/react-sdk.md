@@ -63,21 +63,20 @@ SDK 提供两个具有类似属性的组件，旨在用于不同的用例。
 
 ```jsx
 <JaaSMeeting
-    appId={YOUR_APP_ID}
-    roomName="PleaseUseAGoodRoomName"
-    jwt={YOUR_VALID_JWT}
-    configOverwrite={{
-        disableThirdPartyRequests: true,
+    appId = { YOUR_APP_ID }
+    roomName = "PleaseUseAGoodRoomName"
+    jwt = { YOUR_VALID_JWT }
+    configOverwrite = {{
         disableLocalVideoFlip: true,
         backgroundAlpha: 0.5
     }}
-    interfaceConfigOverwrite={{
+    interfaceConfigOverwrite = {{
         VIDEO_LAYOUT_FIT: 'nocrop',
         MOBILE_APP_PROMO: false,
         TILE_VIEW_MAX_COLUMNS: 4
     }}
-    spinner={SpinnerView}
-    onApiReady={(externalApi) => { ... }}
+    spinner = { SpinnerView }
+    onApiReady = { (externalApi) => { ... } }
 />
 ```
 
@@ -85,10 +84,10 @@ SDK 提供两个具有类似属性的组件，旨在用于不同的用例。
 
 ```js
 <JaaSMeeting
-    appId={YOUR_APP_ID}
-    roomName="PleaseUseAGoodRoomName"
+    appId = { YOUR_APP_ID }
+    roomName = "PleaseUseAGoodRoomName"
     ...
-    useStaging={true}
+    useStaging = { true }
 />
 ```
 

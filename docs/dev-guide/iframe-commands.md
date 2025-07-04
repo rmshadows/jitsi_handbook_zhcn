@@ -244,13 +244,14 @@ api.executeCommand('endConference');
 api.executeCommand('email', 'example@example.com');
 ```
 
-### avatarUrl
+### ~~avatarUrl~~
 
-更改本地头像 URL。
+~~更改本地头像 URL。~~
 
-该命令需要新的头像 URL 作为单个参数。
+~~该命令需要新的头像 URL 作为单个参数。~~
 
 ```javascript
+(原内容已删除)
 api.executeCommand('avatarUrl', 'https://avatars0.githubusercontent.com/u/3671647');
 ```
 
@@ -714,6 +715,10 @@ api.executeCommand('toggleWhiteboard');
 api.executeCommand('setAssumedBandwidthBps',
     assumedBandwidthBps: number // 必需。要设置的假定带宽值，以 bps 表示。
 );
+
+api.executeCommand('setAssumedBandwidthBps',
+assumedBandwidthBps: number // 必填。设置的假定带宽值，单位为 bps（比特每秒）。
+);
 ```
 
 ### setBlurredBackground
@@ -725,3 +730,25 @@ api.executeCommand('setBlurredBackground',
 		blurType: String // 必需。要应用的模糊类型。接受的值为 'slight-blur'、'blur' 或 'none'。
 );
 ```
+
+### setAudioOnly
+
+启用或禁用“仅音频”模式。
+
+```javascript
+api.executeCommand('setAudioOnly',
+    enable: boolean // 必填。true 表示启用，仅音频模式；false 表示禁用。
+);
+```
+
+### setVirtualBackground
+
+使用 Base64 编码的图像设置你的虚拟背景。
+
+```javascript
+api.executeCommand('setVirtualBackground',
+    enabled: boolean, // 必填。是否启用虚拟背景。
+    backgroundImage: string // 必填。Base64 编码的图像字符串，例如："data:image/png;base64, iVBOR..."。
+);
+```
+

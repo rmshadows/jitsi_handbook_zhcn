@@ -43,7 +43,11 @@ sidebar_label: Docker
    * 对于 Windows：
 
    ```bash
-   echo web,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri | % { mkdir "~/.jitsi-meet-cfg/$_" }
+   echo web,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,jigasi,jibri
+   ```
+
+   ```bash
+    mkdir "~/.jitsi-meet-cfg/$_"
    ```
 
 6. 运行以下命令启动服务（译者：建议使用`docker-compose`输出更简洁）：
@@ -625,7 +629,7 @@ find /config/data/meet%2ejitsi/accounts -type f -exec basename {} .dat \;
 | `JIGASI_TRANSCRIBER_WHISPER_PRIVATE_KEY_NAME`   | Whisper 使用的私钥标识                                    |        |
 | `JIGASI_TRANSCRIBER_WHISPER_PRIVATE_KEY`        | Whisper 使用的私钥内容（去除换行符与 START/END 标记）     |        |
 
-有关设置 Google Cloud 凭据的详细信息，请参阅 https://cloud.google.com/text-to-speech/docs/quickstart-protocol> 中的 "Before you begin" 部分的第 1 到 5 段。
+要设置 Google Cloud 凭据，请阅读 [https://cloud.google.com/text-to-speech/docs/quickstart-protocol](https://cloud.google.com/text-to-speech/docs/quickstart-protocol) 中“开始之前”("Before you begin" )部分的第 1 至第 5 段。
 
 ### Sentry 日志配置
 
@@ -649,6 +653,7 @@ find /config/data/meet%2ejitsi/accounts -type f -exec basename {} .dat \;
 | `TURN_TRANSPORT`   | TURN 服务器协议，使用逗号分隔的列表（UDP 或 TCP 或两者） | tcp    |
 | `TURNS_HOST`       | TURN 服务器主机名，使用逗号分隔的列表（TLS 传输）        |        |
 | `TURNS_PORT`       | TURN 服务器端口（TLS 传输）                              | 443    |
+|`TURN_TLL`| TURN 最大分配持续时间（秒） | 86400 |
 
 ### 高级配置
 
@@ -760,6 +765,14 @@ JVB_ADVERTISE_IPS=192.168.1.1,1.2.3.4
 ```
 JVB_DISABLE_STUN=true
 ```
+
+### 调整 UDP 缓冲区
+
+如果你在使用 UDP 流量时遇到问题，例如同步异常、画面跳帧等，或者你预期会有高流量和大型会议的情况，你可能需要调整 UDP 缓冲区的大小。
+
+你需要在宿主机上（即运行 jvb 容器的主机）进行这个设置。
+
+为此，你可以获取这个 [sysctl 配置文件](https://github.com/jitsi/jitsi-videobridge/blob/master/config/20-jvb-udp-buffers.conf)，将其保存到 `/etc/sysctl.d` 目录下，然后通过以下命令加载配置：`sysctl --system`
 
 ## 访问服务器日志
 

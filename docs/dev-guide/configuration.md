@@ -543,7 +543,7 @@ __弃用__ 使用 `transcription.enabled` 代替。
 属性：
 
 * `enabled` - 启用转录（在 interface_config 中，可以配置字幕和按钮）。默认值：`false`。
-* `translationLanguages` - 翻译语言。可用语言可以在 ./src/react/features/transcribing/translation-languages.json 中找到。
+* `translationLanguages` - 翻译语言。可用语言可以在 ./lang/translation-languages.json. 中找到。
 * `useAppLanguage` - 如果为 `true`，转录器将使用应用程序语言。应用程序语言可以由参与者在其设置中明确设置，也可以根据环境自动检测，例如如果应用程序在默认使用法语的 Chrome 实例中打开，则该参与者的转录将为法语。默认值：`true`。
 * `preferredLanguage` - 转录器语言。此设置仅在 `useAppLanguage` 显式设置为 `false` 时有效。可用语言可以在 [这里](https://github.com/jitsi/jitsi-meet/blob/master/react/features/transcribing/transcriber-langs.json) 找到。默认值：`'en-US'`。
 * `autoTranscribeOnRecord` - 启用在开始录制时自动启用转录。默认值：`true`。
@@ -1288,12 +1288,14 @@ recordingLimit: {
 * `recordAudioAndVideo` - 如果为真（默认），则在录制对话框中默认选择录制音频和视频。
 * `suggestRecording` - 如果为真，则在会议开始时显示通知，并带有启动录制的行动按钮（供有此权限的用户使用）。
 * `showPrejoinWarning` - 如果为真，则在预加入屏幕中显示警告标签，指出您加入的通话可能会被录制。
+* `showRecordingLink` - 如果为 true，则录制开始的通知中会显示一个用于下载云录制的链接。
 
 ```javascript
 recordings: {
     recordAudioAndVideo: true,
     suggestRecording: false,
-    showPrejoinWarning: true
+    showPrejoinWarning: true,
+    showRecordingLink: true
 }
 ```
 

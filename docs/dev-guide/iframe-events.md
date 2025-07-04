@@ -319,10 +319,11 @@ api.removeListener(event, listener);
 
 ```javascript
 {
-    from: string, // 发送消息的用户的 ID
-    nick: string, // 发送消息的用户的昵称
-    privateMessage: boolean, // 是否为私人消息或群组消息
-    message: string // 消息文本
+    from: string, // 发送该消息的用户 ID
+    nick: string, // 发送该消息的用户昵称
+    privateMessage: boolean, // 是否为私聊消息（true 表示私聊，false 表示群聊）
+    message: string // 消息内容文本
+    stamp: string // 消息的时间戳，字符串格式（ISO-8601 标准）
 }
 ```
 
@@ -635,6 +636,7 @@ https://github.com/jitsi/jitsi-meet/blob/042a2cb447bd9ff39ab3904e493952787bd3092
     displayName: string, // 本地参与者的显示名称
     avatarURL: string, // 本地参与者的头像 URL
     breakoutRoom: boolean // 当前房间是否为分组讨论室
+    visitor: boolean // 当前用户是不是访客
 }
 ```
 
@@ -829,6 +831,19 @@ https://github.com/jitsi/jitsi-meet/blob/042a2cb447bd9ff39ab3904e493952787bd3092
     isP2p: boolean|null // 新的连接类型是否为 P2P
 }
 ```
+
+### audioOnlyChanged
+
+当“仅音频”模式的状态发生变化时，触发该事件通知。
+
+事件监听器会接收到一个对象，其结构如下：
+
+```javascript
+{
+    audioOnlyChanged: boolean // 表示“仅音频”模式当前是启用（true）还是禁用（false）。
+}
+```
+
 
 [config.js]: https://github.com/jitsi/jitsi-meet/blob/master/config.js
 [interface_config.js]: https://github.com/jitsi/jitsi-meet/blob/master/interface_config.js

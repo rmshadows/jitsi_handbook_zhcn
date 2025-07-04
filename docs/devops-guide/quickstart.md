@@ -223,22 +223,31 @@ _注意_：默认情况下，任何访问您的 Jitsi Meet 服务器的人都可
 会议/房间的访问控制在房间内进行管理，您可以在特定房间创建后在网页上设置密码。
 有关详细信息，请参见用户指南：[用户指南](https://jitsi.github.io/handbook/docs/user-guide/user-guide-start-a-jitsi-meeting)。
 
-#### 高级配置
+### 高级配置
 
-如果安装在 [NAT 后面](https://jitsi.github.io/handbook/docs/faq#how-to-tell-if-my-server-instance-is-behind-nat)，jitsi-videobridge 应在启动时自动配置。如果三方通话无法正常工作，则需要对 jitsi-videobridge 进行进一步配置，以使其可以从外部访问。
+如果安装在一台 [处于 NAT 之后](https://jitsi.github.io/handbook/docs/faq#how-to-tell-if-my-server-instance-is-behind-nat) 的机器上，`jitsi-videobridge` 应该会在启动时自动进行配置。
+ 但如果三方通话无法正常工作，则需要对 `jitsi-videobridge` 进行进一步配置，以确保其能从外部访问。
 
-前提是所有必需的端口已转发到其运行的机器。默认情况下，这些端口是 TCP/443 和 UDP/10000。
+前提是所有所需端口都已正确路由（转发）到运行该服务的机器上。默认情况下，这些端口是 TCP/443 和 UDP/10000。
 
-需要在文件 `/etc/jitsi/videobridge/sip-communicator.properties` 中添加以下额外行：
+请在 `/etc/jitsi/videobridge/jvb.conf` 文件中的 `ice4j.harvest.mapping` 部分添加静态映射配置：
 
 ```
-org.ice4j.ice.harvest.NAT_HARVESTER_LOCAL_ADDRESS=<Local.IP.Address>
-org.ice4j.ice.harvest.NAT_HARVESTER_PUBLIC_ADDRESS=<Public.IP.Address>
+ice4j {
+  harvest {
+    mapping {
+      static-mappings = [
+        {
+          local-address = "<Local.IP.Address>"
+          public-address = "<Public.IP.Address>"
+        }
+      ]
+    }
+  }
+}
 ```
 
-并注释掉现有的 `org.ice4j.ice.harvest.STUN_MAPPING_HARVESTER_ADDRESSES`。
-
-有关详细信息，请参见 [ice4j 文档](https://github.com/jitsi/ice4j/blob/master/doc/configuration.md)。
+有关详细信息，请参见 [ice4j 文档](https://github.com/jitsi/ice4j/blob/4f1329607cdcfd9ea13c0a5e7e099205775f7a0b/src/main/resources/reference.conf#L91)。
 
 **Systemd/限制：**
 默认部署将对最大进程和打开文件的值设置得很低。对于超过 100 个参与者，请更改 `/etc/systemd/system.conf` 为：
