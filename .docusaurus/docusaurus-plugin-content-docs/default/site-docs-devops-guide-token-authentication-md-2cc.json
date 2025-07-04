@@ -1,0 +1,28 @@
+{
+  "id": "devops-guide/token-authentication",
+  "title": "Token Authentication - 令牌认证",
+  "description": "可以设置仅允许持有有效令牌的用户创建新的会议室。",
+  "source": "@site/docs/devops-guide/token-authentication.md",
+  "sourceDirName": "devops-guide",
+  "slug": "/devops-guide/token-authentication",
+  "permalink": "/handbook/docs/devops-guide/token-authentication",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/jitsi/handbook/edit/master/docs/devops-guide/token-authentication.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "token-authentication",
+    "title": "Token Authentication - 令牌认证",
+    "sidebar_label": "Authentication (Token)"
+  },
+  "sidebar": "docs",
+  "previous": {
+    "title": "Authentication (Secure Domain) - 认证（安全域）",
+    "permalink": "/handbook/docs/devops-guide/secure-domain"
+  },
+  "next": {
+    "title": "Authentication (LDAP) - 认证(LDAP)",
+    "permalink": "/handbook/docs/devops-guide/ldap-authentication"
+  }
+}
