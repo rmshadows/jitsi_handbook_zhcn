@@ -9,17 +9,19 @@ sidebar_label: Jitsi Meet development - Jitsi Meet开发
 ## 构建源代码
 
 :::note
-需要 Node.js >= 16 和 npm >= 8。
+Node.js >= 22 and npm >= 10 are required.
 :::
 
 :::caution
 不支持 Windows。
 :::
 
-在 Debian/Ubuntu 系统上，可以通过以下方式安装所需的软件包：
+请确保你已经安装了 Node.js。如果尚未安装，请按照[这些说明](https://nodejs.org/en/download/)进行操作。
 
-- 从 https://nodejs.org/en/download/ 下载“Linux Binaries (x64)”。
-- 按照以下说明安装 Node.js：[Node.js 安装说明](https://github.com/nodejs/help/wiki/Installation)。
+~~在 Debian/Ubuntu 系统上，可以通过以下方式安装所需的软件包：~~
+
+- ~~从 https://nodejs.org/en/download/ 下载“Linux Binaries (x64)”。~~
+- ~~按照以下说明安装 Node.js：[Node.js 安装说明](https://github.com/nodejs/help/wiki/Installation)。~~
 
 然后继续：
 
@@ -30,8 +32,11 @@ cd ./jitsi-meet
 
 npm install
 
-# 构建 Jitsi Meet 应用程序，只需输入
+# To build the Jitsi Meet production application:
 make
+
+# For development:
+make dev
 ```
 
 :::warning

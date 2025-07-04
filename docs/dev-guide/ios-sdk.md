@@ -77,11 +77,14 @@ xcodebuild -create-xcframework \
     -framework ios/sdk/out/ios-device.xcarchive/Products/Library/Frameworks/JitsiMeetSDK.framework \
     -framework ios/sdk/out/ios-simulator.xcarchive/Products/Library/Frameworks/JitsiMeetSDK.framework \
     -output ios/sdk/out/JitsiMeetSDK.xcframework
+cp -a ios/Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework ios/sdk/out
 ```
 
-成功构建 Jitsi Meet SDK for iOS 后，生成的 XCFramework 将位于 `ios/sdk/out` 目录中。
+成功构建 iOS 版 Jitsi Meet SDK 后，生成的 XCFramework 文件会位于 `ios/sdk/out` 目录下。
 
-注意：您的应用将需要依赖于 JitsiWebRTC CocoaPod。
+如果你是将 Framework 直接嵌入项目中，还需要添加生成的 `hermes.xcframework`。
+
+注意：你的应用还需要依赖 JitsiWebRTC CocoaPod。
 
 ## API
 
@@ -125,23 +128,39 @@ JitsiMeet 是一个 iOS 框架，它体现了完整的 Jitsi Meet 体验，并�
 ```objc
   JitsiMeetConferenceOptions *options = [JitsiMeetConferenceOptions fromBuilder:^(JitsiMeetConferenceOptionsBuilder *builder) {
       builder.serverURL = [NSURL URLWithString:@"https://meet.jit.si"];
-      builder.room = @"test123";
+      builder.room = @"test123testing";
       builder.audioOnly = NO;
       builder.audioMuted = NO;
       builder.videoMuted = NO;
       builder.welcomePageEnabled = NO;
-      [builder setConfigOverride:@"requireDisplayName" withBoolean:YES];
-      [builder setConfigOverride:@"customToolbarButtons" withArray:@[
-      @{
-          @"icon": @"https://w7.pngwing.com/pngs/987/537/png-transparent-download-downloading-save-basic-user-interface-icon-thumbnail.png",
-          @"id": @"btn1",
-          @"text": @"Button one"
-        }, 
-      @{
-          @"icon": @"https://w7.pngwing.com/pngs/987/537/png-transparent-download-downloading-save-basic-user-interface-icon-thumbnail.png",
-          @"id": @"btn2",
-          @"text": @"Button two"
-      }]];
+     [builder setConfigOverride:@"requireDisplayName" withBoolean:YES];
+     [builder setConfigOverride:@"customToolbarButtons" withArray:@[
+        @{
+            @"icon": @"ICON_URL",
+            @"id": @"CUSTOM_BTN_ID"
+        },
+        @{
+            @"icon": @"ICON_URL",
+            @"id": @"CUSTOM_BTN_ID"
+        },
+        @{
+            @"icon": @"ICON_URL",
+            @"id": @"CUSTOM_BTN_ID"
+        },
+        @{
+            @"icon": @"ICON_URL",
+            @"id": @"CUSTOM_BTN_ID"
+        },
+        @{
+            @"backgroundColor": @"CUSTOM_BTN_BACKGROUND_COLOR",
+            @"icon": @"ICON_URL",
+            @"id": @"CUSTOM_BTN_ID"
+        }
+     ]];
+        <!-- If you want your custom button/s to appear inside the toolbar, 
+        you will need to set your toolbar buttons too and always include "overflowmenu", "hangup".
+        All the buttons that, because of the screen size, won't fit the toolbar, will be automatically moved to the overflow menu. -->
+     [builder setConfigOverride:@"toolbarButtons" withArray:@[@"CUSTOM_BTN_ID", @"CUSTOM_BTN_ID", @"CUSTOM_BTN_ID", @"CUSTOM_BTN_ID", @"CUSTOM_BTN_ID", @"overflowmenu", @"hangup"]];
   }];
 
   [jitsiMeetView join:options];
@@ -312,14 +331,35 @@ continueUserActivity:(NSUserActivity *)userActivity
 
 当 SDK 准备关闭时调用。此时没有会议正在进行。
 
-#### customOverflowMenuButtonPressed
+#### customButtonPressed
+
+~~customOverflowMenuButtonPressed~~
 
 当自定义按钮添加到溢出菜单时调用。`data` 包含以下信息：
 
 - `id`：被按下的自定义按钮的 ID。
 - `text`：被按下的自定义按钮的标签。
 
-### 画中画
+#### conferenceUniqueIdSet
+
+当会议唯一 ID 被设置时触发。`data` 包含以下信息：
+
+* `sessionId`：唯一的会议 ID。
+
+#### recordingStatusChanged
+
+当当前录制状态发生变化时触发。`data` 包含以下信息：
+
+* `error`：错误信息（如果有）。
+* `id`：录制任务的 ID。
+* `initiator`：发起录制的人。
+* `liveStreamViewURL`：直播观看的链接地址。
+* `mode`：录制模式。
+* `status`：当前录制状态。
+* `terminator`：终止录制的人。
+* `timestamp`：状态变化的时间戳。
+
+### 画中画 - Picture-in-Picture
 
 `JitsiMeetView` 在以画中画样式场景呈现时会自动调整其用户界面，大小矩形不足以容纳其“完整”用户界面。
 

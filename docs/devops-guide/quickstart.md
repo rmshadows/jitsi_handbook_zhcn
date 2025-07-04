@@ -4,10 +4,11 @@ title: "自托管指南 - Debian/Ubuntu服务器"
 sidebar_label: "Debian/Ubuntu server"
 ---
 
-在 Debian 系统上快速安装 Jitsi-Meet，请按照以下步骤操作。以下发行版开箱即用地得到支持：
+按照以下步骤，可在基于 Debian 的 GNU/Linux 系统上快速安装 Jitsi Meet。
+以下发行版可直接支持安装：
 
-- Debian 10（Buster）或更新版本
-- Ubuntu 22.04（Jammy Jellyfish）或更新版本（可以使用 Ubuntu 18.04 或 20.04，但必须在安装之前将 Prosody 更新到 0.11+ 版本）
+* Debian 11（Bullseye）或更高版本
+* Ubuntu 22.04（Jammy Jellyfish）或更高版本
 
 :::note
 许多安装步骤需要 `root` 或 `sudo` 权限。因此，建议您拥有系统的 `sudo`/`root` 访问权限。
@@ -20,10 +21,10 @@ sidebar_label: "Debian/Ubuntu server"
 * `gnupg2`
 * `nginx-full`
 * `sudo` => **仅在使用 `sudo` 时需要**
-* `curl` => **或者** `wget` **用于[添加 Jitsi 软件包仓库](#add-the-jitsi-package-repository)**
+* `curl` => **或者** `wget` **用于[添加 Jitsi 软件包仓库](#添加 Jitsi 软件包仓库)**
 
 :::note 注意
-必须使用 OpenJDK 11。
+必须使用 OpenJDK 17。
 :::
 
 确保您的系统是最新的，并且已安装所需的软件包：
@@ -97,17 +98,25 @@ sudo hostnamectl set-hostname meet.example.org
 
 这将添加 Prosody 仓库，以便安装最新的 Prosody，这是实现包括大堂功能在内的功能所必需的。
 
-**Ubuntu 18.04 和 20.04**
+```
+sudo curl -sL https://prosody.im/files/prosody-debian-packages.key -o /usr/share/keyrings/prosody-debian-packages.key
+echo "deb [signed-by=/usr/share/keyrings/prosody-debian-packages.key] http://packages.prosody.im/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/prosody-debian-packages.list
+sudo apt install lua5.2
+```
+
+~~**Ubuntu 18.04 和 20.04**~~
 
 ```bash
+(原文已删除)
 echo deb http://packages.prosody.im/debian $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list
 wget https://prosody.im/files/prosody-debian-packages.key -O- | sudo apt-key add -
 sudo apt install lua5.2
 ```
 
-**Ubuntu 22.04**
+~~**Ubuntu 22.04**~~
 
 ```bash
+(原文已删除)
 sudo curl -sL https://prosody.im/files/prosody-debian-packages.key -o /etc/apt/keyrings/prosody-debian-packages.key
 echo "deb [signed-by=/etc/apt/keyrings/prosody-debian-packages.key] http://packages.prosody.im/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/prosody-debian-packages.list
 sudo apt install lua5.2
@@ -117,16 +126,23 @@ sudo apt install lua5.2
 
 这将把 Jitsi 仓库添加到您的软件包源中，以使 Jitsi Meet 软件包可用。
 
-**Ubuntu 18.04 和 20.04**
+```
+curl -sL https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
+echo "deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/" | sudo tee /etc/apt/sources.list.d/jitsi-stable.list
+```
+
+~~**Ubuntu 18.04 和 20.04~~**
 
 ```bash
+(原文已删除)
 curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
 echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list > /dev/null
 ```
 
-**Ubuntu 22.04**
+~~**Ubuntu 22.04**~~
 
 ```bash
+(原文已删除)
 curl -sL https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
 echo "deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/" | sudo tee /etc/apt/sources.list.d/jitsi-stable.list
 ```
@@ -204,7 +220,7 @@ sudo apt install jitsi-meet
 ```
 
 **SSL/TLS 证书生成：**
-您将被询问关于 SSL/TLS 证书生成的相关信息。有关详细信息，请参阅 [上面](#tls-certificate)。
+您将被询问关于 SSL/TLS 证书生成的相关信息。有关详细信息，请参阅 [上面](#TLS 证书)。
 
 **主机名：**
 您还将被询问输入 Jitsi Meet 实例的主机名。如果您有域名，请使用特定的域名，例如：
@@ -266,7 +282,7 @@ systemctl show --property DefaultLimitNOFILE
 systemctl show --property DefaultTasksMax
 ```
 
-要加载值并检查，请参见 [下面](#systemd-details) 的详细信息。
+要加载值并检查，请参见 [下面](#Systemd 详情) 的详细信息。
 
 ##### Systemd 详情
 

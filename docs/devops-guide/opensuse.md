@@ -6,7 +6,9 @@ sidebar_label: openSUSE
 
 本文描述了在 openSUSE Leap 15.2 上快速安装 Jitsi-Meet 的步骤，包括单个 Videobridge 和单个 Jicofo。
 
-__注意__：许多安装步骤需要 root 访问权限。
+:::note
+许多安装步骤需要 root 访问权限。
+:::
 
 ## 安装
 
@@ -166,12 +168,18 @@ Component "conferenceduration.<FQDN>" "conference_duration_component"
 
 ### Nginx
 
-编辑 `/etc/nginx/vhosts.d/` 中的 `jitsi-meet.conf` 文件（与 `jitsi-meet` 一起安装），并执行以下操作：
+编辑 `/etc/nginx/vhosts.d/` 目录下的 `jitsi-meet.conf` 文件（该文件随 `jitsi-meet` 安装时一同生成），并执行以下操作：
 
-* 检查 `server_name` 的值。
-* 检查 TLS 证书（生产环境使用 Let's Encrypt，测试时可以使用 Prosody 的证书）。
+* 检查 `server_name` 的值是否正确。
+* 检查 TLS 证书（生产环境建议使用 Let's Encrypt，测试环境可使用 Prosody 生成的证书等）。
 
-__注意：__ 如果您使用的是现有服务器，请确保也调整 websocket 和 bosh 部分。
+:::warning[Mobile apps]
+Jitsi 的移动端应用**必须**使用由受信任[证书颁发机构（CA）](https://en.wikipedia.org/wiki/Certificate_authority)签发的有效证书。因此，如果你未配置 TLS，移动端应用将无法连接到你的 Jitsi 实例。
+:::
+
+:::note
+如果你使用的是已有的服务器，请务必同时调整 WebSocket 和 BOSH 的相关配置。
+:::
 
 ### Jitsi-Meet
 
@@ -190,11 +198,16 @@ var config = {
 };
 ```
 
-__注意：__ 请注意，这是最小配置。
+:::note
+请注意，这是最小配置。
+:::
 
 ### Jitsi-Videobridge
 
-__注意：__ 我们结合了 [新 Videobridge 配置](https://github.com/jitsi/jitsi-videobridge/blob/master/doc/muc.md#videobridge-configuration) 和包含 `sip-communicator.properties` 文件的旧配置。我们必须这样做是因为 `STATISTICS_TRANSPORT` 属性。
+:::note
+我们同时使用了[新版 Videobridge 配置](https://github.com/jitsi/jitsi-videobridge/blob/master/doc/muc.md#videobridge-configuration)和传统的 `sip-communicator.properties` 配置文件。
+我们之所以这样做，是因为需要配置 `STATISTICS_TRANSPORT` 属性。
+:::
 
 如果我们从 `sip-communicator.properties` 中删除 `org.jitsi.videobridge.STATISTICS_TRANSPORT=muc,colibri`，视频桥将无法工作！
 
@@ -312,7 +325,9 @@ TOOLBAR_BUTTONS: [
 
 ## 附加组件：Jitsi-Jigasi
 
-__来自 openSUSE 打包者的说明：__ 我们已经打包了它，但没有基础设施来设置这个组件。因此我们目前无法提供指南。
+:::note[Note from openSUSE packagers:]
+我们已经打包了它，但没有基础设施来设置这个组件。因此我们目前无法提供指南。
+:::
 
 ## 服务
 

@@ -122,6 +122,20 @@ api.removeListener(event, listener);
 }
 ```
 
+### customNotificationActionTriggered
+
+当执行 [showNotification](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe-commands/#shownotification) 命令时定义的自定义操作被触发时调用的回调函数。
+
+监听器会接收到一个具有以下结构的对象：
+
+```javascript
+{
+    data: {
+        id: string // 被触发操作的 uuid
+    }
+}
+```
+
 ### dataChannelOpened
 
 指示数据通道已打开，因此可以通过它发送消息。
@@ -420,10 +434,8 @@ api.removeListener(event, listener);
 
 ### toolbarButtonClicked
 
-提供关于工具栏按钮被点击的事件通知，以及点击例程是否执行。
-
-要覆盖按钮的点击，请使用以下配置覆盖：
-https://github.com/jitsi/jitsi-meet/blob/042a2cb447bd9ff39ab3904e493952787bd30924/config.js#L547
+提供有关工具栏按钮被点击的事件通知，并指示点击操作是否已被执行。
+要启用此通知，你需要将该按钮添加到 [`buttonsWithNotifyClick` 配置项](/handbook/docs/dev-guide/dev-guide-configuration#buttonswithnotifyclick) 中。
 
 监听器接收一个具有以下结构的对象：
 

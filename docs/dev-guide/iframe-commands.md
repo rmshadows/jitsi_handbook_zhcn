@@ -675,18 +675,22 @@ api.executeCommand('overwriteNames', [{
 
 ### showNotification
 
-显示自定义通知。这仅影响本地用户。
+显示一个自定义通知，仅对本地用户生效。
 
-如果提供了 `uid`，则该通知将替换具有相同 `uid` 的现有通知。`uid` 也可以传递给 `hideNotification` 命令，以程序化地隐藏通知。
+如果提供了 `uid`，则该通知将替换具有相同 `uid` 的现有通知。该 `uid` 也可以传递给 `hideNotification` 命令，以编程方式隐藏通知。
+
+如果提供了 `customActions`，当用户触发这些操作时，将会触发一个 [customNotificationActionTriggered](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe-events#customnotificationactiontriggered) 事件，并附带其对应的 uuid。
 
 ```javascript
 api.executeCommand('showNotification', {
   title: String, // 通知的标题。
   description: String, // 通知的内容。
+  customActions: Object(label: String, uuid: String)[], // 可选。定义要在通知上显示的自定义操作。
   uid: String, // 可选。通知的唯一标识符。
-  type: String, // 可选。可以是 'info'、'normal'、'success'、'warning' 或 'error'。默认为 'normal'。
+  type: String, // 可选。可以是 'normal'、'success'、'warning' 或 'error'。默认为 'normal'。
   timeout: String // 可选。可以是 'short'、'medium'、'long' 或 'sticky'。默认为 'short'。
 });
+
 ```
 
 ### hideNotification

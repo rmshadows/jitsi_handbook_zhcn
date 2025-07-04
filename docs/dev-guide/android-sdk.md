@@ -272,21 +272,34 @@ public class MainActivity extends FragmentActivity implements JitsiMeetActivityI
 示例：
 
 ```java
-ArrayList<Bundle> customToolbarButtons = new ArrayList<Bundle>();
+private static @NonNull ArrayList<Bundle> getCustomToolbarButtons() {
+    ArrayList<Bundle> customToolbarButtons = new ArrayList<>();
 
-Bundle firstCustomButton = new Bundle();
-Bundle secondCustomButton = new Bundle();
+    Bundle firstCustomButton = new Bundle();
+    Bundle secondCustomButton = new Bundle();
+    Bundle thirdCustomButton = new Bundle();
+    Bundle fourthCustomButton = new Bundle();
+    Bundle fifthCustomButton = new Bundle();
+    // 第一个自定义按钮，设置图标和ID
+    firstCustomButton.putString("icon", "ICON_URL");
+    firstCustomButton.putString("id", "CUSTOM_BTN_ID");
+    // 第二个自定义按钮，设置背景颜色、图标和ID
+    secondCustomButton.putString("backgroundColor", "CUSTOM_BTN_BACKGROUND_COLOR");
+    secondCustomButton.putString("icon", "ICON_URL");
+    secondCustomButton.putString("id", "CUSTOM_BTN_ID");
 
-firstCustomButton.putString("text", "Button one");
-firstCustomButton.putString("icon", "https://w7.pngwing.com/pngs/987/537/png-transparent-download-downloading-save-basic-user-interface-icon-thumbnail.png");
-firstCustomButton.putString("id", "btn1");
+    customToolbarButtons.add(firstCustomButton);
+    customToolbarButtons.add(secondCustomButton);
 
-secondCustomButton.putString("text", "Button two");
-secondCustomButton.putString("icon", "https://w7.pngwing.com/pngs/987/537/png-transparent-download-downloading-save-basic-user-interface-icon-thumbnail.png");
-secondCustomButton.putString("id", "btn2");
+    return customToolbarButtons;
+}
 
-customToolbarButtons.add(firstCustomButton);
-customToolbarButtons.add(secondCustomButton);
+// 如果你想让自定义按钮显示在工具栏中，
+// 你还需要设置工具栏按钮列表，并且必须包含 "overflowmenu" 和 "hangup"。
+// 屏幕尺寸不足以显示的按钮会自动移至溢出菜单。
+private String[] getToolbarButtons() {
+    return new String[]{"CUSTOM_BTN_ID", "CUSTOM_BTN_ID", "microphone", "overflowmenu", "hangup"};
+}
         
 JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
     .setServerURL(new URL("https://meet.jit.si"))
@@ -296,7 +309,8 @@ JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
     .setAudioOnly(false)
     .setWelcomePageEnabled(false)
     .setConfigOverride("requireDisplayName", true)
-    .setConfigOverride("customToolbarButtons", customToolbarButtons)
+    .setConfigOverride("customToolbarButtons", getCustomToolbarButtons())
+    .setConfigOverride("toolbarButtons", getToolbarButtons())
     .build();
 ```
 
@@ -400,7 +414,7 @@ SDK 广播了几个事件，用户可以对此进行监听。
 
 当接收到一个端点文本消息时广播。`data` HashMap 包含一个 `senderId` 键，值为发送者的 participantId 和一个 `message` 键，值为内容。
 
-#### SCREEN_SHARE_TOGGLED
+##### SCREEN_SHARE_TOGGLED
 
 当参与者开始或停止共享屏幕时广播。`data` 包含以下信息：
 
@@ -436,14 +450,24 @@ SDK 广播了几个事件，用户可以对此进行监听。
 
 SDK 已准备好关闭/解除。
 
-##### CUSTOM_OVERFLOW_MENU_BUTTON_PRESSED
+##### CUSTOM_BUTTON_PRESSED
 
-当在溢出菜单中按下自定义按钮时广播。`data` 包含以下信息：
+~~CUSTOM_OVERFLOW_MENU_BUTTON_PRESSED~~
+
+~~当在溢出菜单中按下自定义按钮时广播。`data` 包含以下信息：~~
+
+当一个自定义按钮被点击时触发广播事件。`data` 包含以下信息：
 
 - `id`: 按下的自定义按钮的 ID。
 - `text`: 按下的自定义按钮的标签。
 
-### 广播操作
+##### CONFERENCE\_UNIQUE\_ID\_SET
+
+当会议唯一标识（unique id）被设置时广播该事件。`data` 包含以下信息：
+
+* `sessionId`：会议的唯一标识符。
+
+### 广播操作 - Broadcasting Actions
 
 SDK 监听来自用户的广播操作并做出相应反应。
 
@@ -457,39 +481,84 @@ SDK 监听来自用户的广播操作并做出相应反应。
 
 请参阅 `JitsiMeetOngoingConferenceService` 以获取更多发送操作的示例。
 
-#### 支持的操作
+#### 支持的操作 - Supported actions
 
-##### SET_AUDIO_MUTED
+##### SET\_AUDIO\_MUTED
 
-根据 `muted` 参数设置本地参与者音频静音状态。
-期望意图额外信息中包含一个布尔值的 `muted` 键。
+根据 `muted` 参数设置本地参与者的音频静音状态。
+需要在 intent 额外参数中包含布尔值的 `muted` 键。
 
-##### SET_VIDEO_MUTED
+##### SET\_VIDEO\_MUTED
 
-根据 `muted` 参数设置本地参与者视频静音状态。
-期望意图额外信息中包含一个布尔值的 `muted` 键。
+根据 `muted` 参数设置本地参与者的视频静音状态。
+需要在 intent 额外参数中包含布尔值的 `muted` 键。
 
-##### HANG_UP
+##### HANG\_UP
 
 本地参与者离开当前会议。
-不期望任何额外值。
+不需要额外参数。
 
-##### SEND_ENDPOINT_TEXT_MESSAGE
+##### SEND\_ENDPOINT\_TEXT\_MESSAGE
 
-通过数据通道向特定参与者或所有参与者发送消息。
-期望意图额外信息中包含 `to` 键，值为要发送消息的参与者的 ID，以及 `message` 键，值为实际消息内容。
-如果 `to` 键不存在或其值为空，则消息将发送给会议中的所有参与者。
+通过数据通道向某个特定参与者或所有参与者发送消息。
+需要在 intent 额外参数中包含：
 
-要获取 participantId，应监听 `PARTICIPANT_JOINED` 事件，该事件的 `data` 包含 ID，并应以某种方式存储。
+* `to`：消息接收者的参与者 ID（如果为空或不存在，则发送给所有参与者）
+* `message`：字符串类型，消息内容。
 
-##### TOGGLE_SCREEN_SHARE
+要获取参与者 ID，需要监听 `PARTICIPANT_JOINED` 事件，事件中 `data` 包含参与者 ID，需自行保存。
+
+##### TOGGLE\_SCREEN\_SHARE
 
 根据 `enabled` 参数设置本地参与者的屏幕共享状态。
-期望意图额外信息中包含一个布尔值的 `enabled` 键。
+需要在 intent 额外参数中包含布尔值的 `enabled` 键。
 
-##### RETRIEVE_PARTICIPANTS_INFO
+##### RETRIEVE\_PARTICIPANTS\_INFO
 
-通知 SDK 检索参与者信息列表。SDK 将发出 `PARTIC
+指示 SDK 获取参与者信息列表。SDK 会触发 `PARTICIPANTS_INFO_RETRIEVED` 事件。
+需要在 intent 额外参数中包含字符串类型的 `requestId` 键，该参数会在事件中返回。
+
+##### OPEN\_CHAT
+
+打开聊天对话框。
+如果带有有效的参与者 ID 的 `to` 键，则打开该参与者的私聊窗口。
+
+##### CLOSE\_CHAT
+
+关闭聊天对话框。
+不需要额外参数。
+
+##### SEND\_CHAT\_MESSAGE
+
+发送聊天消息。
+如果带有有效的参与者 ID 的 `to` 键，则发送私聊消息，否则发送给所有人。
+需要包含字符串类型的 `message` 键。
+
+##### SHOW\_NOTIFICATION
+
+显示通知，可以基于 `appearance`（外观）、`description`（描述）、`timeout`（超时）、`title`（标题）和 `uid`（唯一标识）进行配置。
+
+##### HIDE\_NOTIFICATION
+
+根据 `uid` 隐藏指定的通知。
+
+##### START\_RECORDING
+
+开始录制，需设置 `mode`（录制模式），可以是 `file`（文件）或 `stream`（流）。
+还可以包含 `dropboxToken`、`shouldShare`、`rtmpStreamKey`、`rtmBroadcastID`、`youtubeStreamKey`、`youtubeBroadcastID`、其它 `extraMetadata`。
+该操作也支持开启 `transcription`（转录）。
+
+##### STOP\_RECORDING
+
+停止录制，基于 `mode`。如果启用了转录，也会停止转录。
+
+##### OVERWRITE\_CONFIG
+
+在会议期间覆盖配置（`config`）。
+
+##### SEND\_CAMERA\_FACING\_MODE\_MESSAGE
+
+通过数据通道发送带有 `facingMode`（摄像头方向模式）的消息给指定的 `to` 对象。
 
 ## ProGuard 规则
 

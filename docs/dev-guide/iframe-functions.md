@@ -192,6 +192,18 @@ api.getSessionId().then(sessionId => {
 });
 ```
 
+### getSharedDocumentUrl
+
+返回会议中 Etherpad 协作文档的唯一链接（`sharedDocumentUrl`）。
+ 请注意，`sharedDocumentUrl` 在预加入界面（prejoin screen）中不可用，并且在刚加入会议后也不一定立即可用——此时返回值可能为空。
+
+```javascript
+api.getSharedDocumentUrl().then(sharedDocumentUrl => {
+    // sharedDocumentUrl: 字符串类型的共享文档链接
+    ...
+});
+```
+
 ### getVideoQuality
 
 返回当前视频质量设置。

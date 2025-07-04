@@ -711,8 +711,8 @@ hosts: {
 * `iceTransportPolicy` - 设置点对点连接的ICE传输策略。目前可用的值为`all`和`relay`，但未来可能会更改。枚举在[WebRTC标准](https://www.w3.org/TR/webrtc/#rtcicetransportpolicy-enum)中定义。如果未设置，默认值为`all`。
 * `codecPreferenceOrder` - 提供一种方式在桌面端设置编解码器的优先顺序。
 * `mobileCodecPreferenceOrder` - 提供一种方式在移动设备（包括React Native和移动浏览器端点）上设置编解码器的优先顺序。
-* `preferredCodec` - __已弃用__ 使用`codecPreferenceOrder`或`mobileCodecPreferenceOrder`代替。
-* `disabledCodec` - __已弃用__ 使用`codecPreferenceOrder`或`mobileCodecPreferenceOrder`代替。
+* ~~`preferredCodec` - __已弃用__ 使用`codecPreferenceOrder`或`mobileCodecPreferenceOrder`代替。~~
+* ~~`disabledCodec` - __已弃用__ 使用`codecPreferenceOrder`或`mobileCodecPreferenceOrder`代替。~~
 * `backToP2PDelay` - 第三位参与者离开后，等待多长时间再切换回点对点模式（用于过滤页面重新加载情况）。
 * `stunServers` - 点对点连接中将使用的STUN服务器。
 
@@ -895,7 +895,19 @@ filmstrip: {
 }
 ```
 
-## 面部特征点 - FaceLandmarks
+### disableCameraTintForeground
+
+type: `Boolean`
+
+Default: **unset**
+
+如果为 true，则在画廊视图中禁用对当前发言者的摄像头前景加深（高亮）效果。
+
+```javascript
+disableCameraTintForeground: true
+```
+
+## 面部特征点 - Face Landmarks
 
 ### faceLandmarks
 
@@ -1002,15 +1014,16 @@ gravatarBaseURL: 'https://www.gravatar.com/avatar/'
 channelLastN: -1
 ```
 
-### lastNLimits 🚫
+### ~~lastNLimits 🚫~~
 
-类型: `Object`
+~~类型: `Object`~~
 
-根据会议参与者人数使用不同的“last N”值。对象中的键表示参与者人数，值为参与者人数达到或超过时要使用的“last N”。
+~~根据会议参与者人数使用不同的“last N”值。对象中的键表示参与者人数，值为参与者人数达到或超过时要使用的“last N”。~~
 
-在给定的示例映射中，只要会议中有至少5人但少于29人，“last N”将设置为20。当第30个参与者加入时，将降低为15。在达到第一个阈值之前，将使用`channelLastN`作为默认值。
+~~在给定的示例映射中，只要会议中有至少5人但少于29人，“last N”将设置为20。当第30个参与者加入时，将降低为15。在达到第一个阈值之前，将使用`channelLastN`作为默认值。~~
 
 ```javascript
+(原文已删除)
 lastNLimits: {
     5: 20,
     30: 15,
@@ -1481,11 +1494,11 @@ maxFullResolutionParticipants: 5
 
 ### ~~preferH264~~
 
-类型: `Boolean`
+~~类型: `Boolean`~~
 
-__已弃用__ 请在 `videoQuality` 部分使用 `preferredCodec` 替代。
+~~__已弃用__ 请在 `videoQuality` 部分使用 `preferredCodec` 替代。~~
 
-优先使用H.264视频编解码器（如果支持）。注意，建议不要这样做，因为在使用H.264时不支持多路复用。对于1对1通话，此设置默认启用，可以在P2P部分进行切换。
+~~优先使用H.264视频编解码器（如果支持）。注意，建议不要这样做，因为在使用H.264时不支持多路复用。对于1对1通话，此设置默认启用，可以在P2P部分进行切换。~~
 
 ### resolution
 
@@ -1592,9 +1605,9 @@ vp9: {
 },
 ```
 
-* `disabledCodec` - __已弃用__ 请使用 `codecPreferenceOrder` 或 `mobileCodecPreferenceOrder` 替代。
+* ~~`disabledCodec` - __已弃用__ 请使用 `codecPreferenceOrder` 或 `mobileCodecPreferenceOrder` 替代。~~
 
-* `preferredCodec` - __已弃用__ 请使用 `codecPreferenceOrder` 或 `mobileCodecPreferenceOrder` 替代。
+* ~~`preferredCodec` - __已弃用__ 请使用 `codecPreferenceOrder` 或 `mobileCodecPreferenceOrder` 替代。~~
 
 * `minHeightForQualityLvl` - 此选项可用于覆盖与应用中使用的视频质量级别相对应的缩略图高度的默认阈值。在撰写本文时，允许的级别为：
 

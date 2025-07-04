@@ -11,13 +11,13 @@ title: FAQ - 常见问题回答
 
 ## 客户端在 `meet.jit.si` 创建的房间中能够正常通信，但在我自托管的实例中仍然能够连接，但彼此无法听到或看到。问题出在哪里？
 
-很可能是服务器在 NAT 后面，但你没有添加特定于 NAT 的配置。请查看 [这个已解决的问题](https://community.jitsi.org/t/cannot-see-video-or-hear-audio-on-self-hosted-instance/)。你需要按照 [这里](devops-guide/devops-guide-quickstart#advanced-configuration) 的详细步骤进行操作。
+很可能是服务器在 NAT 后面，但你没有添加特定于 NAT 的配置。请查看 [这个已解决的问题](https://community.jitsi.org/t/cannot-see-video-or-hear-audio-on-self-hosted-instance/)。你需要按照 [这里](devops-guide/devops-guide-quickstart#高级配置) 的详细步骤进行操作。
 
 ## 两个参与者的时候它可以正常工作，但第三个参与者加入时，会崩溃或无法正常运行
 
 P2P 模式正常工作，但在尝试通过 jitsi-videobridge2 传递流量时失败。
 
-请检查你的防火墙/NAT 设置是否正确，特别是 UDP 10000。有关更多信息，请参见 [这里](devops-guide/devops-guide-quickstart#setup-and-configure-your-firewall)。
+请检查你的防火墙/NAT 设置是否正确，特别是 UDP 10000。有关更多信息，请参见 [这里](devops-guide/devops-guide-quickstart#设置和配置您的防火墙)。
 
 ## 我可以静音和取消静音其他参与者吗？
 
@@ -25,7 +25,7 @@ P2P 模式正常工作，但在尝试通过 jitsi-videobridge2 传递流量时�
 
 你可能想要设定一些“基本规则”，规定谁可以发言以及何时发言，就像任何实体会议或课堂一样。
 
-如果你希望限制谁可以成为主持人，需要设置你的 Jitsi 实例并启用“安全域”。有关更多信息，请参见 [这里](#4-enable-secure-domain-if-you-are-using-your-instance-of-jitsi)。
+如果你希望限制谁可以成为主持人，需要设置你的 Jitsi 实例并启用“安全域”。有关更多信息，请参见 [这里](#4. 如果你使用自托管的 Jitsi 实例，启用“安全域”。)。
 
 ## 如何保护我的 Jitsi 会议？
 
@@ -67,19 +67,27 @@ P2P 模式正常工作，但在尝试通过 jitsi-videobridge2 传递流量时�
 
 ## 我可以录制并保存视频吗？
 
-可以。有多种方法可以录制会议（使用外部软件或服务）：
+是的，有多种方法可以录制会议（使用外部软件、服务或内嵌功能）：
 
-_注意_：如果你想使用隐私友好的方法，建议使用方法 1 或 2。
+#### 使用原生功能进行录制
 
-1. **OBS**：使用 [OBS](https://obsproject.com/) 录制会议（例如浏览器窗口）。
+Jitsi 提供了在本地录制会议视频（包含音频）的功能。当录制被手动停止，或达到文件的最大限制时，录制文件（WebM 格式）将会保存到设备存储中。
 
-2. **RTMP 服务器**：你需要设置自己的 RTMP 服务器，然后使用你的 RTMP URL 和流密钥，而不是按照[这里](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)描述的使用 YouTube 流密钥。自行部署的 Jitsi Meet 实例需要设置 Jibri 来实现此功能。
+若为自建部署，请参考[此处](dev-guide/dev-guide-configuration/#录制 - Recording)的配置说明。
 
-3. **Dropbox**：通过 Jitsi Meet [连接 Dropbox](/handbook/docs/dev-guide/dev-guide-web-integrations#creating-the-dropbox-app-for-dropbox-recording-integration)，并将视频保存到 Dropbox。
+#### 使用外部软件 / 服务进行录制
 
-4. **视频服务/网站**：将你的会议直播到 YouTube 或其他网站（例如 Twitch），然后在那里获取录制的视频（参见 [操作指南](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)）。自托管的 Jitsi Meet 部署需要设置 Jibri 来实现此功能。
+*注意*：如果你希望使用更注重隐私的方式，推荐使用方法 1 或 2。
 
-未来可能会有更多录制方法，但目前尚未准备好（例如 [本地录制](https://github.com/jitsi/jitsi-meet/issues/6014)）。
+1. **OBS**：使用 [OBS](https://obsproject.com/) 录制你的会议（例如浏览器窗口）。
+
+2. **RTMP 服务器**：你需要搭建自己的 RTMP 服务器，然后使用你自己的 RTMP URL + 推流密钥，代替 [此处](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)所述的 YouTube 推流密钥。自建的 Jitsi Meet 部署需要配置 Jibri 才能实现此功能。
+
+3. **Dropbox**：将 Jitsi Meet [连接至 Dropbox](/handbook/docs/dev-guide/dev-guide-web-integrations#创建 Dropbox 应用以集成 Dropbox 录制)，将视频保存至 Dropbox 云盘。
+
+4. **视频服务 / 网站**：将会议推流至 YouTube 或其他平台（如 Twitch），然后在这些平台上获取录制内容（参考[操作方法](https://jitsi.org/blog/live-streaming-with-jitsi-and-youtube/)）。自建的 Jitsi Meet 部署同样需要配置 Jibri 来实现此功能。
+
+~~More methods might be implemented in the future, but are not ready yet (e.g. [Local Recording](https://github.com/jitsi/jitsi-meet/issues/6014).~~
 
 ## 我在会议中设置了密码，但下次会议时它没有生效
 
