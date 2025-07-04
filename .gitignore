@@ -1,0 +1,12 @@
+.DS_Store
+build
+node_modules
+translated_docs
+build
+yarn.lock
+.docusaurus
+.vscode
+.idea
+
+*~
+*.sw?
